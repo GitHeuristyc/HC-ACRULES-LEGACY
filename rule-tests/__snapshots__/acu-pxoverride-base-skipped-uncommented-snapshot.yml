@@ -1,0 +1,266 @@
+id: acu-pxoverride-base-skipped-uncommented
+snapshots:
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public IEnumerable Print(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Print)
+        {
+            return LogReport(adapter, base_Print);
+        }
+    }
+  : labels:
+    - source: Print
+      style: primary
+      start: 106
+      end: 111
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: Func<PXAdapter, IEnumerable>
+      style: secondary
+      start: 131
+      end: 159
+    - source: base_Print
+      style: secondary
+      start: 160
+      end: 170
+    - source: Func<PXAdapter, IEnumerable> base_Print
+      style: secondary
+      start: 131
+      end: 170
+    - source: Func<PXAdapter, IEnumerable> base_Print
+      style: secondary
+      start: 131
+      end: 170
+    - source: |-
+        {
+                return LogReport(adapter, base_Print);
+            }
+      style: secondary
+      start: 176
+      end: 230
+    - source: |-
+        [PXOverride]
+            public IEnumerable Print(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Print)
+            {
+                return LogReport(adapter, base_Print);
+            }
+      style: secondary
+      start: 70
+      end: 230
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+        {
+            // TODO: call the base delegate
+            return GetContractDiscount(order);
+        }
+    }
+  : labels:
+    - source: CalcDiscount
+      style: primary
+      start: 102
+      end: 114
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: Func<SOOrder, decimal>
+      style: secondary
+      start: 130
+      end: 152
+    - source: base_CalcDiscount
+      style: secondary
+      start: 153
+      end: 170
+    - source: Func<SOOrder, decimal> base_CalcDiscount
+      style: secondary
+      start: 130
+      end: 170
+    - source: Func<SOOrder, decimal> base_CalcDiscount
+      style: secondary
+      start: 130
+      end: 170
+    - source: |-
+        {
+                // TODO: call the base delegate
+                return GetContractDiscount(order);
+            }
+      style: secondary
+      start: 176
+      end: 266
+    - source: |-
+        [PXOverride]
+            public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+            {
+                // TODO: call the base delegate
+                return GetContractDiscount(order);
+            }
+      style: secondary
+      start: 70
+      end: 266
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+        {
+            return GetContractDiscount(order);
+        }
+    }
+  : labels:
+    - source: CalcDiscount
+      style: primary
+      start: 102
+      end: 114
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: Func<SOOrder, decimal>
+      style: secondary
+      start: 130
+      end: 152
+    - source: base_CalcDiscount
+      style: secondary
+      start: 153
+      end: 170
+    - source: Func<SOOrder, decimal> base_CalcDiscount
+      style: secondary
+      start: 130
+      end: 170
+    - source: Func<SOOrder, decimal> base_CalcDiscount
+      style: secondary
+      start: 130
+      end: 170
+    - source: |-
+        {
+                return GetContractDiscount(order);
+            }
+      style: secondary
+      start: 176
+      end: 226
+    - source: |-
+        [PXOverride]
+            public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+            {
+                return GetContractDiscount(order);
+            }
+      style: secondary
+      start: 70
+      end: 226
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Recalculate(SOOrder order, Action<SOOrder> base_Recalculate)
+        {
+            if (base_Recalculate != null)
+            {
+                DoWork(order);
+            }
+        }
+    }
+  : labels:
+    - source: Recalculate
+      style: primary
+      start: 99
+      end: 110
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: Action<SOOrder>
+      style: secondary
+      start: 126
+      end: 141
+    - source: base_Recalculate
+      style: secondary
+      start: 142
+      end: 158
+    - source: Action<SOOrder> base_Recalculate
+      style: secondary
+      start: 126
+      end: 158
+    - source: Action<SOOrder> base_Recalculate
+      style: secondary
+      start: 126
+      end: 158
+    - source: |-
+        {
+                if (base_Recalculate != null)
+                {
+                    DoWork(order);
+                }
+            }
+      style: secondary
+      start: 164
+      end: 256
+    - source: |-
+        [PXOverride]
+            public void Recalculate(SOOrder order, Action<SOOrder> base_Recalculate)
+            {
+                if (base_Recalculate != null)
+                {
+                    DoWork(order);
+                }
+            }
+      style: secondary
+      start: 70
+      end: 256
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public delegate void RecalculateDelegate(SOOrder order);
+
+        [PXOverride]
+        public void Recalculate(SOOrder order, RecalculateDelegate base_Recalculate)
+        {
+            DoWork(order);
+        }
+    }
+  : labels:
+    - source: Recalculate
+      style: primary
+      start: 161
+      end: 172
+    - source: '[PXOverride]'
+      style: secondary
+      start: 132
+      end: 144
+    - source: RecalculateDelegate
+      style: secondary
+      start: 188
+      end: 207
+    - source: base_Recalculate
+      style: secondary
+      start: 208
+      end: 224
+    - source: RecalculateDelegate base_Recalculate
+      style: secondary
+      start: 188
+      end: 224
+    - source: RecalculateDelegate base_Recalculate
+      style: secondary
+      start: 188
+      end: 224
+    - source: |-
+        {
+                DoWork(order);
+            }
+      style: secondary
+      start: 230
+      end: 260
+    - source: |-
+        [PXOverride]
+            public void Recalculate(SOOrder order, RecalculateDelegate base_Recalculate)
+            {
+                DoWork(order);
+            }
+      style: secondary
+      start: 132
+      end: 260

@@ -1,11 +1,11 @@
-# MUI-011 (deterministic twin) — `declare module "client-controls"` compiles but
+# `declare module "client-controls"` compiles but
 # fails at runtime: the webpack generateScreenInfos transformer ignores ambient
 # augmentation, producing "The field {View}.{Field} cannot be bound to a FieldState".
 # Source: HC.ACAGENTS skills/acumatica-modern-ui-migration/SKILL.md
 id: mui-no-declare-module
 language: typescript
 severity: error
-message: Never use `declare module "client-controls"` — it compiles but fails at runtime. Use the named class extension pattern instead (MUI-011).
+message: Never use `declare module "client-controls"` — it compiles but fails at runtime. Use the named class extension pattern instead.
 note: |
   Ambient module augmentation is compile-time only. Acumatica's webpack
   generateScreenInfos transformer ignores it, so bound fields declared this way

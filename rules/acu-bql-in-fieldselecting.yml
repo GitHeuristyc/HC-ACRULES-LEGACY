@@ -1,7 +1,7 @@
 id: acu-bql-in-fieldselecting
 language: csharp
 severity: warning
-message: "BQL query inside a FieldSelecting handler. FieldSelecting fires on every read of the field; load the data in RowSelecting or a view delegate, or cache the result."
+message: "BQL query inside a FieldSelecting handler, which is not recommended. FieldSelecting fires on every read of the field; load the data in RowSelecting or a view delegate, or cache the result."
 metadata:
   skill: acumatica-events
 rule:

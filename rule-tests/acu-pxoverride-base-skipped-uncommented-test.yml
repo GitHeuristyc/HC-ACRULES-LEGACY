@@ -1,0 +1,107 @@
+id: acu-pxoverride-base-skipped-uncommented
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+        {
+            return base_CalcDiscount(order);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+        {
+            // Base not called: contract pricing replaces the standard discount calculation.
+            return GetContractDiscount(order);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public IEnumerable Release(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Release) => base_Release(adapter);
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public void Recalculate(SOOrder order, Action<SOOrder> callback)
+        {
+            DoWork(order);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Recalculate(SOOrder order, Action<SOOrder> base_Recalculate)
+        {
+            base_Recalculate.Invoke(order);
+            PXLongOperation.StartOperation(Base, () => base_Recalculate(order));
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public IEnumerable Print(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Print)
+        {
+            // LogReport calls base_Print after it writes the audit entry.
+            return LogReport(adapter, base_Print);
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+        {
+            return GetContractDiscount(order);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public delegate void RecalculateDelegate(SOOrder order);
+
+        [PXOverride]
+        public void Recalculate(SOOrder order, RecalculateDelegate base_Recalculate)
+        {
+            DoWork(order);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order, Func<SOOrder, decimal> base_CalcDiscount)
+        {
+            // TODO: call the base delegate
+            return GetContractDiscount(order);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Recalculate(SOOrder order, Action<SOOrder> base_Recalculate)
+        {
+            if (base_Recalculate != null)
+            {
+                DoWork(order);
+            }
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public IEnumerable Print(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Print)
+        {
+            return LogReport(adapter, base_Print);
+        }
+    }

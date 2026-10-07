@@ -1,9 +1,9 @@
-# MUI-026 — An import containing "customizationScreens" is ALWAYS a bug.
+# An import containing "customizationScreens" is ALWAYS a bug.
 # Source: HC.ACAGENTS skills/acumatica-modern-ui/assets/extension-patterns.md (Rule 3)
 id: mui-no-customizationscreens-import
 language: typescript
 severity: error
-message: Import path contains "customizationScreens" — it hardcodes the tenant folder and breaks package publishing on client instances (MUI-026).
+message: Import path contains "customizationScreens" — it hardcodes the tenant folder and breaks package publishing on client instances.
 note: |
   The tenant folder name under customizationScreens/ differs per Acumatica site,
   so any import that spells it out fails to resolve everywhere else.
