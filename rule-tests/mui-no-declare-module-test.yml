@@ -1,0 +1,7 @@
+id: mui-no-declare-module
+valid:
+  - |
+    export class SO301000_HC extends SO301000 { }
+invalid:
+  - |
+    declare module "client-controls" { interface SOOrder { UsrNote: PXFieldState; } }

@@ -1,0 +1,16 @@
+id: acu-report-removed-api
+language: csharp
+severity: error
+message: "PXReportMailer or PXReportTools is not part of the current Acumatica build, so this code does not compile. Throw PXReportRequiredException to open a report, or render it with injected IReportLoaderService and IReportRenderer."
+metadata:
+  skill: acumatica-reports-from-code
+rule:
+  kind: identifier
+  regex: '^(PXReportMailer|PXReportTools)$'
+  not:
+    inside:
+      stopBy: end
+      any:
+        - kind: using_directive
+        - kind: class_declaration
+          has: { field: name, regex: '^(PXReportMailer|PXReportTools)$' }

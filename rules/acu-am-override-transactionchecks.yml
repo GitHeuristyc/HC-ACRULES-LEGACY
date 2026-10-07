@@ -1,0 +1,18 @@
+id: acu-am-override-transactionchecks
+language: csharp
+severity: warning
+message: "[PXOverride] of MoveEntryBase.TransactionChecks. The method is obsolete and nothing calls it, so the override never runs; validate in RowPersisting<AMMTran> or extend MoveEntryValidationExt."
+metadata:
+  skill: acumatica-manufacturing-hooks
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    all:
+      - has: { kind: attribute_list, regex: 'PXOverride' }
+      - has: { field: name, regex: '^TransactionChecks$' }
+      - has: { field: parameters, regex: '\bAMMTran\b' }

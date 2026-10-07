@@ -1,0 +1,211 @@
+id: acu-graph-static-member
+snapshots:
+  ? |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        public static readonly PXSelect<HCODWorkOrder> Orders;
+    }
+  : labels:
+    - source: public static readonly PXSelect<HCODWorkOrder> Orders;
+      style: primary
+      start: 83
+      end: 137
+    - source: static
+      style: secondary
+      start: 90
+      end: 96
+    - source: PXSelect<HCODWorkOrder>
+      style: secondary
+      start: 106
+      end: 129
+    - source: PXSelect<HCODWorkOrder> Orders
+      style: secondary
+      start: 106
+      end: 136
+    - source: ': PXGraph<HCODWorkOrderEntry, HCODWorkOrder>'
+      style: secondary
+      start: 32
+      end: 76
+    - source: |-
+        public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+        {
+            public static readonly PXSelect<HCODWorkOrder> Orders;
+        }
+      style: secondary
+      start: 0
+      end: 139
+    - source: |-
+        {
+            public static readonly PXSelect<HCODWorkOrder> Orders;
+        }
+      style: secondary
+      start: 77
+      end: 139
+  ? |
+    public class HCODxMRPDisplay : PXGraphExtension<MRPDisplay>
+    {
+        public static bool IsActive() => true;
+
+        public static bool processingAll = false;
+    }
+  : labels:
+    - source: public static bool processingAll = false;
+      style: primary
+      start: 110
+      end: 151
+    - source: static
+      style: secondary
+      start: 117
+      end: 123
+    - source: ': PXGraphExtension<MRPDisplay>'
+      style: secondary
+      start: 29
+      end: 59
+    - source: |-
+        public class HCODxMRPDisplay : PXGraphExtension<MRPDisplay>
+        {
+            public static bool IsActive() => true;
+
+            public static bool processingAll = false;
+        }
+      style: secondary
+      start: 0
+      end: 153
+    - source: |-
+        {
+            public static bool IsActive() => true;
+
+            public static bool processingAll = false;
+        }
+      style: secondary
+      start: 60
+      end: 153
+  ? |
+    public class HCODxPOCreate : PXGraphExtension<POCreate>
+    {
+        public static bool IsActive() => true;
+
+        public static SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View SOOrders;
+    }
+  : labels:
+    - source: public static SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View SOOrders;
+      style: primary
+      start: 106
+      end: 199
+    - source: static
+      style: secondary
+      start: 113
+      end: 119
+    - source: SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View
+      style: secondary
+      start: 120
+      end: 189
+    - source: SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View SOOrders
+      style: secondary
+      start: 120
+      end: 198
+    - source: ': PXGraphExtension<POCreate>'
+      style: secondary
+      start: 27
+      end: 55
+    - source: |-
+        public class HCODxPOCreate : PXGraphExtension<POCreate>
+        {
+            public static bool IsActive() => true;
+
+            public static SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View SOOrders;
+        }
+      style: secondary
+      start: 0
+      end: 201
+    - source: |-
+        {
+            public static bool IsActive() => true;
+
+            public static SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View SOOrders;
+        }
+      style: secondary
+      start: 56
+      end: 201
+  ? |
+    public class SomeGraph : PXGraph<SomeGraph>
+    {
+        public static IFinPeriodRepository FinPeriodRepository { get; set; }
+    }
+  : labels:
+    - source: public static IFinPeriodRepository FinPeriodRepository { get; set; }
+      style: primary
+      start: 50
+      end: 118
+    - source: static
+      style: secondary
+      start: 57
+      end: 63
+    - source: set;
+      style: secondary
+      start: 112
+      end: 116
+    - source: '{ get; set; }'
+      style: secondary
+      start: 105
+      end: 118
+    - source: ': PXGraph<SomeGraph>'
+      style: secondary
+      start: 23
+      end: 43
+    - source: |-
+        public class SomeGraph : PXGraph<SomeGraph>
+        {
+            public static IFinPeriodRepository FinPeriodRepository { get; set; }
+        }
+      style: secondary
+      start: 0
+      end: 120
+    - source: |-
+        {
+            public static IFinPeriodRepository FinPeriodRepository { get; set; }
+        }
+      style: secondary
+      start: 44
+      end: 120
+  ? |
+    public class SomeGraph : PXGraph<SomeGraph>
+    {
+        public static PXAction<ARInvoice> Release;
+    }
+  : labels:
+    - source: public static PXAction<ARInvoice> Release;
+      style: primary
+      start: 50
+      end: 92
+    - source: static
+      style: secondary
+      start: 57
+      end: 63
+    - source: PXAction<ARInvoice>
+      style: secondary
+      start: 64
+      end: 83
+    - source: PXAction<ARInvoice> Release
+      style: secondary
+      start: 64
+      end: 91
+    - source: ': PXGraph<SomeGraph>'
+      style: secondary
+      start: 23
+      end: 43
+    - source: |-
+        public class SomeGraph : PXGraph<SomeGraph>
+        {
+            public static PXAction<ARInvoice> Release;
+        }
+      style: secondary
+      start: 0
+      end: 94
+    - source: |-
+        {
+            public static PXAction<ARInvoice> Release;
+        }
+      style: secondary
+      start: 44
+      end: 94

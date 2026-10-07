@@ -1,0 +1,28 @@
+id: acu-smtpclient
+snapshots:
+  ? |
+    protected virtual void SendConfirmation(string to, string body)
+    {
+        using (var client = new SmtpClient("smtp.office365.com", 587))
+            client.Send("erp@example.com", to, "Order", body);
+    }
+  : labels:
+    - source: new SmtpClient("smtp.office365.com", 587)
+      style: primary
+      start: 90
+      end: 131
+    - source: SmtpClient
+      style: secondary
+      start: 94
+      end: 104
+  ? |
+    var smtp = new System.Net.Mail.SmtpClient(host) { EnableSsl = true };
+  : labels:
+    - source: new System.Net.Mail.SmtpClient(host) { EnableSsl = true }
+      style: primary
+      start: 11
+      end: 68
+    - source: System.Net.Mail.SmtpClient
+      style: secondary
+      start: 15
+      end: 41

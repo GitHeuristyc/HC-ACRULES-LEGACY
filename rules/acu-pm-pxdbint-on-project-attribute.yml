@@ -1,0 +1,22 @@
+id: acu-pm-pxdbint-on-project-attribute
+language: csharp
+severity: error
+message: "[PXDBInt] stacked on ProjectBase, ActiveProjectBase or BaseProjectTask. These attributes already carry [PXDBInt]; remove the extra [PXDBInt]."
+metadata:
+  skill: acumatica-project-accounting-hooks
+utils:
+  has-attr-pxdbint:
+    has:
+      kind: attribute_list
+      has: { kind: attribute, has: { field: name, regex: '(^|\.)PXDBInt(Attribute)?$' } }
+  has-attr-project:
+    has:
+      kind: attribute_list
+      has: { kind: attribute, has: { field: name, regex: '(^|\.)(ProjectBase|ActiveProjectBase|BaseProjectTask)(Attribute)?$' } }
+rule:
+  any:
+    - kind: property_declaration
+    - kind: method_declaration
+  all:
+    - matches: has-attr-pxdbint
+    - matches: has-attr-project

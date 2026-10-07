@@ -1,0 +1,13 @@
+id: acu-bql-in-rowselected
+valid:
+  - |
+    class E { protected virtual void _(Events.RowUpdated<SOOrder> e) { var l = PXSelect<SOLine>.Select(Base); } }
+  - |
+    class E { protected virtual void _(Events.RowSelected<SOOrder> e) { var c = e.Row?.OrderNbr; } }
+invalid:
+  - |
+    class E { protected virtual void _(Events.RowSelected<SOOrder> e) { var n = PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Current<SOOrder.orderNbr>>>>.Select(Base).Select(r => (SOLine)r).ToList(); } }
+  - |
+    class E { protected virtual void _(Events.RowSelected<SOOrder> e) { var l = PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, e.Row.OrderNbr); } }
+  - |
+    class E { protected virtual void SOOrder_RowSelected(PXCache sender, PXRowSelectedEventArgs e) { var l = SelectFrom<SOLine>.View.Select(Base); } }

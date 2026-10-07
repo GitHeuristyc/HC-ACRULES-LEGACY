@@ -1,0 +1,70 @@
+id: acu-webhook-pxlongoperation
+snapshots:
+  ? |
+    public class HCOrderWebhook : PXGraph<HCOrderWebhook>, IWebhookHandler
+    {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            PXLongOperation.StartOperation(this, () => Process(context));
+            context.Response.StatusCode = 202;
+        }
+    }
+  : labels:
+    - source: PXLongOperation.StartOperation(this, () => Process(context))
+      style: primary
+      start: 186
+      end: 246
+    - source: ': PXGraph<HCOrderWebhook>, IWebhookHandler'
+      style: secondary
+      start: 28
+      end: 70
+    - source: |-
+        public class HCOrderWebhook : PXGraph<HCOrderWebhook>, IWebhookHandler
+        {
+            async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+            {
+                PXLongOperation.StartOperation(this, () => Process(context));
+                context.Response.StatusCode = 202;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 298
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 186
+      end: 216
+  ? |
+    public class HCShipWebhook : IWebhookHandler
+    {
+        public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            var graph = PXGraph.CreateInstance<HCShipMaint>();
+            PX.Data.PXLongOperation.StartOperation(graph, delegate { graph.Import(); });
+        }
+    }
+  : labels:
+    - source: PX.Data.PXLongOperation.StartOperation(graph, delegate { graph.Import(); })
+      style: primary
+      start: 210
+      end: 285
+    - source: ': IWebhookHandler'
+      style: secondary
+      start: 27
+      end: 44
+    - source: |-
+        public class HCShipWebhook : IWebhookHandler
+        {
+            public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+            {
+                var graph = PXGraph.CreateInstance<HCShipMaint>();
+                PX.Data.PXLongOperation.StartOperation(graph, delegate { graph.Import(); });
+            }
+        }
+      style: secondary
+      start: 0
+      end: 294
+    - source: PX.Data.PXLongOperation.StartOperation
+      style: secondary
+      start: 210
+      end: 248

@@ -1,0 +1,30 @@
+# Source: skills/acumatica-modern-ui-html-attrs/SKILL.md (Rule 2)
+id: mui-qp-template-invalid-name
+language: html
+severity: error
+message: "`<qp-template>` name is not a ScreenTemplates key, so the template resolves to no layout. Use one of 1, 1-1, 1-1-1, 1-2, 2-1, 7-10-7, 10-7-7, 17-7, 7-17, 17-31, 17-17-14, 14-17-17, 17-14-17, or a record-* layout."
+note: |
+  The keys come from the ScreenTemplates.set() calls in
+  client-controls/src/controls/container/template/qp-template.ts; the list is
+  identical in 2025R2, 2026R1, and 2026R2. A bound name (name.bind) and a
+  qp-template without name (2026R1 base screens EP309010/EP309020 use one)
+  are not checked.
+rule:
+  kind: attribute
+  has:
+    kind: attribute_name
+    regex: ^(?i:name)$
+  inside:
+    any:
+      - kind: start_tag
+      - kind: self_closing_tag
+    has:
+      kind: tag_name
+      regex: ^(?i:qp-template)$
+  not:
+    has:
+      stopBy: end
+      kind: attribute_value
+      regex: ^(1|1-1|1-1-1|1-2|2-1|7-10-7|10-7-7|17-7|7-17|17-31|17-17-14|14-17-17|17-14-17|record-1|record-1-1|record-1-2|record-1-2-compact|record-1-1-1|record-1-1-1-compact|record-3-2-2-2)$
+metadata:
+  skill: acumatica-modern-ui-html-attrs

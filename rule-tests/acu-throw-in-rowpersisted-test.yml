@@ -1,0 +1,60 @@
+id: acu-throw-in-rowpersisted
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowPersisting<SOOrder> e)
+        {
+            if (e.Row?.CustomerID == null)
+                throw new PXRowPersistingException(typeof(SOOrder.customerID).Name, null, Messages.CustomerRequired);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            if (e.TranStatus == PXTranStatus.Open && e.Row == null)
+                throw new ArgumentNullException(nameof(e));
+            if (e.TranStatus == PXTranStatus.Open)
+                throw new PXRowPersistedException(typeof(SOOrder.orderNbr).Name, e.Row.OrderNbr, Messages.SyncFailed);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.FieldVerifying<SOOrder, SOOrder.orderQty> e)
+        {
+            if ((decimal?)e.NewValue < 0)
+                throw new PXSetPropertyException(Messages.QuantityMustBePositive);
+        }
+    }
+invalid:
+  - |
+    public class SSINOutageEntry : PXGraph<SSINOutageEntry, SSINOutage>
+    {
+        protected void _(Events.FieldUpdating<SSINOutage.hold> e)
+        {
+            if (e.NewValue == null)
+                throw new PXException(Messages.OutageRequestedQty0);
+        }
+    }
+  - |
+    public class PEWOOrderMaint : PXGraph<PEWOOrderMaint, PEWOOrder>
+    {
+        protected virtual void PEWOOrder_RowPersisted(PXCache sender, PXRowPersistedEventArgs e)
+        {
+            if (MailAccountManager.DefaultMailAccountID == null)
+            {
+                throw new PXException(Messages.AccountIDNotSet);
+            }
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            var status = e.Row?.Status ?? throw new InvalidOperationException(Messages.StatusMissing);
+        }
+    }

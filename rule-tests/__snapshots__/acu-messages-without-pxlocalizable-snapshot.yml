@@ -1,0 +1,195 @@
+id: acu-messages-without-pxlocalizable
+snapshots:
+  ? |
+    using PX.BarcodeProcessing;
+
+    public class ConfirmShipmentCommand : ScanCommand
+    {
+        public abstract class Msg
+        {
+            public const string Success = "Shipment successfully confirmed.";
+        }
+    }
+  : labels:
+    - source: Msg
+      style: primary
+      start: 107
+      end: 110
+    - source: Msg
+      style: secondary
+      start: 107
+      end: 110
+    - source: const
+      style: secondary
+      start: 132
+      end: 137
+    - source: string
+      style: secondary
+      start: 138
+      end: 144
+    - source: string Success = "Shipment successfully confirmed."
+      style: secondary
+      start: 138
+      end: 189
+    - source: public const string Success = "Shipment successfully confirmed.";
+      style: secondary
+      start: 125
+      end: 190
+    - source: public const string Success = "Shipment successfully confirmed.";
+      style: secondary
+      start: 125
+      end: 190
+    - source: using PX.BarcodeProcessing;
+      style: secondary
+      start: 0
+      end: 27
+    - source: |
+        using PX.BarcodeProcessing;
+
+        public class ConfirmShipmentCommand : ScanCommand
+        {
+            public abstract class Msg
+            {
+                public const string Success = "Shipment successfully confirmed.";
+            }
+        }
+      style: secondary
+      start: 0
+      end: 199
+    - source: |-
+        public abstract class Msg
+            {
+                public const string Success = "Shipment successfully confirmed.";
+            }
+      style: secondary
+      start: 85
+      end: 196
+  ? |
+    using PX.Common;
+
+    public static class HCODMessages
+    {
+        public const string Prefix = "OD";
+        public const string CustomerRequired = "Customer is required.";
+    }
+  : labels:
+    - source: HCODMessages
+      style: primary
+      start: 38
+      end: 50
+    - source: HCODMessages
+      style: secondary
+      start: 38
+      end: 50
+    - source: const
+      style: secondary
+      start: 64
+      end: 69
+    - source: string
+      style: secondary
+      start: 70
+      end: 76
+    - source: string Prefix = "OD"
+      style: secondary
+      start: 70
+      end: 90
+    - source: public const string Prefix = "OD";
+      style: secondary
+      start: 57
+      end: 91
+    - source: public const string Prefix = "OD";
+      style: secondary
+      start: 57
+      end: 91
+    - source: using PX.Common;
+      style: secondary
+      start: 0
+      end: 16
+    - source: |
+        using PX.Common;
+
+        public static class HCODMessages
+        {
+            public const string Prefix = "OD";
+            public const string CustomerRequired = "Customer is required.";
+        }
+      style: secondary
+      start: 0
+      end: 162
+    - source: |-
+        public static class HCODMessages
+        {
+            public const string Prefix = "OD";
+            public const string CustomerRequired = "Customer is required.";
+        }
+      style: secondary
+      start: 18
+      end: 161
+  ? |
+    using PX.Data;
+
+    public static class WorkOrderStatus
+    {
+        public const string Hold = "H";
+
+        public static class DisplayNames
+        {
+            public const string Hold = "Hold";
+        }
+    }
+  : labels:
+    - source: DisplayNames
+      style: primary
+      start: 115
+      end: 127
+    - source: DisplayNames
+      style: secondary
+      start: 115
+      end: 127
+    - source: const
+      style: secondary
+      start: 149
+      end: 154
+    - source: string
+      style: secondary
+      start: 155
+      end: 161
+    - source: string Hold = "Hold"
+      style: secondary
+      start: 155
+      end: 175
+    - source: public const string Hold = "Hold";
+      style: secondary
+      start: 142
+      end: 176
+    - source: public const string Hold = "Hold";
+      style: secondary
+      start: 142
+      end: 176
+    - source: using PX.Data;
+      style: secondary
+      start: 0
+      end: 14
+    - source: |
+        using PX.Data;
+
+        public static class WorkOrderStatus
+        {
+            public const string Hold = "H";
+
+            public static class DisplayNames
+            {
+                public const string Hold = "Hold";
+            }
+        }
+      style: secondary
+      start: 0
+      end: 185
+    - source: |-
+        public static class DisplayNames
+            {
+                public const string Hold = "Hold";
+            }
+      style: secondary
+      start: 95
+      end: 182

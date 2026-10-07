@@ -1,0 +1,33 @@
+id: acu-px-namespace
+snapshots:
+  ? |
+    namespace PX.Objects.AR;
+    public class HCARInvoiceEntryExt { }
+  : labels:
+    - source: PX.Objects.AR
+      style: primary
+      start: 10
+      end: 23
+    - source: PX.Objects.AR
+      style: secondary
+      start: 10
+      end: 23
+    - source: namespace PX.Objects.AR;
+      style: secondary
+      start: 0
+      end: 24
+  ? |
+    namespace PX.Objects.SO { public class HCSOOrderEntryExt { } }
+  : labels:
+    - source: PX.Objects.SO
+      style: primary
+      start: 10
+      end: 23
+    - source: PX.Objects.SO
+      style: secondary
+      start: 10
+      end: 23
+    - source: namespace PX.Objects.SO { public class HCSOOrderEntryExt { } }
+      style: secondary
+      start: 0
+      end: 62

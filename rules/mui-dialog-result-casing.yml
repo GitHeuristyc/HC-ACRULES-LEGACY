@@ -1,0 +1,22 @@
+# Source: skills/acumatica-modern-ui/assets/extension-patterns.md (Rule 10, common mistake 4)
+id: mui-dialog-result-casing
+language: html
+severity: error
+message: "dialog-result value has the wrong casing. getDialogResultCode() looks it up in WebDialogResult by exact name, so it resolves to undefined. Use OK, Cancel, Yes, No, Abort, Retry, or Ignore exactly."
+rule:
+  kind: attribute
+  has:
+    kind: attribute_name
+    regex: ^(?i:dialog-result)$
+  all:
+    - has:
+        stopBy: end
+        kind: attribute_value
+        regex: ^(?i:none|ok|cancel|abort|retry|ignore|yes|no)$
+    - not:
+        has:
+          stopBy: end
+          kind: attribute_value
+          regex: ^(None|OK|Cancel|Abort|Retry|Ignore|Yes|No)$
+metadata:
+  skill: acumatica-modern-ui

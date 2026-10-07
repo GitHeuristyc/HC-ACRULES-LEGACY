@@ -1,0 +1,121 @@
+id: acu-pxoverride-virtual
+snapshots:
+  ? |
+    public class HCODxARReleaseProcess : PXGraphExtension<ARReleaseProcess>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        protected void ReleaseInvoice(ARRegister doc, Action<ARRegister> baseMethod)
+        {
+            baseMethod(doc);
+        }
+    }
+  : labels:
+    - source: ReleaseInvoice
+      style: primary
+      start: 154
+      end: 168
+    - source: PXOverride
+      style: secondary
+      start: 123
+      end: 133
+    - source: PXOverride
+      style: secondary
+      start: 123
+      end: 133
+    - source: '[PXOverride]'
+      style: secondary
+      start: 122
+      end: 134
+    - source: |-
+        [PXOverride]
+            protected void ReleaseInvoice(ARRegister doc, Action<ARRegister> baseMethod)
+            {
+                baseMethod(doc);
+            }
+      style: secondary
+      start: 122
+      end: 252
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        public virtual void Persist(Action baseMethod)
+        {
+            baseMethod();
+        }
+    }
+  : labels:
+    - source: Persist
+      style: primary
+      start: 151
+      end: 158
+    - source: PXOverride
+      style: secondary
+      start: 115
+      end: 125
+    - source: PXOverride
+      style: secondary
+      start: 115
+      end: 125
+    - source: '[PXOverride]'
+      style: secondary
+      start: 114
+      end: 126
+    - source: virtual
+      style: secondary
+      start: 138
+      end: 145
+    - source: |-
+        [PXOverride]
+            public virtual void Persist(Action baseMethod)
+            {
+                baseMethod();
+            }
+      style: secondary
+      start: 114
+      end: 211
+  ? |
+    public class HCODxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        public override void Persist(Action baseMethod)
+        {
+            baseMethod();
+        }
+    }
+  : labels:
+    - source: Persist
+      style: primary
+      start: 158
+      end: 165
+    - source: PXOverride
+      style: secondary
+      start: 121
+      end: 131
+    - source: PXOverride
+      style: secondary
+      start: 121
+      end: 131
+    - source: '[PXOverride]'
+      style: secondary
+      start: 120
+      end: 132
+    - source: override
+      style: secondary
+      start: 144
+      end: 152
+    - source: |-
+        [PXOverride]
+            public override void Persist(Action baseMethod)
+            {
+                baseMethod();
+            }
+      style: secondary
+      start: 120
+      end: 218

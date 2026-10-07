@@ -1,0 +1,56 @@
+id: acu-generic-graph-not-abstract
+snapshots:
+  ? |
+    public class GenericOrderGraph<TOrderDac> : PXGraph<GenericOrderGraph<TOrderDac>>
+        where TOrderDac : PXBqlTable, IBqlTable, new()
+    {
+        public PXSelect<TOrderDac> Orders;
+    }
+  : labels:
+    - source: GenericOrderGraph
+      style: primary
+      start: 13
+      end: 30
+    - source: <TOrderDac>
+      style: secondary
+      start: 30
+      end: 41
+    - source: ': PXGraph<GenericOrderGraph<TOrderDac>>'
+      style: secondary
+      start: 42
+      end: 81
+    - source: |-
+        public class GenericOrderGraph<TOrderDac> : PXGraph<GenericOrderGraph<TOrderDac>>
+            where TOrderDac : PXBqlTable, IBqlTable, new()
+        {
+            public PXSelect<TOrderDac> Orders;
+        }
+      style: secondary
+      start: 0
+      end: 175
+  ? |
+    public class HCUSVendorSupplyDialog<TGraph, TPrimary, TSecondary> : PXGraphExtension<TGraph>
+        where TGraph : PXGraph
+    {
+    }
+  : labels:
+    - source: HCUSVendorSupplyDialog
+      style: primary
+      start: 13
+      end: 35
+    - source: <TGraph, TPrimary, TSecondary>
+      style: secondary
+      start: 35
+      end: 65
+    - source: ': PXGraphExtension<TGraph>'
+      style: secondary
+      start: 66
+      end: 92
+    - source: |-
+        public class HCUSVendorSupplyDialog<TGraph, TPrimary, TSecondary> : PXGraphExtension<TGraph>
+            where TGraph : PXGraph
+        {
+        }
+      style: secondary
+      start: 0
+      end: 123

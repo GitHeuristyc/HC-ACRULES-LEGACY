@@ -1,0 +1,58 @@
+id: acu-webhook-httpcontext
+snapshots:
+  ? |
+    public class HCFedexWebhookHandler : IWebhookHandler
+    {
+        public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            if (!IsRequestFromAllowedIP(HttpContext.Current.Request)) return;
+        }
+    }
+  : labels:
+    - source: HttpContext.Current
+      style: primary
+      start: 187
+      end: 206
+    - source: ': IWebhookHandler'
+      style: secondary
+      start: 35
+      end: 52
+    - source: |-
+        public class HCFedexWebhookHandler : IWebhookHandler
+        {
+            public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+            {
+                if (!IsRequestFromAllowedIP(HttpContext.Current.Request)) return;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 232
+  ? |
+    public class HCTestWebhookHandler : PXGraph<HCTestWebhookHandler>, IWebhookHandler
+    {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            HttpRequest aspNetRequest = System.Web.HttpContext.Current?.Request;
+        }
+    }
+  : labels:
+    - source: System.Web.HttpContext.Current
+      style: primary
+      start: 226
+      end: 256
+    - source: ': PXGraph<HCTestWebhookHandler>, IWebhookHandler'
+      style: secondary
+      start: 34
+      end: 82
+    - source: |-
+        public class HCTestWebhookHandler : PXGraph<HCTestWebhookHandler>, IWebhookHandler
+        {
+            async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+            {
+                HttpRequest aspNetRequest = System.Web.HttpContext.Current?.Request;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 274

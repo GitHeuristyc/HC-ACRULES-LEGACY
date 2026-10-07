@@ -1,0 +1,46 @@
+id: acu-report-service-locator
+valid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        [InjectDependency] internal IReportLoaderService ReportLoader { get; set; }
+        [InjectDependency] internal IReportRenderer ReportRenderer { get; set; }
+    }
+  - |
+    public partial class ReportLauncher : PXPage
+    {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            SendReportService = ServiceLocator.Current.GetInstance<ISendReportService>();
+        }
+    }
+  - |
+    public class HCCOPlugin : CustomizationPlugin
+    {
+        public override void UpdateDatabase()
+        {
+            var loader = ServiceLocator.Current.GetInstance<IReportLoaderService>();
+        }
+    }
+invalid:
+  - |
+    public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+    {
+        public static bool IsActive() => true;
+        public byte[] RenderInvoice(string refNbr)
+        {
+            IReportLoaderService ReportLoader = ServiceLocator.Current.GetInstance<IReportLoaderService>();
+            IReportRenderer ReportRenderer = ServiceLocator.Current.GetInstance<IReportRenderer>();
+            return null;
+        }
+    }
+  - |
+    public class HCShippingPrintProcess : PXGraph<HCShippingPrintProcess>
+    {
+        private byte[] Render(Report report)
+        {
+            var renderer = CommonServiceLocator.ServiceLocator.Current?.GetInstance<PX.Reports.IReportRenderer>();
+            return null;
+        }
+    }

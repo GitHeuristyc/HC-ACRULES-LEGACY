@@ -1,0 +1,82 @@
+id: acu-bql-in-fieldselecting
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_ItemDesc_FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+        {
+            InventoryItem item = PXSelect<InventoryItem,
+                Where<InventoryItem.inventoryID, Equal<Required<InventoryItem.inventoryID>>>>
+                .Select(this, 1).FirstOrDefault();
+        }
+    }
+  : labels:
+    - source: |-
+        PXSelect<InventoryItem,
+                    Where<InventoryItem.inventoryID, Equal<Required<InventoryItem.inventoryID>>>>
+                    .Select(this, 1).FirstOrDefault()
+      style: primary
+      start: 200
+      end: 359
+    - source: HCODWidget_ItemDesc_FieldSelecting
+      style: secondary
+      start: 85
+      end: 119
+    - source: (PXCache sender, PXFieldSelectingEventArgs e)
+      style: secondary
+      start: 119
+      end: 164
+    - source: |-
+        protected virtual void HCODWidget_ItemDesc_FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+            {
+                InventoryItem item = PXSelect<InventoryItem,
+                    Where<InventoryItem.inventoryID, Equal<Required<InventoryItem.inventoryID>>>>
+                    .Select(this, 1).FirstOrDefault();
+            }
+      style: secondary
+      start: 62
+      end: 366
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.FieldSelecting<SOOrder, HCODxSOOrder.usrCustomerName> e)
+        {
+            if (e.Row == null) return;
+            Customer customer = SelectFrom<Customer>
+                .Where<Customer.bAccountID.IsEqual<@P.AsInt>>
+                .View.Select(Base, e.Row.CustomerID);
+            e.ReturnValue = customer?.AcctName;
+        }
+    }
+  : labels:
+    - source: |-
+        SelectFrom<Customer>
+                    .Where<Customer.bAccountID.IsEqual<@P.AsInt>>
+                    .View.Select(Base, e.Row.CustomerID)
+      style: primary
+      start: 228
+      end: 355
+    - source: Events.FieldSelecting<SOOrder, HCODxSOOrder.usrCustomerName>
+      style: secondary
+      start: 95
+      end: 155
+    - source: Events.FieldSelecting<SOOrder, HCODxSOOrder.usrCustomerName> e
+      style: secondary
+      start: 95
+      end: 157
+    - source: Events.FieldSelecting<SOOrder, HCODxSOOrder.usrCustomerName> e
+      style: secondary
+      start: 95
+      end: 157
+    - source: |-
+        protected virtual void _(Events.FieldSelecting<SOOrder, HCODxSOOrder.usrCustomerName> e)
+            {
+                if (e.Row == null) return;
+                Customer customer = SelectFrom<Customer>
+                    .Where<Customer.bAccountID.IsEqual<@P.AsInt>>
+                    .View.Select(Base, e.Row.CustomerID);
+                e.ReturnValue = customer?.AcctName;
+            }
+      style: secondary
+      start: 70
+      end: 406

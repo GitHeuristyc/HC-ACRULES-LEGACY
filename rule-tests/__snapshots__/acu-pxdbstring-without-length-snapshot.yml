@@ -1,0 +1,24 @@
+id: acu-pxdbstring-without-length
+snapshots:
+  ? |
+    class D { [PXDBString(IsUnicode = true)] public virtual string Code { get; set; } }
+  : labels:
+    - source: PXDBString(IsUnicode = true)
+      style: primary
+      start: 11
+      end: 39
+    - source: PXDBString
+      style: secondary
+      start: 11
+      end: 21
+  ? |
+    class D { [PXDBString] public virtual string Code { get; set; } }
+  : labels:
+    - source: PXDBString
+      style: primary
+      start: 11
+      end: 21
+    - source: PXDBString
+      style: secondary
+      start: 11
+      end: 21

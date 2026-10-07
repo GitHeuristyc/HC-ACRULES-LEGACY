@@ -1,0 +1,25 @@
+# Source: skills/acumatica-modern-ui/SKILL.md NEVER 3; acumatica-modern-ui-html-attrs (Other qp-* attributes)
+id: mui-grid-columns-in-html
+language: html
+severity: warning
+message: "Grid columns are declared in HTML. HC convention keeps every column as a PXFieldState on the grid view class (with @columnConfig for per-column settings); remove the <columns> block."
+note: |
+  qp-grid does parse <columns>/<column> children, so this is an HC
+  maintainability convention, not a framework limit. No Acumatica base screen
+  uses the HTML form.
+rule:
+  kind: element
+  has:
+    kind: start_tag
+    has:
+      kind: tag_name
+      regex: ^(?i:columns)$
+  inside:
+    kind: element
+    has:
+      kind: start_tag
+      has:
+        kind: tag_name
+        regex: ^(?i:qp-grid)$
+metadata:
+  skill: acumatica-modern-ui-html-attrs

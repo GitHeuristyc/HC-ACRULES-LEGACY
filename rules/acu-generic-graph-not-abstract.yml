@@ -1,0 +1,20 @@
+id: acu-generic-graph-not-abstract
+language: csharp
+severity: error
+message: "Generic graph or graph extension that is not abstract (PX1112). Mark the class `abstract` and derive concrete, non-generic graphs or extensions from it."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    all:
+      - has: { kind: type_parameter_list }
+      - not: { has: { kind: modifier, regex: '^abstract$' } }
+      - has:
+          kind: base_list
+          regex: '(^|[\s:,.])PXGraph(Extension)?<'

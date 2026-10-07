@@ -1,0 +1,22 @@
+id: mui-dialog-result-casing
+valid:
+  - |
+    <footer>
+      <qp-button id="btnHCTC-Create" state.bind="CreatePayment" dialog-result="OK"></qp-button>
+      <qp-button id="btnHCTC-Cancel" dialog-result="Cancel" caption="Cancel"></qp-button>
+    </footer>
+  - |
+    <footer>
+      <qp-button id="btnYes" dialog-result="Yes" caption="Yes"></qp-button>
+      <qp-button id="btnAbort" dialog-result="Abort" caption="Abort"></qp-button>
+      <qp-button id="btnNum" dialog-result="1" caption="OK"></qp-button>
+    </footer>
+invalid:
+  - |
+    <footer>
+      <qp-button id="btnHCTC-Create" state.bind="CreatePayment" dialog-result="Ok"></qp-button>
+    </footer>
+  - |
+    <footer>
+      <qp-button id="btnHCTC-Cancel" dialog-result="cancel" caption="Cancel"></qp-button>
+    </footer>

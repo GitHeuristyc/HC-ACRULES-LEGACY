@@ -1,0 +1,65 @@
+id: mui-selector-missing-hash
+snapshots:
+  ? |
+    <template>
+      <qp-fieldset id="fsHCEM" view.bind="Document" append="Document_form"></qp-fieldset>
+    </template>
+  : labels:
+    - source: append="Document_form"
+      style: primary
+      start: 59
+      end: 81
+    - source: Document_form
+      style: secondary
+      start: 67
+      end: 80
+    - source: Document_form
+      style: secondary
+      start: 67
+      end: 80
+    - source: append
+      style: secondary
+      start: 59
+      end: 65
+  ? |
+    <template>
+      <qp-fieldset id="fsHCEM2" view.bind="Setup" before="groupRetainageSettings"></qp-fieldset>
+    </template>
+  : labels:
+    - source: before="groupRetainageSettings"
+      style: primary
+      start: 57
+      end: 88
+    - source: groupRetainageSettings
+      style: secondary
+      start: 65
+      end: 87
+    - source: groupRetainageSettings
+      style: secondary
+      start: 65
+      end: 87
+    - source: before
+      style: secondary
+      start: 57
+      end: 63
+  ? |
+    <template>
+      <qp-tab id="tabHCEM" caption="Custom" after="tabGeneral"></qp-tab>
+    </template>
+  : labels:
+    - source: after="tabGeneral"
+      style: primary
+      start: 51
+      end: 69
+    - source: tabGeneral
+      style: secondary
+      start: 58
+      end: 68
+    - source: tabGeneral
+      style: secondary
+      start: 58
+      end: 68
+    - source: after
+      style: secondary
+      start: 51
+      end: 56

@@ -1,0 +1,27 @@
+# Source: skills/acumatica-modern-ui-html-attrs/SKILL.md (Rules 1-2, Decision Tree)
+id: mui-qp-missing-id
+language: html
+severity: error
+message: "`<$TAG>` has no id attribute. qp-fieldset and qp-template fail at runtime with a red fatal-error box, and qp-tabbar and qp-wizard fail the webpack build. Add a unique, package-prefixed id."
+note: |
+  Build check: html-wrapper-generation.ts requires id on qp-tabbar/qp-wizard
+  (qp-fieldset passes with only view.bind). Runtime check: qp-fieldset.ts and
+  qp-template.ts call fatalError() when id is missing. Extension elements that
+  carry a modify, remove, or replace directive edit an existing element and
+  are not checked.
+rule:
+  any:
+    - kind: start_tag
+    - kind: self_closing_tag
+  has:
+    kind: tag_name
+    pattern: $TAG
+    regex: ^(?i:qp-fieldset|qp-template|qp-tabbar|qp-wizard)$
+  not:
+    has:
+      kind: attribute
+      has:
+        kind: attribute_name
+        regex: ^(?i:id|id\.[a-z-]+|modify|remove|replace)$
+metadata:
+  skill: acumatica-modern-ui-html-attrs

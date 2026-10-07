@@ -1,0 +1,25 @@
+id: acu-localization-concatenation
+language: csharp
+severity: warning
+message: "Concatenated message passed to a PX exception or localization method (PX1053). Put a `{0}` placeholder in the [PXLocalizable] message and pass the values as format arguments, for example `new PXException(Messages.OrderNotFound, orderNbr)`."
+metadata:
+  skill: acumatica-strings
+rule:
+  kind: argument
+  nthChild: 1
+  has:
+    kind: binary_expression
+    pattern: $LEFT + $RIGHT
+  inside:
+    kind: argument_list
+    inside:
+      any:
+        - kind: object_creation_expression
+          all:
+            - has: { field: type, regex: '^(PX\.Data\.)?PX\w*Exception(<.*>)?$' }
+            # Redirect exceptions take a URL or graph, not a message.
+            - not: { has: { field: type, regex: 'Redirect' } }
+        - kind: invocation_expression
+          has:
+            field: function
+            regex: '^(PX\.Data\.)?(PXMessages|PXLocalizer)\.Localize\w*$'

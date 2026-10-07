@@ -1,0 +1,56 @@
+id: acu-persist-in-event-handler
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public PXAction<SOOrder> approveOrder;
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Approve")]
+        public virtual IEnumerable ApproveOrder(PXAdapter adapter)
+        {
+            Base.Actions.PressSave();
+            return adapter.Get();
+        }
+
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            if (e.TranStatus != PXTranStatus.Completed) return;
+            var log = PXGraph.CreateInstance<HCODLogMaint>();
+            log.Actions.PressSave();
+        }
+    }
+  - |
+    public class HCODWidgetProcess : PXGraph<HCODWidgetProcess>
+    {
+        protected virtual void _(Events.RowSelected<HCODWidgetFilter> e)
+        {
+            Widgets.SetProcessDelegate(list =>
+            {
+                var graph = PXGraph.CreateInstance<HCODWidgetMaint>();
+                graph.Actions.PressSave();
+            });
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.FieldUpdated<SOOrder, SOOrder.customerID> e)
+        {
+            if (e.Row == null) return;
+            Base.Actions.PressSave();
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowUpdated(PXCache sender, PXRowUpdatedEventArgs e)
+        {
+            this.Persist();
+        }
+
+        protected virtual void _(Events.RowPersisting<HCODWidget> e)
+        {
+            Caches[typeof(HCODWidgetLog)].Persist(PXDBOperation.Insert);
+        }
+    }

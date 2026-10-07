@@ -1,0 +1,51 @@
+id: acu-savefile-result-ignored
+valid:
+  - |
+    using PX.SM;
+    public class HCFormProcessor
+    {
+        public Guid? Attach(FileInfo file)
+        {
+            var uploadFileMaintenance = PXGraph.CreateInstance<UploadFileMaintenance>();
+            if (uploadFileMaintenance.SaveFile(file, FileExistsAction.CreateVersion))
+                return file.UID;
+            return null;
+        }
+    }
+  - |
+    using PX.SM;
+    public class HCFormProcessor
+    {
+        public bool Attach(FileInfo file)
+        {
+            var upload = PXGraph.CreateInstance<UploadFileMaintenance>();
+            bool saved = upload.SaveFile(file);
+            return saved && file.UID != null;
+        }
+    }
+  - |
+    public class HCExcelExport
+    {
+        public void Export(ExcelPackage package) { package.SaveFile(); }
+    }
+invalid:
+  - |
+    using PX.SM;
+    public class HCPDFileHelper
+    {
+        public static void Attach(PXCache cache, object row, FileInfo file)
+        {
+            var fileGraph = PXGraph.CreateInstance<UploadFileMaintenance>();
+            fileGraph.SaveFile(file, FileExistsAction.CreateVersion);
+            PXNoteAttribute.SetFileNotes(cache, row, file.UID.Value);
+        }
+    }
+  - |
+    public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+    {
+        public void AttachExcel(PX.SM.FileInfo fileExcel)
+        {
+            PX.SM.UploadFileMaintenance upload = PXGraph.CreateInstance<PX.SM.UploadFileMaintenance>();
+            upload.SaveFile(fileExcel);
+        }
+    }

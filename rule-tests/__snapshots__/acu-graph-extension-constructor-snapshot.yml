@@ -1,0 +1,108 @@
+id: acu-graph-extension-constructor
+snapshots:
+  ? |
+    public class ARReleaseProcess_Extension : PXGraphExtension<ARReleaseProcess>
+    {
+        public ARReleaseProcess_Extension() : base()
+        {
+            UnityInitializer.InitializeUnityContainer();
+        }
+    }
+  : labels:
+    - source: |-
+        public ARReleaseProcess_Extension() : base()
+            {
+                UnityInitializer.InitializeUnityContainer();
+            }
+      style: primary
+      start: 83
+      end: 192
+    - source: ARReleaseProcess_Extension
+      style: secondary
+      start: 90
+      end: 116
+    - source: ARReleaseProcess_Extension
+      style: secondary
+      start: 13
+      end: 39
+    - source: ': PXGraphExtension<ARReleaseProcess>'
+      style: secondary
+      start: 40
+      end: 76
+    - source: |-
+        public class ARReleaseProcess_Extension : PXGraphExtension<ARReleaseProcess>
+        {
+            public ARReleaseProcess_Extension() : base()
+            {
+                UnityInitializer.InitializeUnityContainer();
+            }
+        }
+      style: secondary
+      start: 0
+      end: 194
+    - source: |-
+        {
+            public ARReleaseProcess_Extension() : base()
+            {
+                UnityInitializer.InitializeUnityContainer();
+            }
+        }
+      style: secondary
+      start: 77
+      end: 194
+  ? |
+    public class HCCDxPOCreate : PXGraphExtension<POCreate>
+    {
+        public static bool IsActive() => true;
+
+        public HCCDxPOCreate()
+        {
+            filterCache = new Dictionary<string, bool>();
+        }
+    }
+  : labels:
+    - source: |-
+        public HCCDxPOCreate()
+            {
+                filterCache = new Dictionary<string, bool>();
+            }
+      style: primary
+      start: 106
+      end: 194
+    - source: HCCDxPOCreate
+      style: secondary
+      start: 113
+      end: 126
+    - source: HCCDxPOCreate
+      style: secondary
+      start: 13
+      end: 26
+    - source: ': PXGraphExtension<POCreate>'
+      style: secondary
+      start: 27
+      end: 55
+    - source: |-
+        public class HCCDxPOCreate : PXGraphExtension<POCreate>
+        {
+            public static bool IsActive() => true;
+
+            public HCCDxPOCreate()
+            {
+                filterCache = new Dictionary<string, bool>();
+            }
+        }
+      style: secondary
+      start: 0
+      end: 196
+    - source: |-
+        {
+            public static bool IsActive() => true;
+
+            public HCCDxPOCreate()
+            {
+                filterCache = new Dictionary<string, bool>();
+            }
+        }
+      style: secondary
+      start: 56
+      end: 196

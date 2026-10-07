@@ -1,0 +1,40 @@
+id: acu-dac-nonnullable-field
+snapshots:
+  ? |
+    public class HCDoc : PXBqlTable, IBqlTable { public virtual decimal Amount { get; set; } }
+  : labels:
+    - source: public virtual decimal Amount { get; set; }
+      style: primary
+      start: 45
+      end: 88
+    - source: ': PXBqlTable, IBqlTable'
+      style: secondary
+      start: 19
+      end: 42
+    - source: 'public class HCDoc : PXBqlTable, IBqlTable { public virtual decimal Amount { get; set; } }'
+      style: secondary
+      start: 0
+      end: 90
+    - source: decimal
+      style: secondary
+      start: 60
+      end: 67
+  ? |
+    public sealed class HCSOOrderExt : PXCacheExtension<SOOrder> { public virtual bool UsrFlag { get; set; } }
+  : labels:
+    - source: public virtual bool UsrFlag { get; set; }
+      style: primary
+      start: 63
+      end: 104
+    - source: ': PXCacheExtension<SOOrder>'
+      style: secondary
+      start: 33
+      end: 60
+    - source: 'public sealed class HCSOOrderExt : PXCacheExtension<SOOrder> { public virtual bool UsrFlag { get; set; } }'
+      style: secondary
+      start: 0
+      end: 106
+    - source: bool
+      style: secondary
+      start: 78
+      end: 82

@@ -1,0 +1,148 @@
+id: acu-action-handler-attributes
+snapshots:
+  ? |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        [PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)]
+        public virtual IEnumerable viewDocument(PXAdapter adapter)
+        {
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: viewDocument
+      style: primary
+      start: 197
+      end: 209
+    - source: IEnumerable
+      style: secondary
+      start: 185
+      end: 196
+    - source: (PXAdapter adapter)
+      style: secondary
+      start: 209
+      end: 228
+    - source: PXUIField
+      style: secondary
+      start: 84
+      end: 93
+    - source: PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)
+      style: secondary
+      start: 84
+      end: 164
+    - source: '[PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)]'
+      style: secondary
+      start: 83
+      end: 165
+    - source: ': PXGraph<HCODWorkOrderEntry, HCODWorkOrder>'
+      style: secondary
+      start: 32
+      end: 76
+    - source: |-
+        public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+        {
+            [PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)]
+            public virtual IEnumerable viewDocument(PXAdapter adapter)
+            {
+                return adapter.Get();
+            }
+        }
+      style: secondary
+      start: 0
+      end: 272
+    - source: |-
+        {
+            [PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)]
+            public virtual IEnumerable viewDocument(PXAdapter adapter)
+            {
+                return adapter.Get();
+            }
+        }
+      style: secondary
+      start: 77
+      end: 272
+    - source: |-
+        [PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)]
+            public virtual IEnumerable viewDocument(PXAdapter adapter)
+            {
+                return adapter.Get();
+            }
+      style: secondary
+      start: 83
+      end: 270
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXProcessButton]
+        protected virtual IEnumerable ProcessAll(PXAdapter adapter)
+        {
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: ProcessAll
+      style: primary
+      start: 166
+      end: 176
+    - source: IEnumerable
+      style: secondary
+      start: 154
+      end: 165
+    - source: (PXAdapter adapter)
+      style: secondary
+      start: 176
+      end: 195
+    - source: PXProcessButton
+      style: secondary
+      start: 115
+      end: 130
+    - source: PXProcessButton
+      style: secondary
+      start: 115
+      end: 130
+    - source: '[PXProcessButton]'
+      style: secondary
+      start: 114
+      end: 131
+    - source: ': PXGraphExtension<SOOrderEntry>'
+      style: secondary
+      start: 31
+      end: 63
+    - source: |-
+        public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+        {
+            public static bool IsActive() => true;
+
+            [PXProcessButton]
+            protected virtual IEnumerable ProcessAll(PXAdapter adapter)
+            {
+                return adapter.Get();
+            }
+        }
+      style: secondary
+      start: 0
+      end: 239
+    - source: |-
+        {
+            public static bool IsActive() => true;
+
+            [PXProcessButton]
+            protected virtual IEnumerable ProcessAll(PXAdapter adapter)
+            {
+                return adapter.Get();
+            }
+        }
+      style: secondary
+      start: 64
+      end: 239
+    - source: |-
+        [PXProcessButton]
+            protected virtual IEnumerable ProcessAll(PXAdapter adapter)
+            {
+                return adapter.Get();
+            }
+      style: secondary
+      start: 114
+      end: 237

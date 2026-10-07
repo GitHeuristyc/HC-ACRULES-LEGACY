@@ -1,0 +1,16 @@
+id: acu-pxdatabase-direct-write
+snapshots:
+  ? |
+    class C { void M() { PXDatabase.Delete<SOOrder>(new PXDataFieldRestrict<SOOrder.status>("X")); } }
+  : labels:
+    - source: PXDatabase.Delete<SOOrder>(new PXDataFieldRestrict<SOOrder.status>("X"))
+      style: primary
+      start: 21
+      end: 93
+  ? |
+    class C { void M() { PXDatabase.Update<SOOrder>(new PXDataFieldAssign<SOOrder.status>("C")); } }
+  : labels:
+    - source: PXDatabase.Update<SOOrder>(new PXDataFieldAssign<SOOrder.status>("C"))
+      style: primary
+      start: 21
+      end: 91

@@ -1,0 +1,64 @@
+id: acu-notification-in-rowpersist
+snapshots:
+  ? |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void SOOrder_RowPersisting(PXCache sender, PXRowPersistingEventArgs e)
+        {
+            PX.Objects.EP.TemplateNotificationGenerator.Create(e.Row, "HCORDERSAVED").Send();
+        }
+    }
+  : labels:
+    - source: PX.Objects.EP.TemplateNotificationGenerator.Create(e.Row, "HCORDERSAVED")
+      style: primary
+      start: 216
+      end: 289
+    - source: (PXCache sender, PXRowPersistingEventArgs e)
+      style: secondary
+      start: 157
+      end: 201
+    - source: |-
+        protected virtual void SOOrder_RowPersisting(PXCache sender, PXRowPersistingEventArgs e)
+            {
+                PX.Objects.EP.TemplateNotificationGenerator.Create(e.Row, "HCORDERSAVED").Send();
+            }
+      style: secondary
+      start: 113
+      end: 303
+    - source: PX.Objects.EP.TemplateNotificationGenerator.Create
+      style: secondary
+      start: 216
+      end: 266
+  ? |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            var sender = TemplateNotificationGenerator.Create(Base, e.Row, NotificationCD);
+            sender.Send();
+        }
+    }
+  : labels:
+    - source: TemplateNotificationGenerator.Create(Base, e.Row, NotificationCD)
+      style: primary
+      start: 197
+      end: 262
+    - source: (Events.RowPersisted<SOOrder> e)
+      style: secondary
+      start: 137
+      end: 169
+    - source: |-
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+            {
+                var sender = TemplateNotificationGenerator.Create(Base, e.Row, NotificationCD);
+                sender.Send();
+            }
+      style: secondary
+      start: 113
+      end: 292
+    - source: TemplateNotificationGenerator.Create
+      style: secondary
+      start: 197
+      end: 233

@@ -1,0 +1,29 @@
+id: acu-pxoverride-base-not-called
+language: csharp
+severity: warning
+message: "[PXOverride] of Persist or ConfirmShipment never calls its base delegate. Skipping base_Persist() saves nothing, and skipping base_ConfirmShipment(args) skips the inventory issue and order status updates; call the delegate."
+metadata:
+  skill: acumatica-order-to-cash-hooks
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    all:
+      - has: { kind: attribute_list, regex: 'PXOverride' }
+      - has: { field: name, regex: '^(Persist|ConfirmShipment)$' }
+      - has:
+          field: parameters
+          has:
+            kind: parameter
+            nthChild: { position: 1, reverse: true }
+            has: { field: name, pattern: $DEL }
+      - not:
+          has:
+            any:
+              - kind: block
+              - kind: arrow_expression_clause
+            has: { stopBy: end, kind: identifier, pattern: $DEL }

@@ -1,0 +1,17 @@
+id: acu-gl-batch-curyid-on-insert
+valid:
+  - |
+    Batch batch = je.BatchModule.Insert(new Batch { BranchID = branchID, DateEntered = docDate, Description = descr });
+    je.BatchModule.Cache.SetValueExt<Batch.curyID>(batch, curyID);
+  - |
+    var line = je.GLTranModuleBatNbr.Insert(new GLTran { AccountID = accountID, SubID = subID, CuryDebitAmt = amount });
+    var info = je.currencyinfo.Insert(new CurrencyInfo { CuryID = curyID });
+invalid:
+  - |
+    Batch batch = je.BatchModule.Insert(new Batch { BranchID = branchID, DateEntered = docDate, CuryID = "EUR" });
+  - |
+    var batch = graph.BatchModule.Insert(new PX.Objects.GL.Batch
+    {
+        BranchID = doc.BranchID,
+        CuryID = doc.CuryID,
+    });

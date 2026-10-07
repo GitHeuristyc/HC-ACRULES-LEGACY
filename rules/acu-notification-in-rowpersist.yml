@@ -1,0 +1,15 @@
+id: acu-notification-in-rowpersist
+language: csharp
+severity: warning
+message: "Email created inside a RowPersisting or RowPersisted handler. The save can still roll back; send from an action, or from a Persist override after base_Persist() returns."
+metadata:
+  skill: acumatica-notifications
+rule:
+  kind: invocation_expression
+  has: { field: function, regex: '(^|\.)TemplateNotificationGenerator\.Create$' }
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has: { kind: parameter_list, regex: 'RowPersist(ing|ed)' }
+      - has: { field: name, regex: '_RowPersist(ing|ed)$' }

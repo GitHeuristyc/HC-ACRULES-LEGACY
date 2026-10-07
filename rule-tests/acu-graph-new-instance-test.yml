@@ -1,0 +1,76 @@
+id: acu-graph-new-instance
+valid:
+  - |
+    public class HCODxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void CreateOrder()
+        {
+            var graph = PXGraph.CreateInstance<SOOrderEntry>();
+            graph.Document.Insert(new SOOrder { OrderType = SOOrderTypeConstants.SalesOrder });
+        }
+    }
+  - |
+    [TestFixture]
+    public class SalesOrderTests : Check
+    {
+        public override void Execute()
+        {
+            var screen = new SO301000SOOrderEntry();
+            screen.OpenScreen();
+        }
+    }
+  - |
+    public class TGPOShippingInq : PXGraph<TGPOShippingInq>
+    {
+        public void Reprint()
+        {
+            var graph = PXGraph.CreateInstance<TGPOShippingInq>();
+            var entry = new TGLogEntry();
+        }
+    }
+  - |
+    using QuickBooks.Api.Models;
+
+    public class HCODImporter
+    {
+        public void Run()
+        {
+            var entry = new JournalEntry();
+        }
+    }
+invalid:
+  - |
+    using PX.Objects.SO;
+
+    public class HCODxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void CreateOrder()
+        {
+            SOOrderEntry graph = new SOOrderEntry();
+            graph.Document.Insert(new SOOrder());
+        }
+    }
+  - |
+    public class TGPOShippingInq : PXGraph<TGPOShippingInq>
+    {
+        public void Reprint()
+        {
+            TGPOShippingInq invGraph = new TGPOShippingInq();
+            invGraph.Filter.Current = Filter.Current;
+        }
+    }
+  - |
+    using PX.Data;
+    using PX.Objects.GL;
+
+    namespace HC.Objects.OD.GL
+    {
+    public class HCODPostingService
+    {
+        public void Post()
+        {
+            var je = new JournalEntry();
+            je.Save.Press();
+        }
+    }
+    }

@@ -1,0 +1,125 @@
+id: acu-action-handler-returns-null
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public PXAction<HCODWidget> process;
+        [PXButton]
+        [PXUIField(DisplayName = "Process")]
+        public IEnumerable Process(PXAdapter adapter)
+        {
+            if (Widgets.Current == null)
+            {
+                return null;
+            }
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: return null;
+      style: primary
+      start: 270
+      end: 282
+    - source: IEnumerable
+      style: secondary
+      start: 166
+      end: 177
+    - source: PXAdapter
+      style: secondary
+      start: 186
+      end: 195
+    - source: PXAdapter adapter
+      style: secondary
+      start: 186
+      end: 203
+    - source: PXAdapter adapter
+      style: secondary
+      start: 186
+      end: 203
+    - source: PXButton
+      style: secondary
+      start: 104
+      end: 112
+    - source: PXButton
+      style: secondary
+      start: 104
+      end: 112
+    - source: '[PXButton]'
+      style: secondary
+      start: 103
+      end: 113
+    - source: |-
+        [PXButton]
+            [PXUIField(DisplayName = "Process")]
+            public IEnumerable Process(PXAdapter adapter)
+            {
+                if (Widgets.Current == null)
+                {
+                    return null;
+                }
+                return adapter.Get();
+            }
+      style: secondary
+      start: 103
+      end: 328
+    - source: 'null'
+      style: secondary
+      start: 277
+      end: 281
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public IEnumerable Release(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Release)
+        {
+            if (Base.Document.Current?.Hold == true) return null;
+            return base_Release(adapter);
+        }
+    }
+  : labels:
+    - source: return null;
+      style: primary
+      start: 231
+      end: 243
+    - source: IEnumerable
+      style: secondary
+      start: 94
+      end: 105
+    - source: PXAdapter
+      style: secondary
+      start: 114
+      end: 123
+    - source: PXAdapter adapter
+      style: secondary
+      start: 114
+      end: 131
+    - source: PXAdapter adapter
+      style: secondary
+      start: 114
+      end: 131
+    - source: PXOverride
+      style: secondary
+      start: 71
+      end: 81
+    - source: PXOverride
+      style: secondary
+      start: 71
+      end: 81
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: |-
+        [PXOverride]
+            public IEnumerable Release(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Release)
+            {
+                if (Base.Document.Current?.Hold == true) return null;
+                return base_Release(adapter);
+            }
+      style: secondary
+      start: 70
+      end: 287
+    - source: 'null'
+      style: secondary
+      start: 238
+      end: 242

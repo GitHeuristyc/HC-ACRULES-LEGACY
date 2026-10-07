@@ -1,0 +1,61 @@
+id: acu-long-operation-in-scope
+snapshots:
+  ? |
+    public class HCODWebhookHandler
+    {
+        public void Handle(PXGraph graph, string company)
+        {
+            using var login = new PXLoginScope("admin@" + company);
+            PXLongOperation.StartOperation(graph, () => HCODSync.Run());
+        }
+    }
+  : labels:
+    - source: PXLongOperation.StartOperation(graph, () => HCODSync.Run())
+      style: primary
+      start: 166
+      end: 225
+    - source: using var login = new PXLoginScope("admin@" + company);
+      style: secondary
+      start: 102
+      end: 157
+    - source: PXLongOperation.StartOperation(graph, () => HCODSync.Run());
+      style: secondary
+      start: 166
+      end: 226
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 166
+      end: 196
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public virtual IEnumerable Process(PXAdapter adapter)
+        {
+            using (PXTransactionScope ts = new PXTransactionScope())
+            {
+                Actions.PressSave();
+                PXLongOperation.StartOperation(this, () => HCODSync.Run());
+                ts.Complete();
+            }
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: PXLongOperation.StartOperation(this, () => HCODSync.Run())
+      style: primary
+      start: 242
+      end: 300
+    - source: |-
+        using (PXTransactionScope ts = new PXTransactionScope())
+                {
+                    Actions.PressSave();
+                    PXLongOperation.StartOperation(this, () => HCODSync.Run());
+                    ts.Complete();
+                }
+      style: secondary
+      start: 130
+      end: 338
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 242
+      end: 272

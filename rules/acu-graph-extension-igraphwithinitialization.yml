@@ -1,0 +1,19 @@
+id: acu-graph-extension-igraphwithinitialization
+language: csharp
+severity: warning
+message: "Graph extension implements IGraphWithInitialization. Remove the interface and override `public override void Initialize()` from PXGraphExtension; IGraphWithInitialization is for standalone graphs only."
+metadata:
+  skill: acumatica-actions
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    has:
+      kind: base_list
+      all:
+        - regex: '^:\s*(PX\.Data\.)?PXGraphExtension<'
+        - has: { regex: '^(PX\.Data\.)?IGraphWithInitialization$' }

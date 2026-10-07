@@ -1,0 +1,51 @@
+id: acu-graph-extension-constructor
+valid:
+  - |
+    public class HCCDxPOCreate : PXGraphExtension<POCreate>
+    {
+        public static bool IsActive() => true;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Base.Actions.Move("Process", "ProcessAll");
+        }
+    }
+  - |
+    public class HCCDOrderSync : PXGraph<HCCDOrderSync>
+    {
+        public HCCDOrderSync()
+        {
+            Orders.Cache.AllowInsert = false;
+        }
+        public SelectFrom<SOOrder>.View Orders;
+    }
+  - |
+    public class HCCDxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        private class LineComparer
+        {
+            public LineComparer() { }
+        }
+    }
+invalid:
+  - |
+    public class HCCDxPOCreate : PXGraphExtension<POCreate>
+    {
+        public static bool IsActive() => true;
+
+        public HCCDxPOCreate()
+        {
+            filterCache = new Dictionary<string, bool>();
+        }
+    }
+  - |
+    public class ARReleaseProcess_Extension : PXGraphExtension<ARReleaseProcess>
+    {
+        public ARReleaseProcess_Extension() : base()
+        {
+            UnityInitializer.InitializeUnityContainer();
+        }
+    }

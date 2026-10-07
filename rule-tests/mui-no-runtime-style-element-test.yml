@@ -1,0 +1,22 @@
+id: mui-no-runtime-style-element
+valid:
+  - |
+    @handleEvent(CustomEventType.GetCellCss, { view: "HCPSDocumentSigners", column: "Status" })
+    HCPS_statusCellCss(args: CellCssHandlerArgs): string | undefined {
+      return args?.selector?.cellValue === "Signed" ? "CssHCPSGreen" : undefined;
+    }
+  - |
+    const canvas = document.createElement("canvas");
+    const container = this.element.querySelector("div.hcus-map");
+invalid:
+  - |
+    const style = document.createElement('style');
+    style.innerHTML = `.CssHCPSGreen { background-color: #28a745 !important; }`;
+    document.head.appendChild(style);
+  - |
+    export class EP507010_HCTC {
+      private setupGridCssBackgroundColor(): void {
+        const style = document.createElement("style");
+        document.head.appendChild(style);
+      }
+    }

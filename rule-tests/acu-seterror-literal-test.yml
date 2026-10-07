@@ -1,0 +1,44 @@
+id: acu-seterror-literal
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            PXUIFieldAttribute.SetWarning<SOOrder.orderQty>(e.Cache, e.Row, Messages.LargeOrderWarning);
+            PXUIFieldAttribute.SetError<SOOrder.customerID>(e.Cache, e.Row, null);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            PXUIFieldAttribute.SetError(e.Cache, e.Row, "OrderQty", Messages.QuantityMustBePositive);
+        }
+    }
+invalid:
+  - |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint>
+    {
+        protected virtual void _(Events.RowSelected<TGFreightPostTran> e)
+        {
+            PXUIFieldAttribute.SetWarning<TGFreightPostTran.proNo>(e.Cache, e.Row, "Please enter Invoice Number when a Blank PO NO. is added.");
+        }
+    }
+  - |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint>
+    {
+        protected virtual void _(Events.RowSelected<TGFreightPostTran> e)
+        {
+            PXUIFieldAttribute.SetError<TGFreightPostTran.tranNo>(e.Cache, e.Row, $"This OrderNbr ({e.Row.TranNo}) was added.");
+        }
+    }
+  - |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint>
+    {
+        protected virtual void _(Events.RowSelected<TGFreightPostTran> e)
+        {
+            PXUIFieldAttribute.SetError(e.Cache, e.Row, "TranNo", "The order was already added.");
+        }
+    }

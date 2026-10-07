@@ -1,0 +1,94 @@
+id: acu-fs-override-invoiceappointment
+snapshots:
+  ? |
+    public class HCAppointmentEntryExt : PXGraphExtension<AppointmentEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public IEnumerable InvoiceAppointment(PXAdapter adapter, Func<PXAdapter, IEnumerable> baseMethod)
+        {
+            ValidateBeforeInvoice();
+            return baseMethod(adapter);
+        }
+    }
+  : labels:
+    - source: InvoiceAppointment
+      style: primary
+      start: 157
+      end: 175
+    - source: '[PXOverride]'
+      style: secondary
+      start: 121
+      end: 133
+    - source: InvoiceAppointment
+      style: secondary
+      start: 157
+      end: 175
+    - source: ': PXGraphExtension<AppointmentEntry>'
+      style: secondary
+      start: 35
+      end: 71
+    - source: |-
+        public class HCAppointmentEntryExt : PXGraphExtension<AppointmentEntry>
+        {
+            public static bool IsActive() => true;
+            [PXOverride]
+            public IEnumerable InvoiceAppointment(PXAdapter adapter, Func<PXAdapter, IEnumerable> baseMethod)
+            {
+                ValidateBeforeInvoice();
+                return baseMethod(adapter);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 318
+    - source: |-
+        [PXOverride]
+            public IEnumerable InvoiceAppointment(PXAdapter adapter, Func<PXAdapter, IEnumerable> baseMethod)
+            {
+                ValidateBeforeInvoice();
+                return baseMethod(adapter);
+            }
+      style: secondary
+      start: 121
+      end: 316
+  ? |
+    public class HCAppointmentEntryExt2 : PXGraphExtension<SM_AppointmentEntry, PX.Objects.FS.AppointmentEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual IEnumerable InvoiceAppointment(PXAdapter adapter, InvoiceDelegate baseMethod) => baseMethod(adapter);
+    }
+  : labels:
+    - source: InvoiceAppointment
+      style: primary
+      start: 201
+      end: 219
+    - source: '[PXOverride]'
+      style: secondary
+      start: 157
+      end: 169
+    - source: InvoiceAppointment
+      style: secondary
+      start: 201
+      end: 219
+    - source: ': PXGraphExtension<SM_AppointmentEntry, PX.Objects.FS.AppointmentEntry>'
+      style: secondary
+      start: 36
+      end: 107
+    - source: |-
+        public class HCAppointmentEntryExt2 : PXGraphExtension<SM_AppointmentEntry, PX.Objects.FS.AppointmentEntry>
+        {
+            public static bool IsActive() => true;
+            [PXOverride]
+            public virtual IEnumerable InvoiceAppointment(PXAdapter adapter, InvoiceDelegate baseMethod) => baseMethod(adapter);
+        }
+      style: secondary
+      start: 0
+      end: 292
+    - source: |-
+        [PXOverride]
+            public virtual IEnumerable InvoiceAppointment(PXAdapter adapter, InvoiceDelegate baseMethod) => baseMethod(adapter);
+      style: secondary
+      start: 157
+      end: 290

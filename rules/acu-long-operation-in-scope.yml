@@ -1,0 +1,20 @@
+id: acu-long-operation-in-scope
+language: csharp
+severity: error
+message: "Long operation started inside a PXTransactionScope or PXLoginScope. The operation runs on another thread outside the scope; start it outside the using block and open the scope inside the operation body."
+metadata:
+  skill: acumatica-scopes-and-direct-db
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    regex: '(^|\.)(PXLongOperation|LongOperationManager)\.(StartOperation|StartAsyncOperation)$'
+  inside:
+    stopBy: end
+    any:
+      - kind: using_statement
+        regex: '^using\s*\(\s*([\w.]+\s+\w+\s*=\s*)?new\s+(PX\.Data\.)?(PXTransactionScope|PXLoginScope)\b'
+      - follows:
+          stopBy: end
+          kind: local_declaration_statement
+          regex: '^using\s[\s\S]*\bnew\s+(PX\.Data\.)?(PXTransactionScope|PXLoginScope)\b'

@@ -1,0 +1,44 @@
+id: acu-setnote-in-rowselected
+valid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            string note = PXNoteAttribute.GetNote(e.Cache, e.Row);
+            copyNote.SetEnabled(!string.IsNullOrEmpty(note));
+        }
+    }
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        public PXAction<SOOrder> copyNote;
+        [PXButton, PXUIField(DisplayName = "Copy Note")]
+        protected virtual IEnumerable CopyNote(PXAdapter adapter)
+        {
+            PXNoteAttribute.SetNote(Base.Document.Cache, Base.Document.Current, "Copied");
+            return adapter.Get();
+        }
+    }
+invalid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            PXNoteAttribute.SetNote(e.Cache, e.Row, "Reviewed");
+        }
+    }
+  - |
+    public class HCAPInvoiceEntryExt : PXGraphExtension<APInvoiceEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void APInvoice_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            PX.Data.PXNoteAttribute.SetNote(sender, e.Row, GetSourceNote());
+        }
+    }

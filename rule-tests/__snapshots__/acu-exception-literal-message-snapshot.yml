@@ -1,0 +1,71 @@
+id: acu-exception-literal-message
+snapshots:
+  ? |
+    class C { void M() { throw new PXSetPropertyException("Customer reference is required."); } }
+  : labels:
+    - source: new PXSetPropertyException("Customer reference is required.")
+      style: primary
+      start: 27
+      end: 88
+    - source: PXSetPropertyException
+      style: secondary
+      start: 31
+      end: 53
+    - source: '"Customer reference is required."'
+      style: secondary
+      start: 54
+      end: 87
+    - source: '"Customer reference is required."'
+      style: secondary
+      start: 54
+      end: 87
+    - source: '"Customer reference is required."'
+      style: secondary
+      start: 54
+      end: 87
+  ? |
+    class C { void M() { throw new PXSetPropertyException<SOOrder.customerRefNbr>("Customer reference is required."); } }
+  : labels:
+    - source: new PXSetPropertyException<SOOrder.customerRefNbr>("Customer reference is required.")
+      style: primary
+      start: 27
+      end: 112
+    - source: PXSetPropertyException<SOOrder.customerRefNbr>
+      style: secondary
+      start: 31
+      end: 77
+    - source: '"Customer reference is required."'
+      style: secondary
+      start: 78
+      end: 111
+    - source: '"Customer reference is required."'
+      style: secondary
+      start: 78
+      end: 111
+    - source: '"Customer reference is required."'
+      style: secondary
+      start: 78
+      end: 111
+  ? |
+    class C { void M(string n) { throw new PXException($"Order {n} is closed."); } }
+  : labels:
+    - source: new PXException($"Order {n} is closed.")
+      style: primary
+      start: 35
+      end: 75
+    - source: PXException
+      style: secondary
+      start: 39
+      end: 50
+    - source: $"Order {n} is closed."
+      style: secondary
+      start: 51
+      end: 74
+    - source: $"Order {n} is closed."
+      style: secondary
+      start: 51
+      end: 74
+    - source: $"Order {n} is closed."
+      style: secondary
+      start: 51
+      end: 74

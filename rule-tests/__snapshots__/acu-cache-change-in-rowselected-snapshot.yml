@@ -1,0 +1,78 @@
+id: acu-cache-change-in-rowselected
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            var row = (HCODWidget)e.Row;
+            if (row == null) return;
+            Caches[typeof(HCODWidgetLine)].Update(row);
+        }
+    }
+  : labels:
+    - source: Caches[typeof(HCODWidgetLine)].Update(row)
+      style: primary
+      start: 234
+      end: 276
+    - source: HCODWidget_RowSelected
+      style: secondary
+      start: 85
+      end: 107
+    - source: (PXCache sender, PXRowSelectedEventArgs e)
+      style: secondary
+      start: 107
+      end: 149
+    - source: |-
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+            {
+                var row = (HCODWidget)e.Row;
+                if (row == null) return;
+                Caches[typeof(HCODWidgetLine)].Update(row);
+            }
+      style: secondary
+      start: 62
+      end: 283
+    - source: Caches[typeof(HCODWidgetLine)].Update
+      style: secondary
+      start: 234
+      end: 271
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOLine> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.Update(e.Row);
+        }
+    }
+  : labels:
+    - source: e.Cache.Update(e.Row)
+      style: primary
+      start: 174
+      end: 195
+    - source: Events.RowSelected<SOLine>
+      style: secondary
+      start: 95
+      end: 121
+    - source: Events.RowSelected<SOLine> e
+      style: secondary
+      start: 95
+      end: 123
+    - source: Events.RowSelected<SOLine> e
+      style: secondary
+      start: 95
+      end: 123
+    - source: |-
+        protected virtual void _(Events.RowSelected<SOLine> e)
+            {
+                if (e.Row == null) return;
+                e.Cache.Update(e.Row);
+            }
+      style: secondary
+      start: 70
+      end: 202
+    - source: e.Cache.Update
+      style: secondary
+      start: 174
+      end: 188

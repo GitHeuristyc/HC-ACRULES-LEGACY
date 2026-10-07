@@ -1,0 +1,22 @@
+id: acu-localize-literal
+language: csharp
+severity: warning
+message: "Hardcoded text passed to a PXMessages or PXLocalizer localization method (PX1050, PX1052). Move the text to a [PXLocalizable] Messages class and pass the constant."
+metadata:
+  skill: acumatica-strings
+rule:
+  kind: invocation_expression
+  all:
+    - has:
+        field: function
+        regex: '^(PX\.Data\.)?(PXMessages|PXLocalizer)\.Localize\w*$'
+    - has:
+        field: arguments
+        has:
+          kind: argument
+          nthChild: 1
+          has:
+            any:
+              - kind: interpolated_string_expression
+              - kind: string_literal
+                not: { regex: '^""$' }

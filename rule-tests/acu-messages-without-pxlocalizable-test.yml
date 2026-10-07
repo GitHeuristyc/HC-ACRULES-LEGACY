@@ -1,0 +1,73 @@
+id: acu-messages-without-pxlocalizable
+valid:
+  - |
+    [PXLocalizable(Messages.Prefix)]
+    public static class Messages
+    {
+        public const string Prefix = "OD";
+        public const string CustomerRequired = "Customer is required.";
+    }
+  - |
+    public static class WorkOrderStatus
+    {
+        public const string Hold = "H";
+
+        [PX.Common.PXLocalizable]
+        public static class DisplayNames
+        {
+            public const string Hold = "Hold";
+        }
+    }
+  - |
+    public class ConfirmShipmentCommand : ScanCommand
+    {
+        [PXLocalizable]
+        public abstract class Msg
+        {
+            public const string DisplayName = "Confirm Shipment";
+        }
+    }
+  - |
+    public class HCODQueueMessages
+    {
+        public List<string> Pending { get; } = new List<string>();
+    }
+  - |
+    namespace HCPDDocXHandler.Common
+    {
+        public class HCPDDocXHandlerMessages
+        {
+            public const string ErrorInVariableFormat = "The variable {0} is not properly formatted.";
+        }
+    }
+invalid:
+  - |
+    using PX.Common;
+
+    public static class HCODMessages
+    {
+        public const string Prefix = "OD";
+        public const string CustomerRequired = "Customer is required.";
+    }
+  - |
+    using PX.Data;
+
+    public static class WorkOrderStatus
+    {
+        public const string Hold = "H";
+
+        public static class DisplayNames
+        {
+            public const string Hold = "Hold";
+        }
+    }
+  - |
+    using PX.BarcodeProcessing;
+
+    public class ConfirmShipmentCommand : ScanCommand
+    {
+        public abstract class Msg
+        {
+            public const string Success = "Shipment successfully confirmed.";
+        }
+    }

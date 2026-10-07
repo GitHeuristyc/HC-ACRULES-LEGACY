@@ -1,0 +1,73 @@
+id: acu-ui-state-outside-rowselected
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            PXUIFieldAttribute.SetEnabled<SOOrder.customerID>(e.Cache, e.Row, e.Row.Hold == true);
+        }
+    }
+  - |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        public HCODWorkOrderEntry()
+        {
+            PXUIFieldAttribute.SetVisible<HCODWorkOrder.noteID>(Document.Cache, null, false);
+        }
+
+        protected virtual void HCODWorkOrder_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            PXUIFieldAttribute.SetEnabled<HCODWorkOrder.status>(sender, e.Row, false);
+        }
+
+        protected virtual void SetLineState(PXCache cache, HCODWorkOrder row)
+        {
+            PXUIFieldAttribute.SetEnabled<HCODWorkOrder.status>(cache, row, false);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowUpdated<SOOrder> e)
+        {
+            e.Cache.SetValueExt<SOOrder.orderDesc>(e.Row, Messages.Updated);
+        }
+    }
+invalid:
+  - |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint, TGFreightPost>
+    {
+        protected virtual void _(Events.FieldUpdated<TGFreightPost.refNbr> e)
+        {
+            PXUIFieldAttribute.SetEnabled<TGFreightPost.separateInv>(e.Cache, e.Row, e.NewValue == null);
+        }
+    }
+  - |
+    public class SOOrderEntry : PXGraph<SOOrderEntry, SOOrder>
+    {
+        protected virtual void SOOrder_RowInserted(PXCache sender, PXRowInsertedEventArgs e)
+        {
+            PXUIFieldAttribute.SetEnabled<SOOrder.hold>(sender, e.Row, true);
+        }
+    }
+  - |
+    public class InventoryItemLookupInq : PXGraph<InventoryItemLookupInq>
+    {
+        protected virtual void LogEntrySP_CompleteLot_FieldSelecting(PXCache cache, PXFieldSelectingEventArgs e)
+        {
+            PXStringListAttribute.SetList<LogEntrySP.completeLot>(cache, e.Row, values, labels);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXButton]
+        [PXUIField(DisplayName = "Release")]
+        protected virtual IEnumerable Release(PXAdapter adapter)
+        {
+            PXUIFieldAttribute.SetEnabled<SOOrder.orderNbr>(Base.Document.Cache, Base.Document.Current, false);
+            return adapter.Get();
+        }
+    }

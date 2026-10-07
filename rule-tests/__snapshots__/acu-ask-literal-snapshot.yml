@@ -1,0 +1,101 @@
+id: acu-ask-literal
+snapshots:
+  ? |
+    public class ARPaymentEntryTGExt : PXGraphExtension<ARPaymentEntry>
+    {
+        public void Show(string cm)
+        {
+            Base.Document.View.Ask(Base.Document.Current, Messages.Results, $"Credit Memo: {cm}", MessageButtons.OK, MessageIcon.Information);
+        }
+    }
+  : labels:
+    - source: '$"Credit Memo: {cm}"'
+      style: primary
+      start: 180
+      end: 200
+    - source: '$"Credit Memo: {cm}"'
+      style: secondary
+      start: 180
+      end: 200
+    - source: MessageButtons.OK
+      style: secondary
+      start: 202
+      end: 219
+    - source: Base.Document.View.Ask
+      style: secondary
+      start: 116
+      end: 138
+    - source: 'Base.Document.View.Ask(Base.Document.Current, Messages.Results, $"Credit Memo: {cm}", MessageButtons.OK, MessageIcon.Information)'
+      style: secondary
+      start: 116
+      end: 245
+    - source: '(Base.Document.Current, Messages.Results, $"Credit Memo: {cm}", MessageButtons.OK, MessageIcon.Information)'
+      style: secondary
+      start: 138
+      end: 245
+  ? |
+    public class PEITMoveFinishedMaint : PXGraph<PEITMoveFinishedMaint>
+    {
+        public void MoveAll()
+        {
+            if (this.Header.Ask("Would you like to move all remaining pallets?", MessageButtons.YesNo) == WebDialogResult.Yes) { }
+        }
+    }
+  : labels:
+    - source: '"Would you like to move all remaining pallets?"'
+      style: primary
+      start: 130
+      end: 177
+    - source: '"Would you like to move all remaining pallets?"'
+      style: secondary
+      start: 130
+      end: 177
+    - source: MessageButtons.YesNo
+      style: secondary
+      start: 179
+      end: 199
+    - source: this.Header.Ask
+      style: secondary
+      start: 114
+      end: 129
+    - source: this.Header.Ask("Would you like to move all remaining pallets?", MessageButtons.YesNo)
+      style: secondary
+      start: 114
+      end: 200
+    - source: ("Would you like to move all remaining pallets?", MessageButtons.YesNo)
+      style: secondary
+      start: 129
+      end: 200
+  ? |
+    public class PhysicalInventoryBase : PXGraph<PhysicalInventoryBase>
+    {
+        public void Clear()
+        {
+            if (GridRecords.Ask("Confirm", "Are you sure?", MessageButtons.OKCancel, MessageIcon.Question) == WebDialogResult.OK) { }
+        }
+    }
+  : labels:
+    - source: '"Are you sure?"'
+      style: primary
+      start: 139
+      end: 154
+    - source: '"Are you sure?"'
+      style: secondary
+      start: 139
+      end: 154
+    - source: MessageButtons.OKCancel
+      style: secondary
+      start: 156
+      end: 179
+    - source: GridRecords.Ask
+      style: secondary
+      start: 112
+      end: 127
+    - source: GridRecords.Ask("Confirm", "Are you sure?", MessageButtons.OKCancel, MessageIcon.Question)
+      style: secondary
+      start: 112
+      end: 202
+    - source: ("Confirm", "Are you sure?", MessageButtons.OKCancel, MessageIcon.Question)
+      style: secondary
+      start: 127
+      end: 202

@@ -1,0 +1,69 @@
+id: acu-dac-missing-cachename
+snapshots:
+  ? |
+    [Serializable]
+    public class HCODWorkOrder : PXBqlTable, IBqlTable
+    {
+    }
+  : labels:
+    - source: HCODWorkOrder
+      style: primary
+      start: 28
+      end: 41
+    - source: ': PXBqlTable, IBqlTable'
+      style: secondary
+      start: 42
+      end: 65
+    - source: |-
+        [Serializable]
+        public class HCODWorkOrder : PXBqlTable, IBqlTable
+        {
+        }
+      style: secondary
+      start: 0
+      end: 69
+  ? |
+    public class HCODWarehouseMaint : PXGraph<HCODWarehouseMaint>
+    {
+        [Serializable]
+        public class MasterTable : PXBqlTable, IBqlTable
+        {
+        }
+    }
+  : labels:
+    - source: MasterTable
+      style: primary
+      start: 100
+      end: 111
+    - source: ': PXBqlTable, IBqlTable'
+      style: secondary
+      start: 112
+      end: 135
+    - source: |-
+        [Serializable]
+            public class MasterTable : PXBqlTable, IBqlTable
+            {
+            }
+      style: secondary
+      start: 68
+      end: 147
+  ? |
+    public class TSRecalculateDiscountsFilters : IBqlTable
+    {
+    }
+  : labels:
+    - source: TSRecalculateDiscountsFilters
+      style: primary
+      start: 13
+      end: 42
+    - source: ': IBqlTable'
+      style: secondary
+      start: 43
+      end: 54
+    - source: |-
+        public class TSRecalculateDiscountsFilters : IBqlTable
+        {
+        }
+      style: secondary
+      start: 0
+      end: 58

@@ -1,0 +1,23 @@
+id: mui-grid-columns-in-html
+valid:
+  - |
+    <template>
+      <qp-grid id="gridDetails" view.bind="Details"></qp-grid>
+    </template>
+  - |
+    <template>
+      <qp-panel id="HCTCFilterView" caption="Columns">
+        <qp-grid id="gridHCTC" view.bind="HCTCRows"></qp-grid>
+      </qp-panel>
+    </template>
+invalid:
+  - |
+    <template>
+      <qp-grid id="gridDetails" view.bind="Details">
+        <columns>
+          <column field="InventoryID"></column>
+        </columns>
+      </qp-grid>
+    </template>
+  - |
+    <qp-grid id="gridHCEM" view.bind="HCEMLines"><columns><column field="UsrQty"></column></columns></qp-grid>

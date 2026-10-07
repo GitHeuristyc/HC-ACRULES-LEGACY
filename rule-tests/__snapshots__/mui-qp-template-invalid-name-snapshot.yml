@@ -1,0 +1,67 @@
+id: mui-qp-template-invalid-name
+snapshots:
+  ? |
+    <template>
+      <qp-template id="tplCols" name="1-1-1-1"></qp-template>
+    </template>
+  : labels:
+    - source: name="1-1-1-1"
+      style: primary
+      start: 39
+      end: 53
+    - source: qp-template
+      style: secondary
+      start: 14
+      end: 25
+    - source: <qp-template id="tplCols" name="1-1-1-1">
+      style: secondary
+      start: 13
+      end: 54
+    - source: name
+      style: secondary
+      start: 39
+      end: 43
+  ? |
+    <template>
+      <qp-template id="tplMain" name="formArea">
+        <qp-fieldset id="fsA" view.bind="Document" slot="A"></qp-fieldset>
+      </qp-template>
+    </template>
+  : labels:
+    - source: name="formArea"
+      style: primary
+      start: 39
+      end: 54
+    - source: qp-template
+      style: secondary
+      start: 14
+      end: 25
+    - source: <qp-template id="tplMain" name="formArea">
+      style: secondary
+      start: 13
+      end: 55
+    - source: name
+      style: secondary
+      start: 39
+      end: 43
+  ? |
+    <template>
+      <qp-template id="tplSetup" name="Main"></qp-template>
+    </template>
+  : labels:
+    - source: name="Main"
+      style: primary
+      start: 40
+      end: 51
+    - source: qp-template
+      style: secondary
+      start: 14
+      end: 25
+    - source: <qp-template id="tplSetup" name="Main">
+      style: secondary
+      start: 13
+      end: 52
+    - source: name
+      style: secondary
+      start: 40
+      end: 44

@@ -1,0 +1,24 @@
+id: acu-bql-in-rowselected
+language: csharp
+severity: warning
+message: "BQL query inside a RowSelected handler (PX1049). RowSelected runs on every UI refresh; move the query to another event or cache the result."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  kind: invocation_expression
+  regex: '^(PXSelect|SelectFrom|PXSelectReadonly|PXSelectJoin|PXSelectGroupBy)'
+  not:
+    inside:
+      stopBy: end
+      kind: invocation_expression
+      regex: '^(PXSelect|SelectFrom|PXSelectReadonly|PXSelectJoin|PXSelectGroupBy)'
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has: { kind: parameter, nthChild: 1, has: { field: type, regex: '^(PX\.Data\.)?Events\.RowSelected<' } }
+      - all:
+          - has: { field: name, regex: '^\w+_RowSelected$' }
+          - has: { field: parameters, regex: '^\(\s*(PX\.Data\.)?PXCache\s' }

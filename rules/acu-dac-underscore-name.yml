@@ -1,0 +1,27 @@
+id: acu-dac-underscore-name
+language: csharp
+severity: error
+message: "Underscore in a DAC or DAC field name (PX1026). ASPX treats `_` as a separator; rename to PascalCase, for example `OrderNbr` and `orderNbr`."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  any:
+    # The DAC itself.
+    - kind: class_declaration
+      all:
+        - has: { field: name, regex: '_' }
+        - has:
+            kind: base_list
+            regex: '(^|[\s:,.])(IBqlTable|PXBqlTable)\b'
+    # A public or internal field property of a DAC or DAC extension.
+    - kind: property_declaration
+      all:
+        - has: { field: name, regex: '_' }
+        - has: { kind: modifier, regex: '^(public|internal)$' }
+        - inside:
+            kind: declaration_list
+            inside:
+              kind: class_declaration
+              has:
+                kind: base_list
+                regex: '(^|[\s:,.])(IBqlTable\b|PXBqlTable\b|PXCacheExtension<)'

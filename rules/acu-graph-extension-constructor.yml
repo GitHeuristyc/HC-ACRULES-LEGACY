@@ -1,0 +1,20 @@
+id: acu-graph-extension-constructor
+language: csharp
+severity: error
+message: "Instance constructor in a graph extension (PX1040). Move the code to `public override void Initialize()`."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  kind: constructor_declaration
+  all:
+    - has: { field: name, pattern: $EXT }
+    - not: { has: { kind: modifier, regex: '^static$' } }
+    - inside:
+        kind: declaration_list
+        inside:
+          kind: class_declaration
+          all:
+            - has: { field: name, pattern: $EXT }
+            - has:
+                kind: base_list
+                regex: '(^|[\s:,.])PXGraphExtension<'

@@ -1,0 +1,13 @@
+id: acu-webhook-pxlongoperation
+language: csharp
+severity: warning
+message: "PXLongOperation.StartOperation called in a webhook handler. Use the graph's LongOperationManager.StartOperation for background work and return 202 only after the operation is queued."
+metadata:
+  skill: acumatica-webhooks
+rule:
+  kind: invocation_expression
+  has: { field: function, regex: '(^|\.)PXLongOperation\.StartOperation$' }
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: '\bIWebhookHandler\b' }

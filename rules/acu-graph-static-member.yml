@@ -1,0 +1,35 @@
+id: acu-graph-static-member
+language: csharp
+severity: error
+message: "Static view, action or mutable field in a graph or graph extension (PX1062). Static members are shared by every user session; remove `static`, or make a plain field `readonly`."
+metadata:
+  skill: acumatica-acuminator
+utils:
+  view-or-action-type:
+    regex: '^(PX\.Data\.)?(PXSelect\w*|PXAction|PXFilter|PXSetup\w*|PXProcessing\w*|PXFilteredProcessing\w*|SelectFrom)\b'
+rule:
+  any:
+    - kind: field_declaration
+    - kind: property_declaration
+  all:
+    - has: { kind: modifier, regex: '^static$' }
+    - any:
+        # Views and actions are forbidden even when readonly.
+        - has: { kind: variable_declaration, has: { field: type, matches: view-or-action-type } }
+        - has: { field: type, matches: view-or-action-type }
+        # Other static fields are forbidden only when mutable.
+        - all:
+            - kind: field_declaration
+            - not: { has: { kind: modifier, regex: '^(readonly|const)$' } }
+        - all:
+            - kind: property_declaration
+            - has:
+                kind: accessor_list
+                has: { kind: accessor_declaration, regex: '^(private\s+|protected\s+|internal\s+)*set\b' }
+  inside:
+    kind: declaration_list
+    inside:
+      kind: class_declaration
+      has:
+        kind: base_list
+        regex: '(^|[\s:,.])PXGraph(Extension)?<'

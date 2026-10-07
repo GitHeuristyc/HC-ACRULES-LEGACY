@@ -1,0 +1,38 @@
+# A merge interface that extends PXView adds fields to no existing view.
+# Source: skills/acumatica-modern-ui/assets/extension-patterns.md (Rule 6), acumatica-modern-ui-migration NEVER list
+id: mui-view-extension-extends-pxview
+language: typescript
+severity: error
+message: "Merge interface `$NAME` extends PXView, so its fields never reach the base view and the custom columns stay invisible. Extend the base view class exported by the screen file, or declare `class $NAME extends PXView` for a new view."
+note: |
+  The class with the same name has no `extends`, so this is the merge-interface
+  view extension pattern. It must extend the real base view class used in the
+  base screen's createSingle()/createCollection() call, for example
+  `export interface HCEMAPSetup extends APSetup {}`. The build succeeds and no
+  error is logged, but Modern UI drops the columns.
+rule:
+  kind: interface_declaration
+  has:
+    kind: extends_type_clause
+    has:
+      kind: type_identifier
+      regex: ^PXView$
+  all:
+    - has:
+        field: name
+        pattern: $NAME
+    - inside:
+        kind: program
+        stopBy: end
+        has:
+          kind: class_declaration
+          stopBy: end
+          all:
+            - has:
+                field: name
+                pattern: $NAME
+            - not:
+                has:
+                  kind: class_heritage
+metadata:
+  skill: acumatica-modern-ui

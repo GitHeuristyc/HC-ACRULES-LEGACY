@@ -1,0 +1,49 @@
+id: acu-throw-in-rowselected
+valid:
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void _(Events.RowSelected<HCODWidget> e)
+        {
+            HCODSetup setup = Setup.Current;
+            if (setup == null)
+                throw new PXSetupNotEnteredException<HCODSetup>(ErrorMessages.SetupNotEntered);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            Base.Transactions.SetProcessDelegate(list =>
+            {
+                if (list.Count == 0) throw new PXException(HCODMessages.NothingToProcess);
+            });
+        }
+
+        protected virtual void _(Events.RowDeleting<SOOrder> e)
+        {
+            if (e.Row?.Status == SOOrderStatus.Completed)
+                throw new PXException(HCODMessages.CannotDeleteCompleted);
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            if (e.Row.CustomerID == null)
+                throw new PXException(HCODMessages.CustomerRequired);
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            var row = e.Row as HCODWidget ?? throw new PXArgumentException(nameof(e));
+        }
+    }

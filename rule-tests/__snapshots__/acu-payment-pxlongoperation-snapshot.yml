@@ -1,0 +1,62 @@
+id: acu-payment-pxlongoperation
+snapshots:
+  ? |
+    public class HCTerminalGetter : ICCTerminalGetter
+    {
+        public IEnumerable<POSTerminalData> GetTerminals() { PX.Data.PXLongOperation.StartOperation(Guid.NewGuid(), () => Refresh()); return null; }
+    }
+  : labels:
+    - source: PX.Data.PXLongOperation.StartOperation(Guid.NewGuid(), () => Refresh())
+      style: primary
+      start: 109
+      end: 180
+    - source: ': ICCTerminalGetter'
+      style: secondary
+      start: 30
+      end: 49
+    - source: |-
+        public class HCTerminalGetter : ICCTerminalGetter
+        {
+            public IEnumerable<POSTerminalData> GetTerminals() { PX.Data.PXLongOperation.StartOperation(Guid.NewGuid(), () => Refresh()); return null; }
+        }
+      style: secondary
+      start: 0
+      end: 198
+    - source: PX.Data.PXLongOperation.StartOperation
+      style: secondary
+      start: 109
+      end: 147
+  ? |
+    public class HCTransactionProcessor : ICCTransactionProcessor
+    {
+        public ProcessingResult DoTransaction(ProcessingInput inputData)
+        {
+            PXLongOperation.StartOperation(this, () => Send(inputData));
+            return new ProcessingResult();
+        }
+    }
+  : labels:
+    - source: PXLongOperation.StartOperation(this, () => Send(inputData))
+      style: primary
+      start: 147
+      end: 206
+    - source: ': ICCTransactionProcessor'
+      style: secondary
+      start: 36
+      end: 61
+    - source: |-
+        public class HCTransactionProcessor : ICCTransactionProcessor
+        {
+            public ProcessingResult DoTransaction(ProcessingInput inputData)
+            {
+                PXLongOperation.StartOperation(this, () => Send(inputData));
+                return new ProcessingResult();
+            }
+        }
+      style: secondary
+      start: 0
+      end: 254
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 147
+      end: 177

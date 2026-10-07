@@ -1,0 +1,74 @@
+id: acu-report-service-locator
+snapshots:
+  ? |
+    public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+    {
+        public static bool IsActive() => true;
+        public byte[] RenderInvoice(string refNbr)
+        {
+            IReportLoaderService ReportLoader = ServiceLocator.Current.GetInstance<IReportLoaderService>();
+            IReportRenderer ReportRenderer = ServiceLocator.Current.GetInstance<IReportRenderer>();
+            return null;
+        }
+    }
+  : labels:
+    - source: ServiceLocator.Current.GetInstance<IReportLoaderService>()
+      style: primary
+      start: 210
+      end: 268
+    - source: ': PXGraphExtension<ARInvoiceEntry>'
+      style: secondary
+      start: 33
+      end: 67
+    - source: |-
+        public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+        {
+            public static bool IsActive() => true;
+            public byte[] RenderInvoice(string refNbr)
+            {
+                IReportLoaderService ReportLoader = ServiceLocator.Current.GetInstance<IReportLoaderService>();
+                IReportRenderer ReportRenderer = ServiceLocator.Current.GetInstance<IReportRenderer>();
+                return null;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 394
+    - source: ServiceLocator.Current.GetInstance<IReportLoaderService>
+      style: secondary
+      start: 210
+      end: 266
+  ? |
+    public class HCShippingPrintProcess : PXGraph<HCShippingPrintProcess>
+    {
+        private byte[] Render(Report report)
+        {
+            var renderer = CommonServiceLocator.ServiceLocator.Current?.GetInstance<PX.Reports.IReportRenderer>();
+            return null;
+        }
+    }
+  : labels:
+    - source: CommonServiceLocator.ServiceLocator.Current?.GetInstance<PX.Reports.IReportRenderer>()
+      style: primary
+      start: 142
+      end: 228
+    - source: ': PXGraph<HCShippingPrintProcess>'
+      style: secondary
+      start: 36
+      end: 69
+    - source: |-
+        public class HCShippingPrintProcess : PXGraph<HCShippingPrintProcess>
+        {
+            private byte[] Render(Report report)
+            {
+                var renderer = CommonServiceLocator.ServiceLocator.Current?.GetInstance<PX.Reports.IReportRenderer>();
+                return null;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 258
+    - source: CommonServiceLocator.ServiceLocator.Current?.GetInstance<PX.Reports.IReportRenderer>
+      style: secondary
+      start: 142
+      end: 226

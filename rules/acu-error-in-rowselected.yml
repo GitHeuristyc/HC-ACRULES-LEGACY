@@ -1,0 +1,29 @@
+id: acu-error-in-rowselected
+language: csharp
+severity: warning
+message: "Error-level RaiseExceptionHandling inside RowSelected. Use RowSelected for display only, raise PXErrorLevel.Warning there, and enforce save-blocking rules in FieldVerifying or RowPersisting."
+metadata:
+  skill: acumatica-events
+rule:
+  kind: invocation_expression
+  all:
+    - has: { field: function, regex: '(^|\.)RaiseExceptionHandling(<[\s\S]*>)?$' }
+    - has:
+        field: arguments
+        has:
+          kind: argument
+          any:
+            - regex: 'PXErrorLevel\.(Error|RowError)\b'
+            - all:
+                - has: { kind: object_creation_expression, regex: '^new\s+(PX\.Data\.)?PXSetPropertyException\b' }
+                - not: { regex: 'PXErrorLevel\.' }
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has: { kind: parameter, nthChild: 1, has: { field: type, regex: '^(PX\.Data\.)?Events\.RowSelected<' } }
+      - all:
+          - has: { field: name, regex: '^\w+_RowSelected$' }
+          - has: { field: parameters, regex: '^\(\s*(PX\.Data\.)?PXCache\s' }

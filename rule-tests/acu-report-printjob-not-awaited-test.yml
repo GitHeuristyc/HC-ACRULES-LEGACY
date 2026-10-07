@@ -1,0 +1,17 @@
+id: acu-report-printjob-not-awaited
+valid:
+  - |
+    Base.LongOperationManager.StartAsyncOperation(async ct =>
+    {
+        await PX.SM.SMPrintJobMaint.CreatePrintJobGroups(reportsToPrint, ct);
+    });
+  - |
+    bool printed = await SMPrintJobMaint.CreatePrintJobGroup(printerSettings, reportToPrint, reportID, ct);
+invalid:
+  - |
+    PX.SM.SMPrintJobMaint.CreatePrintJobGroups(reportsToPrint, CancellationToken.None);
+  - |
+    PXLongOperation.StartOperation(this, () =>
+    {
+        SMPrintJobMaint.CreatePrintJobGroup(printerSettings, reportToPrint, reportID, CancellationToken.None);
+    });

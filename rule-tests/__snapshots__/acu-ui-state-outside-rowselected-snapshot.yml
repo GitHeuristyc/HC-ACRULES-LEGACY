@@ -1,0 +1,160 @@
+id: acu-ui-state-outside-rowselected
+snapshots:
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXButton]
+        [PXUIField(DisplayName = "Release")]
+        protected virtual IEnumerable Release(PXAdapter adapter)
+        {
+            PXUIFieldAttribute.SetEnabled<SOOrder.orderNbr>(Base.Document.Cache, Base.Document.Current, false);
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: PXUIFieldAttribute.SetEnabled<SOOrder.orderNbr>(Base.Document.Cache, Base.Document.Current, false)
+      style: primary
+      start: 197
+      end: 295
+    - source: PXButton
+      style: secondary
+      start: 71
+      end: 79
+    - source: PXButton
+      style: secondary
+      start: 71
+      end: 79
+    - source: '[PXButton]'
+      style: secondary
+      start: 70
+      end: 80
+    - source: PXUIField
+      style: secondary
+      start: 86
+      end: 95
+    - source: PXUIField(DisplayName = "Release")
+      style: secondary
+      start: 86
+      end: 120
+    - source: '[PXUIField(DisplayName = "Release")]'
+      style: secondary
+      start: 85
+      end: 121
+    - source: |-
+        [PXButton]
+            [PXUIField(DisplayName = "Release")]
+            protected virtual IEnumerable Release(PXAdapter adapter)
+            {
+                PXUIFieldAttribute.SetEnabled<SOOrder.orderNbr>(Base.Document.Cache, Base.Document.Current, false);
+                return adapter.Get();
+            }
+      style: secondary
+      start: 70
+      end: 332
+    - source: PXUIFieldAttribute.SetEnabled<SOOrder.orderNbr>
+      style: secondary
+      start: 197
+      end: 244
+  ? |
+    public class InventoryItemLookupInq : PXGraph<InventoryItemLookupInq>
+    {
+        protected virtual void LogEntrySP_CompleteLot_FieldSelecting(PXCache cache, PXFieldSelectingEventArgs e)
+        {
+            PXStringListAttribute.SetList<LogEntrySP.completeLot>(cache, e.Row, values, labels);
+        }
+    }
+  : labels:
+    - source: PXStringListAttribute.SetList<LogEntrySP.completeLot>(cache, e.Row, values, labels)
+      style: primary
+      start: 195
+      end: 278
+    - source: LogEntrySP_CompleteLot_FieldSelecting
+      style: secondary
+      start: 99
+      end: 136
+    - source: (PXCache cache, PXFieldSelectingEventArgs e)
+      style: secondary
+      start: 136
+      end: 180
+    - source: |-
+        protected virtual void LogEntrySP_CompleteLot_FieldSelecting(PXCache cache, PXFieldSelectingEventArgs e)
+            {
+                PXStringListAttribute.SetList<LogEntrySP.completeLot>(cache, e.Row, values, labels);
+            }
+      style: secondary
+      start: 76
+      end: 285
+    - source: PXStringListAttribute.SetList<LogEntrySP.completeLot>
+      style: secondary
+      start: 195
+      end: 248
+  ? |
+    public class SOOrderEntry : PXGraph<SOOrderEntry, SOOrder>
+    {
+        protected virtual void SOOrder_RowInserted(PXCache sender, PXRowInsertedEventArgs e)
+        {
+            PXUIFieldAttribute.SetEnabled<SOOrder.hold>(sender, e.Row, true);
+        }
+    }
+  : labels:
+    - source: PXUIFieldAttribute.SetEnabled<SOOrder.hold>(sender, e.Row, true)
+      style: primary
+      start: 164
+      end: 228
+    - source: SOOrder_RowInserted
+      style: secondary
+      start: 88
+      end: 107
+    - source: (PXCache sender, PXRowInsertedEventArgs e)
+      style: secondary
+      start: 107
+      end: 149
+    - source: |-
+        protected virtual void SOOrder_RowInserted(PXCache sender, PXRowInsertedEventArgs e)
+            {
+                PXUIFieldAttribute.SetEnabled<SOOrder.hold>(sender, e.Row, true);
+            }
+      style: secondary
+      start: 65
+      end: 235
+    - source: PXUIFieldAttribute.SetEnabled<SOOrder.hold>
+      style: secondary
+      start: 164
+      end: 207
+  ? |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint, TGFreightPost>
+    {
+        protected virtual void _(Events.FieldUpdated<TGFreightPost.refNbr> e)
+        {
+            PXUIFieldAttribute.SetEnabled<TGFreightPost.separateInv>(e.Cache, e.Row, e.NewValue == null);
+        }
+    }
+  : labels:
+    - source: PXUIFieldAttribute.SetEnabled<TGFreightPost.separateInv>(e.Cache, e.Row, e.NewValue == null)
+      style: primary
+      start: 167
+      end: 259
+    - source: Events.FieldUpdated<TGFreightPost.refNbr>
+      style: secondary
+      start: 108
+      end: 149
+    - source: Events.FieldUpdated<TGFreightPost.refNbr> e
+      style: secondary
+      start: 108
+      end: 151
+    - source: Events.FieldUpdated<TGFreightPost.refNbr> e
+      style: secondary
+      start: 108
+      end: 151
+    - source: |-
+        protected virtual void _(Events.FieldUpdated<TGFreightPost.refNbr> e)
+            {
+                PXUIFieldAttribute.SetEnabled<TGFreightPost.separateInv>(e.Cache, e.Row, e.NewValue == null);
+            }
+      style: secondary
+      start: 83
+      end: 266
+    - source: PXUIFieldAttribute.SetEnabled<TGFreightPost.separateInv>
+      style: secondary
+      start: 167
+      end: 223

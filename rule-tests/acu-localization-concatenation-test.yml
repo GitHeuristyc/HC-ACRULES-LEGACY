@@ -1,0 +1,48 @@
+id: acu-localization-concatenation
+valid:
+  - |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Post(string serviceCode)
+        {
+            throw new PXException(HCEMMessages.UnknownShippingMethod, serviceCode);
+        }
+    }
+  - |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Open(string url, string id)
+        {
+            throw new PXRedirectToUrlException(url + id, PXBaseRedirectException.WindowMode.NewWindow, Messages.OpenDeal);
+        }
+    }
+  - |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Post(string a, string b)
+        {
+            throw new PXException(Messages.CannotPost, a + b);
+        }
+    }
+invalid:
+  - |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Post(string serviceCode)
+        {
+            throw new PXException(HCEMMessages.UnknownShippingMethod + serviceCode);
+        }
+    }
+  - |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Post(Exception a)
+        {
+            throw new PXException("Report.ProcessReport error : " + a.Message);
+        }
+    }
+  - |
+    public class LocalizationWithConcatenation
+    {
+        public string All() => PXLocalizer.Localize(MyMessages.Part1 + MyMessages.Part2);
+    }

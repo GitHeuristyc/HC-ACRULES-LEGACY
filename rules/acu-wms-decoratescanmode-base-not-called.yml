@@ -1,0 +1,29 @@
+id: acu-wms-decoratescanmode-base-not-called
+language: csharp
+severity: warning
+message: "DecorateScanMode override never calls its base delegate. Other extensions and core interceptions are lost; call the base delegate first and decorate the mode it returns."
+metadata:
+  skill: acumatica-wms-extension
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    all:
+      - has: { kind: attribute_list, regex: 'PXOverride' }
+      - has: { field: name, regex: '^DecorateScanMode$' }
+      - has:
+          field: parameters
+          has:
+            kind: parameter
+            nthChild: { position: 1, reverse: true }
+            has: { field: name, pattern: $DEL }
+      - not:
+          has:
+            any:
+              - kind: block
+              - kind: arrow_expression_clause
+            has: { stopBy: end, kind: identifier, pattern: $DEL }

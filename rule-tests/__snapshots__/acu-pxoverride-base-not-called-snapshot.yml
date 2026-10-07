@@ -1,0 +1,90 @@
+id: acu-pxoverride-base-not-called
+snapshots:
+  ? |
+    public class HCConfirmShipmentExt : PXGraphExtension<ConfirmShipmentExtension, SOShipmentEntry>
+    {
+        [PXOverride]
+        public virtual void ConfirmShipment(ConfirmShipmentArgs args, Action<ConfirmShipmentArgs> baseMethod)
+        {
+            MarkShipped(args.Shipment);
+        }
+    }
+  : labels:
+    - source: ConfirmShipment
+      style: primary
+      start: 139
+      end: 154
+    - source: '[PXOverride]'
+      style: secondary
+      start: 102
+      end: 114
+    - source: ConfirmShipment
+      style: secondary
+      start: 139
+      end: 154
+    - source: baseMethod
+      style: secondary
+      start: 209
+      end: 219
+    - source: Action<ConfirmShipmentArgs> baseMethod
+      style: secondary
+      start: 181
+      end: 219
+    - source: Action<ConfirmShipmentArgs> baseMethod
+      style: secondary
+      start: 181
+      end: 219
+    - source: |-
+        [PXOverride]
+            public virtual void ConfirmShipment(ConfirmShipmentArgs args, Action<ConfirmShipmentArgs> baseMethod)
+            {
+                MarkShipped(args.Shipment);
+            }
+      style: secondary
+      start: 102
+      end: 268
+  ? |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Persist(Action base_Persist)
+        {
+            ValidateCustomFields();
+            Base.Persist();
+        }
+    }
+  : labels:
+    - source: Persist
+      style: primary
+      start: 99
+      end: 106
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: Persist
+      style: secondary
+      start: 99
+      end: 106
+    - source: base_Persist
+      style: secondary
+      start: 114
+      end: 126
+    - source: Action base_Persist
+      style: secondary
+      start: 107
+      end: 126
+    - source: Action base_Persist
+      style: secondary
+      start: 107
+      end: 126
+    - source: |-
+        [PXOverride]
+            public void Persist(Action base_Persist)
+            {
+                ValidateCustomFields();
+                Base.Persist();
+            }
+      style: secondary
+      start: 70
+      end: 195

@@ -1,0 +1,25 @@
+id: acu-payment-createprocessor-throws
+language: csharp
+severity: error
+message: "CreateProcessor<T>() throws. Acumatica calls it during feature detection and treats an exception as an unsupported feature; return null for unsupported interfaces and a processor instance otherwise."
+metadata:
+  skill: acumatica-payment-processor
+rule:
+  any:
+    - kind: throw_statement
+    - kind: throw_expression
+  inside:
+    stopBy: end
+    kind: method_declaration
+    has: { field: name, regex: '^CreateProcessor$' }
+    inside:
+      stopBy: end
+      kind: class_declaration
+      has: { kind: base_list, regex: '\bICCProcessingPlugin\b' }
+  not:
+    inside:
+      stopBy: end
+      any:
+        - kind: lambda_expression
+        - kind: local_function_statement
+        - kind: anonymous_method_expression

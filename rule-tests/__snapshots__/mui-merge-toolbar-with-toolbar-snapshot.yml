@@ -1,0 +1,38 @@
+id: mui-merge-toolbar-with-toolbar
+snapshots:
+  ? |
+    @gridConfig({ mergeToolbarWith: 'Toolbar', syncPosition: true })
+    export class HCTCDocuments extends PXView {
+      Selected: PXFieldState;
+    }
+  : labels:
+    - source: 'mergeToolbarWith: ''Toolbar'''
+      style: primary
+      start: 14
+      end: 41
+    - source: '''Toolbar'''
+      style: secondary
+      start: 32
+      end: 41
+    - source: mergeToolbarWith
+      style: secondary
+      start: 14
+      end: 30
+  ? |
+    @gridConfig({ preset: GridPreset.Processing, mergeToolbarWith: "toolbar" })
+    export class HCTCProcessRows extends PXView {
+      Selected: PXFieldState;
+    }
+  : labels:
+    - source: 'mergeToolbarWith: "toolbar"'
+      style: primary
+      start: 45
+      end: 72
+    - source: '"toolbar"'
+      style: secondary
+      start: 63
+      end: 72
+    - source: mergeToolbarWith
+      style: secondary
+      start: 45
+      end: 61

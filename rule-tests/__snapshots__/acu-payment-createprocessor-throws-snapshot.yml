@@ -1,0 +1,82 @@
+id: acu-payment-createprocessor-throws
+snapshots:
+  ? |
+    public class HCGatewayPlugin : ICCProcessingPlugin
+    {
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+            => typeof(T) == typeof(ICCTransactionProcessor) ? new HCTransactionProcessor(settingValues) as T : throw new NotImplementedException();
+    }
+  : labels:
+    - source: throw new NotImplementedException()
+      style: primary
+      start: 250
+      end: 285
+    - source: ': ICCProcessingPlugin'
+      style: secondary
+      start: 29
+      end: 50
+    - source: |-
+        public class HCGatewayPlugin : ICCProcessingPlugin
+        {
+            public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+                => typeof(T) == typeof(ICCTransactionProcessor) ? new HCTransactionProcessor(settingValues) as T : throw new NotImplementedException();
+        }
+      style: secondary
+      start: 0
+      end: 288
+    - source: CreateProcessor
+      style: secondary
+      start: 66
+      end: 81
+    - source: |-
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+                => typeof(T) == typeof(ICCTransactionProcessor) ? new HCTransactionProcessor(settingValues) as T : throw new NotImplementedException();
+      style: secondary
+      start: 57
+      end: 286
+  ? |
+    public class HCGatewayPlugin : ICCProcessingPlugin
+    {
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+        {
+            if (typeof(T) == typeof(ICCTransactionProcessor))
+                return new HCTransactionProcessor(settingValues) as T;
+            throw new NotSupportedException(typeof(T).Name);
+        }
+    }
+  : labels:
+    - source: throw new NotSupportedException(typeof(T).Name);
+      style: primary
+      start: 282
+      end: 330
+    - source: ': ICCProcessingPlugin'
+      style: secondary
+      start: 29
+      end: 50
+    - source: |-
+        public class HCGatewayPlugin : ICCProcessingPlugin
+        {
+            public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+            {
+                if (typeof(T) == typeof(ICCTransactionProcessor))
+                    return new HCTransactionProcessor(settingValues) as T;
+                throw new NotSupportedException(typeof(T).Name);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 338
+    - source: CreateProcessor
+      style: secondary
+      start: 66
+      end: 81
+    - source: |-
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+            {
+                if (typeof(T) == typeof(ICCTransactionProcessor))
+                    return new HCTransactionProcessor(settingValues) as T;
+                throw new NotSupportedException(typeof(T).Name);
+            }
+      style: secondary
+      start: 57
+      end: 336

@@ -1,0 +1,33 @@
+id: acu-hardcoded-mail-account
+snapshots:
+  ? |
+    var sender = TemplateNotificationGenerator.Create(Base, row, setup.NotificationID);
+    sender.MailAccountId = 5;
+  : labels:
+    - source: sender.MailAccountId = 5
+      style: primary
+      start: 84
+      end: 108
+    - source: sender.MailAccountId
+      style: secondary
+      start: 84
+      end: 104
+    - source: '5'
+      style: secondary
+      start: 107
+      end: 108
+  ? |
+    var sender = new NotificationGenerator(Base) { MailAccountId = 12, To = contact.EMail };
+  : labels:
+    - source: MailAccountId = 12
+      style: primary
+      start: 47
+      end: 65
+    - source: MailAccountId
+      style: secondary
+      start: 47
+      end: 60
+    - source: '12'
+      style: secondary
+      start: 63
+      end: 65

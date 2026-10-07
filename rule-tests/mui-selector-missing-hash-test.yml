@@ -1,0 +1,26 @@
+id: mui-selector-missing-hash
+valid:
+  - |
+    <template>
+      <qp-fieldset id="fsHCEM" view.bind="Document" after="#Document_form"></qp-fieldset>
+      <field name="UsrCustom" view="Document" after="#fsVendor [name='VendorName']"></field>
+    </template>
+  - |
+    <template>
+      <qp-tab id="tabHCEM" caption="Custom" append="QP-TABBAR"></qp-tab>
+      <field name="UsrInternalNotes" view="Document" after="[name='Description']"></field>
+      <qp-fieldset modify="[name='Status']" caption="State"></qp-fieldset>
+    </template>
+invalid:
+  - |
+    <template>
+      <qp-fieldset id="fsHCEM" view.bind="Document" append="Document_form"></qp-fieldset>
+    </template>
+  - |
+    <template>
+      <qp-tab id="tabHCEM" caption="Custom" after="tabGeneral"></qp-tab>
+    </template>
+  - |
+    <template>
+      <qp-fieldset id="fsHCEM2" view.bind="Setup" before="groupRetainageSettings"></qp-fieldset>
+    </template>

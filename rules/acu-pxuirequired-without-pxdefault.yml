@@ -1,0 +1,26 @@
+id: acu-pxuirequired-without-pxdefault
+language: csharp
+severity: error
+message: "[PXUIRequired] without [PXDefault] on the same field. The attribute throws a PXException when the cache initializes; add [PXDefault] (or [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)])."
+note: |
+  PXUIRequiredAttribute.CacheAttached looks up the field's PXDefaultAttribute and
+  throws UsageOfAttributeWithoutPrerequisites when it is missing. The rule only
+  fires when every attribute on the field is a simple attribute that cannot carry
+  a hidden PXDefault (composites such as [Branch] or [Organization] include one),
+  and when no PXMergeAttributes could inherit it from the base field.
+metadata:
+  skill: acumatica-advanced-attributes
+rule:
+  any: [ { kind: property_declaration }, { kind: method_declaration } ]
+  has:
+    kind: attribute_list
+    has: { kind: attribute, has: { field: name, regex: '(^|\.)PXUIRequired(Attribute)?$' } }
+  not:
+    has:
+      kind: attribute_list
+      has:
+        kind: attribute
+        has:
+          field: name
+          not:
+            regex: '^(PX\.Data\.)?(PXDB(Int|Short|Long|String|Decimal|Bool|Date|DateAndTime|Guid|Byte|Double|Float|Text|Time|Email|Weblink)|PX(Int|Short|Long|String|Decimal|Bool|Date|DateAndTime|Guid|Byte|Double|Float|Text)|PXUIField|PXUIEnabled|PXUIVisible|PXUIRequired|PXUIVerify|PXSelector|PXStringList|PXIntList|PXFormula|PXDependsOnFields)(Attribute)?$'

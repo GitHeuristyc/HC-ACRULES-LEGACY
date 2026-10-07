@@ -1,0 +1,79 @@
+id: acu-persist-in-event-handler
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowUpdated(PXCache sender, PXRowUpdatedEventArgs e)
+        {
+            this.Persist();
+        }
+
+        protected virtual void _(Events.RowPersisting<HCODWidget> e)
+        {
+            Caches[typeof(HCODWidgetLog)].Persist(PXDBOperation.Insert);
+        }
+    }
+  : labels:
+    - source: this.Persist()
+      style: primary
+      start: 162
+      end: 176
+    - source: HCODWidget_RowUpdated
+      style: secondary
+      start: 85
+      end: 106
+    - source: (PXCache sender, PXRowUpdatedEventArgs e)
+      style: secondary
+      start: 106
+      end: 147
+    - source: |-
+        protected virtual void HCODWidget_RowUpdated(PXCache sender, PXRowUpdatedEventArgs e)
+            {
+                this.Persist();
+            }
+      style: secondary
+      start: 62
+      end: 183
+    - source: this.Persist
+      style: secondary
+      start: 162
+      end: 174
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.FieldUpdated<SOOrder, SOOrder.customerID> e)
+        {
+            if (e.Row == null) return;
+            Base.Actions.PressSave();
+        }
+    }
+  : labels:
+    - source: Base.Actions.PressSave()
+      style: primary
+      start: 196
+      end: 220
+    - source: Events.FieldUpdated<SOOrder, SOOrder.customerID>
+      style: secondary
+      start: 95
+      end: 143
+    - source: Events.FieldUpdated<SOOrder, SOOrder.customerID> e
+      style: secondary
+      start: 95
+      end: 145
+    - source: Events.FieldUpdated<SOOrder, SOOrder.customerID> e
+      style: secondary
+      start: 95
+      end: 145
+    - source: |-
+        protected virtual void _(Events.FieldUpdated<SOOrder, SOOrder.customerID> e)
+            {
+                if (e.Row == null) return;
+                Base.Actions.PressSave();
+            }
+      style: secondary
+      start: 70
+      end: 227
+    - source: Base.Actions.PressSave
+      style: secondary
+      start: 196
+      end: 218

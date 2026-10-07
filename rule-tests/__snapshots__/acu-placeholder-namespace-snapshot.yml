@@ -1,0 +1,51 @@
+id: acu-placeholder-namespace
+snapshots:
+  ? |
+    namespace MyCompany.MyModule
+    {
+        public class MyGraph : PXGraph<MyGraph> { }
+    }
+  : labels:
+    - source: |-
+        namespace MyCompany.MyModule
+        {
+            public class MyGraph : PXGraph<MyGraph> { }
+        }
+      style: primary
+      start: 0
+      end: 80
+    - source: MyCompany.MyModule
+      style: secondary
+      start: 10
+      end: 28
+  ? |
+    namespace MyProject.DAC.Projections;
+
+    public class SOOrderProjection : PXBqlTable, IBqlTable { }
+  : labels:
+    - source: namespace MyProject.DAC.Projections;
+      style: primary
+      start: 0
+      end: 36
+    - source: MyProject.DAC.Projections
+      style: secondary
+      start: 10
+      end: 35
+  ? |
+    namespace TODO_YourNamespace.V2
+    {
+        public class TODO_TransactionProcessor { }
+    }
+  : labels:
+    - source: |-
+        namespace TODO_YourNamespace.V2
+        {
+            public class TODO_TransactionProcessor { }
+        }
+      style: primary
+      start: 0
+      end: 82
+    - source: TODO_YourNamespace.V2
+      style: secondary
+      start: 10
+      end: 31

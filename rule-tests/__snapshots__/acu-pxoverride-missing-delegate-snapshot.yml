@@ -1,0 +1,56 @@
+id: acu-pxoverride-missing-delegate
+snapshots:
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public decimal CalcDiscount(SOOrder order)
+        {
+            return 0m;
+        }
+    }
+  : labels:
+    - source: CalcDiscount
+      style: primary
+      start: 102
+      end: 114
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: |-
+        [PXOverride]
+            public decimal CalcDiscount(SOOrder order)
+            {
+                return 0m;
+            }
+      style: secondary
+      start: 70
+      end: 160
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Persist()
+        {
+            Base.Persist();
+        }
+    }
+  : labels:
+    - source: Persist
+      style: primary
+      start: 99
+      end: 106
+    - source: '[PXOverride]'
+      style: secondary
+      start: 70
+      end: 82
+    - source: |-
+        [PXOverride]
+            public void Persist()
+            {
+                Base.Persist();
+            }
+      style: secondary
+      start: 70
+      end: 144

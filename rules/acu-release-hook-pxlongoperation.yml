@@ -1,0 +1,13 @@
+id: acu-release-hook-pxlongoperation
+language: csharp
+severity: warning
+message: "PXLongOperation.StartOperation called from a release process extension. The release already runs inside a long operation; run the work synchronously in the hook."
+metadata:
+  skill: acumatica-release-process-hooks
+rule:
+  kind: invocation_expression
+  has: { field: function, regex: '(^|\.)PXLongOperation\.StartOperation$' }
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: 'PXGraphExtension<[^>]*\b(AR|AP|IN)ReleaseProcess\s*>' }

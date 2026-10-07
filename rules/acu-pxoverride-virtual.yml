@@ -1,0 +1,25 @@
+id: acu-pxoverride-virtual
+language: csharp
+severity: warning
+message: "[PXOverride] method is virtual, abstract, override or not public (PX1097). Declare it `public` without `virtual`; to let deeper extensions customize the logic, call a separate `public virtual` method from it."
+note: |
+  Acuminator reports PX1097 as an error: the framework does not combine the
+  PXOverride mechanism with C# virtual dispatch, and supports only public methods.
+  Older code often uses `public virtual`; fix it when the method is touched.
+metadata:
+  skill: acumatica-acuminator
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    all:
+      - has:
+          kind: attribute_list
+          has: { kind: attribute, has: { field: name, regex: '^(PX\.Data\.)?PXOverride(Attribute)?$' } }
+      - any:
+          - has: { kind: modifier, regex: '^(virtual|abstract|override)$' }
+          - not: { has: { kind: modifier, regex: '^public$' } }

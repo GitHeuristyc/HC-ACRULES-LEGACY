@@ -1,0 +1,39 @@
+id: acu-release-hook-pxlongoperation
+valid:
+  - |
+    public class HCARReleaseProcessExt : PXGraphExtension<ARReleaseProcess>
+    {
+        [PXOverride]
+        public virtual ARRegister OnBeforeRelease(ARRegister ardoc, Func<ARRegister, ARRegister> baseMethod)
+        {
+            if (ardoc.DocDate == null) throw new PXException(Messages.DocDateRequired);
+            return baseMethod(ardoc);
+        }
+    }
+  - |
+    public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+    {
+        public PXAction<ARInvoice> hcSync;
+        [PXButton]
+        protected virtual IEnumerable HcSync(PXAdapter adapter)
+        {
+            PXLongOperation.StartOperation(Base, () => Sync());
+            return adapter.Get();
+        }
+    }
+invalid:
+  - |
+    public class HCARReleaseProcessExt : PXGraphExtension<ARReleaseProcess>
+    {
+        [PXOverride]
+        public virtual ARRegister OnBeforeRelease(ARRegister ardoc, Func<ARRegister, ARRegister> baseMethod)
+        {
+            PXLongOperation.StartOperation(Base, () => NotifyCrm(ardoc));
+            return baseMethod(ardoc);
+        }
+    }
+  - |
+    public class HCINReleaseProcessExt : PXGraphExtension<PX.Objects.IN.INReleaseProcess>
+    {
+        public void Export() { PXLongOperation.StartOperation(Base, delegate { Push(); }); }
+    }

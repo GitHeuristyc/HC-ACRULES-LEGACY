@@ -1,0 +1,27 @@
+id: mui-no-declare-module-screen
+valid:
+  - |
+    import { PXFieldState } from "client-controls";
+    import { AP101000, APSetup } from "src/screens/AP/AP101000/AP101000";
+
+    export interface HCEMAPSetup extends APSetup {}
+    export class HCEMAPSetup {
+      UsrEMFTPSourceUri: PXFieldState;
+    }
+  - |
+    declare module "*.html" {
+      const content: string;
+      export default content;
+    }
+invalid:
+  - |
+    import { PXFieldState } from "client-controls";
+    declare module "src/screens/AP/AP101000/AP101000" {
+      interface APSetup {
+        UsrEMFTPSourceUri: PXFieldState;
+      }
+    }
+  - |
+    declare module '../SO301000' {
+      interface SOLine { UsrRoute: PXFieldState; }
+    }

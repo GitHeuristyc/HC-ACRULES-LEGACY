@@ -1,0 +1,13 @@
+id: acu-report-printjob-not-awaited
+language: csharp
+severity: warning
+message: "SMPrintJobMaint.CreatePrintJobGroup(s) called without await. The method returns Task<bool>, so failures and the result are lost; await it inside the long operation."
+metadata:
+  skill: acumatica-reports-from-code
+rule:
+  kind: expression_statement
+  has:
+    kind: invocation_expression
+    has:
+      field: function
+      regex: '(^|\.)SMPrintJobMaint\.CreatePrintJobGroups?$'

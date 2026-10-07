@@ -1,0 +1,43 @@
+id: acu-workflow-ext-add-screen-config
+valid:
+  - |
+    public class HCSOOrderEntry_Workflow : PXGraphExtension<SOOrderEntry_Workflow, SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        public sealed override void Configure(PXScreenConfiguration config) =>
+            Configure(config.GetScreenConfigurationContext<SOOrderEntry, SOOrder>());
+        protected static void Configure(WorkflowContext<SOOrderEntry, SOOrder> context)
+        {
+            context.UpdateScreenConfigurationFor(screen => screen.WithFlows(flows => { }));
+        }
+    }
+  - |
+    public class HCRQRequisitionEntry_Workflow : PXGraphExtension<HCRQRequisitionEntry>
+    {
+        public static bool IsActive() => true;
+        public sealed override void Configure(PXScreenConfiguration config)
+        {
+            var context = config.GetScreenConfigurationContext<HCRQRequisitionEntry, HCRQRequisition>();
+            context.AddScreenConfigurationFor(screen => screen.StateIdentifierIs<HCRQRequisition.status>());
+        }
+    }
+invalid:
+  - |
+    public class HCSOOrderEntry_Workflow : PXGraphExtension<SOOrderEntry_Workflow, SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        public sealed override void Configure(PXScreenConfiguration config)
+        {
+            var context = config.GetScreenConfigurationContext<SOOrderEntry, SOOrder>();
+            context.AddScreenConfigurationFor(screen => screen.StateIdentifierIs<SOOrder.status>());
+        }
+    }
+  - |
+    public class HCOpportunityMaint_Workflow : PXGraphExtension<PX.Objects.CR.Workflows.OpportunityWorkflow, OpportunityMaint>
+    {
+        public static bool IsActive() => true;
+        protected static void Configure(WorkflowContext<OpportunityMaint, CROpportunity> context)
+        {
+            context.AddScreenConfigurationFor(screen => screen.WithActions(actions => { }));
+        }
+    }

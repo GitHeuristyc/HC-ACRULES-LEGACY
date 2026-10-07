@@ -1,0 +1,38 @@
+id: acu-graph-new-instance
+language: csharp
+severity: error
+message: "Graph created with `new` (PX1001). Use `PXGraph.CreateInstance<TGraph>()` so graph extensions, PXOverride methods and injected services are loaded."
+note: |
+  The rule reports `new X()` only when X is provably a graph: a well-known
+  Acumatica graph in a file that imports a PX.Objects namespace, or a class
+  declared in the same file that derives from PXGraph<>. Other custom graphs
+  created with `new` are not detected.
+metadata:
+  skill: acumatica-acuminator
+rule:
+  kind: object_creation_expression
+  all:
+    - has: { field: type, kind: identifier, pattern: $GRAPH }
+    - not: { has: { kind: initializer_expression } }
+    - any:
+        # A well-known Acumatica graph, in a file that imports PX.Objects.
+        - all:
+            - inside:
+                stopBy: end
+                kind: compilation_unit
+                has: { stopBy: end, kind: using_directive, regex: '\bPX\.Objects\.' }
+            - has:
+                field: type
+                regex: '^(SOOrderEntry|SOShipmentEntry|SOInvoiceEntry|ARInvoiceEntry|ARPaymentEntry|ARCashSaleEntry|APInvoiceEntry|APPaymentEntry|APQuickCheckEntry|POOrderEntry|POReceiptEntry|INReceiptEntry|INIssueEntry|INTransferEntry|INAdjustmentEntry|KitAssemblyEntry|JournalEntry|CATranEntry|CashTransferEntry|CustomerMaint|VendorMaint|InventoryItemMaint|NonStockItemMaint|EmployeeMaint|BusinessAccountMaint|ContactMaint|LeadMaint|OpportunityMaint|QuoteMaint|CRCaseMaint|ProjectEntry|ProjectTaskEntry|ServiceOrderEntry|AppointmentEntry|ARReleaseProcess|APReleaseProcess|INReleaseProcess|POReleaseProcess|ProdMaint|BOMMaint)$'
+        # A graph declared in the same file.
+        - inside:
+            stopBy: end
+            kind: compilation_unit
+            has:
+              stopBy: end
+              kind: class_declaration
+              all:
+                - has: { field: name, pattern: $GRAPH }
+                - has:
+                    kind: base_list
+                    regex: '(^|[\s:,.])PXGraph<'

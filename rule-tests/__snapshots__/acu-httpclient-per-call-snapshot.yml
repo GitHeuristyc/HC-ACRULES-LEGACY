@@ -1,0 +1,62 @@
+id: acu-httpclient-per-call
+snapshots:
+  ? |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public PXAction<SOOrder> sendOrder;
+        [PXButton, PXUIField(DisplayName = "Send")]
+        protected virtual IEnumerable SendOrder(PXAdapter adapter)
+        {
+            Base.LongOperationManager.StartAsyncOperation(async ct =>
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                    await client.PostAsync(Endpoint, Content(), ct);
+            });
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: new System.Net.Http.HttpClient()
+      style: primary
+      start: 331
+      end: 363
+    - source: |-
+        async ct =>
+                {
+                    using (var client = new System.Net.Http.HttpClient())
+                        await client.PostAsync(Endpoint, Content(), ct);
+                }
+      style: secondary
+      start: 277
+      end: 439
+    - source: System.Net.Http.HttpClient
+      style: secondary
+      start: 335
+      end: 361
+  ? |
+    public class WeatherAPI
+    {
+        public string GetCurrent(string zipcode)
+        {
+            HttpClient client = new HttpClient();
+            return client.GetStringAsync("https://api.example.com/current?q=" + zipcode).GetAwaiter().GetResult();
+        }
+    }
+  : labels:
+    - source: new HttpClient()
+      style: primary
+      start: 105
+      end: 121
+    - source: |-
+        public string GetCurrent(string zipcode)
+            {
+                HttpClient client = new HttpClient();
+                return client.GetStringAsync("https://api.example.com/current?q=" + zipcode).GetAwaiter().GetResult();
+            }
+      style: secondary
+      start: 30
+      end: 239
+    - source: HttpClient
+      style: secondary
+      start: 109
+      end: 119

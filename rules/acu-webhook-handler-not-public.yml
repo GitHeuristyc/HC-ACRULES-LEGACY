@@ -1,0 +1,17 @@
+id: acu-webhook-handler-not-public
+language: csharp
+severity: error
+message: "IWebhookHandler class is not public. The webhook framework discovers only public handler classes; declare the class public."
+metadata:
+  skill: acumatica-webhooks
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    has: { kind: base_list, regex: '\bIWebhookHandler\b' }
+    not:
+      has: { kind: modifier, regex: '^(public|abstract)$' }

@@ -1,0 +1,30 @@
+# Source: skills/acumatica-modern-ui-html-attrs/SKILL.md (Decision Tree, Error Reference)
+id: mui-qp-tab-missing-id
+language: html
+severity: error
+message: "`<qp-tab>` has no id and no literal caption, so the webpack build fails with \"must have an id attribute if it doesn't have caption\". Add a unique, package-prefixed id."
+rule:
+  any:
+    - kind: start_tag
+    - kind: self_closing_tag
+  has:
+    kind: tag_name
+    regex: ^(?i:qp-tab)$
+  all:
+    - not:
+        has:
+          kind: attribute
+          has:
+            kind: attribute_name
+            regex: ^(?i:id|id\.[a-z-]+|modify|remove|replace)$
+    - not:
+        has:
+          kind: attribute
+          all:
+            - has:
+                kind: attribute_name
+                regex: ^(?i:caption)$
+            - not:
+                regex: \$\{
+metadata:
+  skill: acumatica-modern-ui-html-attrs

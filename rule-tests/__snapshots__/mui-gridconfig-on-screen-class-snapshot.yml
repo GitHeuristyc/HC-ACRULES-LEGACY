@@ -1,0 +1,62 @@
+id: mui-gridconfig-on-screen-class
+snapshots:
+  ? |
+    @graphInfo({ graphType: "HC.Objects.TC.HCTCMaint", primaryView: "Filter" })
+    @gridConfig({ preset: GridPreset.Details })
+    export class HCTC1010 extends PXScreen {
+      Details = createCollection(HCTCDetail);
+    }
+  : labels:
+    - source: '@gridConfig({ preset: GridPreset.Details })'
+      style: primary
+      start: 76
+      end: 119
+    - source: extends PXScreen
+      style: secondary
+      start: 142
+      end: 158
+    - source: |-
+        class HCTC1010 extends PXScreen {
+          Details = createCollection(HCTCDetail);
+        }
+      style: secondary
+      start: 127
+      end: 204
+    - source: |-
+        @graphInfo({ graphType: "HC.Objects.TC.HCTCMaint", primaryView: "Filter" })
+        @gridConfig({ preset: GridPreset.Details })
+        export class HCTC1010 extends PXScreen {
+          Details = createCollection(HCTCDetail);
+        }
+      style: secondary
+      start: 0
+      end: 204
+  ? |
+    @gridConfig({ syncPosition: true })
+    export class HCTC4020 extends PXScreen {
+      Filter = createSingle(HCTCFilter);
+    }
+  : labels:
+    - source: '@gridConfig({ syncPosition: true })'
+      style: primary
+      start: 0
+      end: 35
+    - source: extends PXScreen
+      style: secondary
+      start: 58
+      end: 74
+    - source: |-
+        class HCTC4020 extends PXScreen {
+          Filter = createSingle(HCTCFilter);
+        }
+      style: secondary
+      start: 43
+      end: 115
+    - source: |-
+        @gridConfig({ syncPosition: true })
+        export class HCTC4020 extends PXScreen {
+          Filter = createSingle(HCTCFilter);
+        }
+      style: secondary
+      start: 0
+      end: 115

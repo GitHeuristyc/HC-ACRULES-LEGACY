@@ -1,0 +1,84 @@
+id: acu-localize-literal
+snapshots:
+  ? |
+    public class HCODMailer
+    {
+        public string Describe(string name) =>
+            PXMessages.LocalizeFormatNoPrefix("\"{0}\" cannot be empty.", name);
+    }
+  : labels:
+    - source: PXMessages.LocalizeFormatNoPrefix("\"{0}\" cannot be empty.", name)
+      style: primary
+      start: 77
+      end: 144
+    - source: PXMessages.LocalizeFormatNoPrefix
+      style: secondary
+      start: 77
+      end: 110
+    - source: '"\"{0}\" cannot be empty."'
+      style: secondary
+      start: 111
+      end: 137
+    - source: '"\"{0}\" cannot be empty."'
+      style: secondary
+      start: 111
+      end: 137
+    - source: '"\"{0}\" cannot be empty."'
+      style: secondary
+      start: 111
+      end: 137
+  ? |
+    public class HCODMailer
+    {
+        public string Describe(string name) => PXLocalizer.Localize($"Order {name} processed");
+    }
+  : labels:
+    - source: PXLocalizer.Localize($"Order {name} processed")
+      style: primary
+      start: 69
+      end: 116
+    - source: PXLocalizer.Localize
+      style: secondary
+      start: 69
+      end: 89
+    - source: $"Order {name} processed"
+      style: secondary
+      start: 90
+      end: 115
+    - source: $"Order {name} processed"
+      style: secondary
+      start: 90
+      end: 115
+    - source: $"Order {name} processed"
+      style: secondary
+      start: 90
+      end: 115
+  ? |
+    public class HCODMailer
+    {
+        public void Send()
+        {
+            throw new PXException(PXMessages.Localize("To E-mail is not specified"));
+        }
+    }
+  : labels:
+    - source: PXMessages.Localize("To E-mail is not specified")
+      style: primary
+      start: 85
+      end: 134
+    - source: PXMessages.Localize
+      style: secondary
+      start: 85
+      end: 104
+    - source: '"To E-mail is not specified"'
+      style: secondary
+      start: 105
+      end: 133
+    - source: '"To E-mail is not specified"'
+      style: secondary
+      start: 105
+      end: 133
+    - source: '"To E-mail is not specified"'
+      style: secondary
+      start: 105
+      end: 133

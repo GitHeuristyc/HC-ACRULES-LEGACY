@@ -1,0 +1,45 @@
+id: mui-view-extension-extends-pxview
+valid:
+  - |
+    import { PXFieldState } from "client-controls";
+    import { AM316000, AMClockItem } from "src/screens/AM/AM316000/AM316000";
+
+    export interface HCEMAMClockItem extends AMClockItem {}
+    export class HCEMAMClockItem {
+      UsrShowOpenPOOnly: PXFieldState;
+    }
+  - |
+    import { PXView, PXFieldState } from "client-controls";
+
+    export class HCEMPackageCounterFilter extends PXView {
+      QuantityCounter: PXFieldState;
+    }
+  - |
+    import { PXView, PXFieldState } from "client-controls";
+
+    export interface HCTCRowShape extends PXView {
+      Status: PXFieldState;
+    }
+    export class HCTCDetails extends PXView {
+      Status: PXFieldState;
+    }
+invalid:
+  - |
+    import { PXFieldState, PXView } from "client-controls";
+
+    export interface HCEMMyView extends PXView {}
+    export class HCEMMyView {
+      UsrCustomField1: PXFieldState;
+      UsrCustomField2: PXFieldState;
+    }
+  - |
+    import { PXFieldState, PXView } from "client-controls";
+    import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+
+    export interface SO301000_HCUS extends SO301000 {}
+    export class SO301000_HCUS {}
+
+    export interface HCUSTransactions extends PXView { }
+    export class HCUSTransactions {
+      UsrRoute: PXFieldState;
+    }

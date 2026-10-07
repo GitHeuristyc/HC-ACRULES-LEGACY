@@ -1,0 +1,47 @@
+id: acu-plugin-graph-field
+valid:
+  - |
+    public class HCODPlugin : CustomizationPlugin
+    {
+        public override void UpdateDatabase()
+        {
+            // Acuminator disable once PX1003 NonSpecificPXGraphCreateInstance Graph must use the current publish company scope.
+            var graph = new PXGraph();
+            BackfillNewFields(graph);
+        }
+
+        private void BackfillNewFields(PXGraph graph) { }
+    }
+  - |
+    public class HCODMigrationHelper
+    {
+        private readonly PXGraph graph;
+        public HCODMigrationHelper(PXGraph graph) { this.graph = graph; }
+    }
+  - |
+    public class HCODPlugin : CustomizationPlugin
+    {
+        private const string ScreenID = "HC301000";
+        private readonly string[] tables = { "HCODWorkOrder" };
+    }
+invalid:
+  - |
+    public class HCODPlugin : CustomizationPlugin
+    {
+        private PXGraph graph = new PXGraph();
+
+        public override void UpdateDatabase()
+        {
+            BackfillNewFields(graph);
+        }
+    }
+  - |
+    public class HCODPlugin : Customization.CustomizationPlugin
+    {
+        private SOOrderEntry OrderGraph { get; set; }
+
+        public override void UpdateDatabase()
+        {
+            OrderGraph = PXGraph.CreateInstance<SOOrderEntry>();
+        }
+    }

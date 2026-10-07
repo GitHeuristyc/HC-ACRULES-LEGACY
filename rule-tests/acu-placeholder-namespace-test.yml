@@ -1,0 +1,33 @@
+id: acu-placeholder-namespace
+valid:
+  - |
+    namespace HC.Objects.OD.SO;
+
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+    }
+  - |
+    namespace HC.Objects.OD.Common
+    {
+        public static class ValidationHelper { }
+    }
+  - |
+    namespace HC.Objects.MYCO.Common
+    {
+        public static class HCMYCOMessages { }
+    }
+invalid:
+  - |
+    namespace MyCompany.MyModule
+    {
+        public class MyGraph : PXGraph<MyGraph> { }
+    }
+  - |
+    namespace MyProject.DAC.Projections;
+
+    public class SOOrderProjection : PXBqlTable, IBqlTable { }
+  - |
+    namespace TODO_YourNamespace.V2
+    {
+        public class TODO_TransactionProcessor { }
+    }

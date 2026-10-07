@@ -1,0 +1,102 @@
+id: acu-plugin-graph-field
+snapshots:
+  ? |
+    public class HCODPlugin : Customization.CustomizationPlugin
+    {
+        private SOOrderEntry OrderGraph { get; set; }
+
+        public override void UpdateDatabase()
+        {
+            OrderGraph = PXGraph.CreateInstance<SOOrderEntry>();
+        }
+    }
+  : labels:
+    - source: private SOOrderEntry OrderGraph { get; set; }
+      style: primary
+      start: 66
+      end: 111
+    - source: SOOrderEntry
+      style: secondary
+      start: 74
+      end: 86
+    - source: ': Customization.CustomizationPlugin'
+      style: secondary
+      start: 24
+      end: 59
+    - source: |-
+        public class HCODPlugin : Customization.CustomizationPlugin
+        {
+            private SOOrderEntry OrderGraph { get; set; }
+
+            public override void UpdateDatabase()
+            {
+                OrderGraph = PXGraph.CreateInstance<SOOrderEntry>();
+            }
+        }
+      style: secondary
+      start: 0
+      end: 229
+    - source: |-
+        {
+            private SOOrderEntry OrderGraph { get; set; }
+
+            public override void UpdateDatabase()
+            {
+                OrderGraph = PXGraph.CreateInstance<SOOrderEntry>();
+            }
+        }
+      style: secondary
+      start: 60
+      end: 229
+  ? |
+    public class HCODPlugin : CustomizationPlugin
+    {
+        private PXGraph graph = new PXGraph();
+
+        public override void UpdateDatabase()
+        {
+            BackfillNewFields(graph);
+        }
+    }
+  : labels:
+    - source: private PXGraph graph = new PXGraph();
+      style: primary
+      start: 52
+      end: 90
+    - source: PXGraph
+      style: secondary
+      start: 60
+      end: 67
+    - source: PXGraph graph = new PXGraph()
+      style: secondary
+      start: 60
+      end: 89
+    - source: ': CustomizationPlugin'
+      style: secondary
+      start: 24
+      end: 45
+    - source: |-
+        public class HCODPlugin : CustomizationPlugin
+        {
+            private PXGraph graph = new PXGraph();
+
+            public override void UpdateDatabase()
+            {
+                BackfillNewFields(graph);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 181
+    - source: |-
+        {
+            private PXGraph graph = new PXGraph();
+
+            public override void UpdateDatabase()
+            {
+                BackfillNewFields(graph);
+            }
+        }
+      style: secondary
+      start: 46
+      end: 181

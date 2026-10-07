@@ -1,0 +1,11 @@
+id: mui-no-customizationscreens-import
+valid:
+  - |
+    import { AP301000 } from "src/screens/AP/AP301000/AP301000";
+  - |
+    import { IGFS3099 } from "../IGFS3099";
+invalid:
+  - |
+    import { AP301000 } from "../../../customizationScreens/TenantA/screens/AP/AP301000/AP301000";
+  - |
+    export { X } from "customizationScreens/T/screens/X";

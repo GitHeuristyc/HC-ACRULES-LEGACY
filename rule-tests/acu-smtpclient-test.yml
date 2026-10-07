@@ -1,0 +1,24 @@
+id: acu-smtpclient
+valid:
+  - |
+    protected virtual void SendConfirmation(SOOrder order)
+    {
+        var sender = TemplateNotificationGenerator.Create(Base, order, setup.ConfirmationNotificationID);
+        sender.RefNoteID = order.NoteID;
+        sender.LinkToEntity = true;
+        sender.Send();
+    }
+  - |
+    public class HCSmtpClientSettings
+    {
+        public SmtpClientOptions Options { get; set; }
+    }
+invalid:
+  - |
+    protected virtual void SendConfirmation(string to, string body)
+    {
+        using (var client = new SmtpClient("smtp.office365.com", 587))
+            client.Send("erp@example.com", to, "Order", body);
+    }
+  - |
+    var smtp = new System.Net.Mail.SmtpClient(host) { EnableSsl = true };

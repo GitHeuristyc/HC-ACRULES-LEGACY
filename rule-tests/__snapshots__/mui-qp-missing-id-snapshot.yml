@@ -1,0 +1,47 @@
+id: mui-qp-missing-id
+snapshots:
+  ? |
+    <template>
+      <qp-fieldset view.bind="Document" after="#fsVendor">
+        <field name="UsrTrackingNbr"></field>
+      </qp-fieldset>
+    </template>
+  : labels:
+    - source: <qp-fieldset view.bind="Document" after="#fsVendor">
+      style: primary
+      start: 13
+      end: 65
+    - source: qp-fieldset
+      style: secondary
+      start: 14
+      end: 25
+  ? |
+    <template>
+      <qp-tabbar>
+        <qp-tab id="tabGeneral" caption="General"></qp-tab>
+      </qp-tabbar>
+    </template>
+  : labels:
+    - source: <qp-tabbar>
+      style: primary
+      start: 13
+      end: 24
+    - source: qp-tabbar
+      style: secondary
+      start: 14
+      end: 23
+  ? |
+    <template>
+      <qp-template name="1-1">
+        <qp-fieldset id="fsA" view.bind="Document" slot="A"></qp-fieldset>
+      </qp-template>
+    </template>
+  : labels:
+    - source: <qp-template name="1-1">
+      style: primary
+      start: 13
+      end: 37
+    - source: qp-template
+      style: secondary
+      start: 14
+      end: 25

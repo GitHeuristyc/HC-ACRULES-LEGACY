@@ -1,0 +1,31 @@
+id: acu-seterror-literal
+language: csharp
+severity: warning
+message: "Hardcoded message in PXUIFieldAttribute.SetError or SetWarning. Move the text to a [PXLocalizable] Messages class and pass the constant."
+metadata:
+  skill: acumatica-strings
+utils:
+  literal-text:
+    any:
+      - kind: interpolated_string_expression
+      - kind: string_literal
+        not: { regex: '^""$' }
+rule:
+  kind: invocation_expression
+  any:
+    # SetError<Field>(cache, row, error) and SetWarning<Field>(cache, row, error)
+    - all:
+        - has:
+            field: function
+            regex: '^(PX\.Data\.)?PXUIFieldAttribute\.Set(Error|Warning)<'
+        - has:
+            field: arguments
+            has: { kind: argument, nthChild: 3, has: { matches: literal-text } }
+    # SetError(cache, row, fieldName, error) and SetWarning(cache, row, fieldName, error)
+    - all:
+        - has:
+            field: function
+            regex: '^(PX\.Data\.)?PXUIFieldAttribute\.Set(Error|Warning)$'
+        - has:
+            field: arguments
+            has: { kind: argument, nthChild: 4, has: { matches: literal-text } }

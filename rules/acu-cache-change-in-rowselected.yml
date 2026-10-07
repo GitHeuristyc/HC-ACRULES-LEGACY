@@ -1,0 +1,34 @@
+id: acu-cache-change-in-rowselected
+language: csharp
+severity: warning
+message: "Cache Insert/Update/Delete inside RowSelected (PX1044). RowSelected fires on every UI refresh; move the change to FieldUpdated, RowUpdated or the action that causes it."
+note: |
+  RowSelected is for UI state, action state and display-only warnings.
+  SetValueExt and SetDefaultExt are not flagged because the skill allows
+  idempotent assignment of unbound presentation fields, which a syntactic rule
+  cannot tell apart from bound fields. Code inside lambdas (for example a
+  process delegate configured in RowSelected) is not flagged.
+metadata:
+  skill: acumatica-events
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    regex: '(^|\.)Cache\.(Insert|Update|Delete)$|\bCaches\[[\s\S]*\]\.(Insert|Update|Delete)$|^(sender|cache)\.(Insert|Update|Delete)$'
+  not:
+    inside:
+      stopBy: { kind: method_declaration }
+      any:
+        - kind: lambda_expression
+        - kind: anonymous_method_expression
+        - kind: local_function_statement
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has: { kind: parameter, nthChild: 1, has: { field: type, regex: '^(PX\.Data\.)?Events\.RowSelected<' } }
+      - all:
+          - has: { field: name, regex: '^\w+_RowSelected$' }
+          - has: { field: parameters, regex: '^\(\s*(PX\.Data\.)?PXCache\s' }

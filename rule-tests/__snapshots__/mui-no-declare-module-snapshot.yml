@@ -1,0 +1,13 @@
+id: mui-no-declare-module
+snapshots:
+  ? |
+    declare module "client-controls" { interface SOOrder { UsrNote: PXFieldState; } }
+  : labels:
+    - source: 'module "client-controls" { interface SOOrder { UsrNote: PXFieldState; } }'
+      style: primary
+      start: 8
+      end: 81
+    - source: 'declare module "client-controls" { interface SOOrder { UsrNote: PXFieldState; } }'
+      style: secondary
+      start: 0
+      end: 81

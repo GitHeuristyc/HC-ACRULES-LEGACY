@@ -1,0 +1,37 @@
+id: acu-non-public-graph-dac
+valid:
+  - |
+    [Serializable]
+    [PXCacheName(HCCCMessages.LabelPrintParameter)]
+    public class INLabelPrintParameter : PXBqlTable, IBqlTable, PX.SM.IPrintable
+    {
+    }
+  - |
+    public class HCCCxINReceiptEntry : PXGraphExtension<INReceiptEntry>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    internal class HCCCLabelFormatter
+    {
+        public string Format(string value) => value;
+    }
+invalid:
+  - |
+    [Serializable]
+    [PXCacheName(HCCCMessages.LabelPrintParameter)]
+    class INLabelPrintParameter : PXBqlTable, IBqlTable, PX.SM.IPrintable
+    {
+    }
+  - |
+    internal class HCCCxINReceiptEntry : PXGraphExtension<INReceiptEntry>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public class HCCCTestBase
+    {
+        private class ResolverGraph : PXGraph<ResolverGraph>
+        {
+        }
+    }

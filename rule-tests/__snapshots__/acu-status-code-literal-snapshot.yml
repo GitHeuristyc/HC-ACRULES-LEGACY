@@ -1,0 +1,166 @@
+id: acu-status-code-literal
+snapshots:
+  ? |
+    using PX.Data;
+
+    public class AGMasterProjectEntry : PXGraph<AGMasterProjectEntry, AGMasterProject>
+    {
+        protected virtual void _(Events.RowSelected<AGMasterProject> e)
+        {
+            if (e.Row.Status == "C" && e.Row.EndDate == null) { }
+        }
+    }
+  : labels:
+    - source: e.Row.Status == "C"
+      style: primary
+      start: 187
+      end: 206
+    - source: Status
+      style: secondary
+      start: 193
+      end: 199
+    - source: e.Row.Status
+      style: secondary
+      start: 187
+      end: 199
+    - source: '"C"'
+      style: secondary
+      start: 203
+      end: 206
+    - source: using PX.Data;
+      style: secondary
+      start: 0
+      end: 14
+    - source: |
+        using PX.Data;
+
+        public class AGMasterProjectEntry : PXGraph<AGMasterProjectEntry, AGMasterProject>
+        {
+            protected virtual void _(Events.RowSelected<AGMasterProject> e)
+            {
+                if (e.Row.Status == "C" && e.Row.EndDate == null) { }
+            }
+        }
+      style: secondary
+      start: 0
+      end: 245
+  ? |
+    using PX.Data;
+
+    public class HCODxPOReceiptEntry : PXGraphExtension<POReceiptEntry>
+    {
+        public void Prepare(INRegister invoice) { invoice.DocType = "INV"; }
+    }
+  : labels:
+    - source: invoice.DocType = "INV"
+      style: primary
+      start: 132
+      end: 155
+    - source: DocType
+      style: secondary
+      start: 140
+      end: 147
+    - source: invoice.DocType
+      style: secondary
+      start: 132
+      end: 147
+    - source: '"INV"'
+      style: secondary
+      start: 150
+      end: 155
+    - source: using PX.Data;
+      style: secondary
+      start: 0
+      end: 14
+    - source: |
+        using PX.Data;
+
+        public class HCODxPOReceiptEntry : PXGraphExtension<POReceiptEntry>
+        {
+            public void Prepare(INRegister invoice) { invoice.DocType = "INV"; }
+        }
+      style: secondary
+      start: 0
+      end: 161
+  ? |
+    using PX.Data;
+
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public bool IsReturn(SOOrder row) => "RC" == row.OrderType;
+    }
+  : labels:
+    - source: '"RC" == row.OrderType'
+      style: primary
+      start: 123
+      end: 144
+    - source: '"RC"'
+      style: secondary
+      start: 123
+      end: 127
+    - source: OrderType
+      style: secondary
+      start: 135
+      end: 144
+    - source: row.OrderType
+      style: secondary
+      start: 131
+      end: 144
+    - source: using PX.Data;
+      style: secondary
+      start: 0
+      end: 14
+    - source: |
+        using PX.Data;
+
+        public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+        {
+            public bool IsReturn(SOOrder row) => "RC" == row.OrderType;
+        }
+      style: secondary
+      start: 0
+      end: 148
+  ? |
+    using PX.Data;
+
+    public class PEBomMaint : PXGraph<PEBomMaint, PEBOM>
+    {
+        public void Activate(PEBOM row)
+        {
+            row.Status = "A";
+        }
+    }
+  : labels:
+    - source: row.Status = "A"
+      style: primary
+      start: 121
+      end: 137
+    - source: Status
+      style: secondary
+      start: 125
+      end: 131
+    - source: row.Status
+      style: secondary
+      start: 121
+      end: 131
+    - source: '"A"'
+      style: secondary
+      start: 134
+      end: 137
+    - source: using PX.Data;
+      style: secondary
+      start: 0
+      end: 14
+    - source: |
+        using PX.Data;
+
+        public class PEBomMaint : PXGraph<PEBomMaint, PEBOM>
+        {
+            public void Activate(PEBOM row)
+            {
+                row.Status = "A";
+            }
+        }
+      style: secondary
+      start: 0
+      end: 147

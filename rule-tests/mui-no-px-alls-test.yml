@@ -1,0 +1,16 @@
+id: mui-no-px-alls
+valid:
+  - |
+    export class HCTC4020 extends PXScreen {
+      Filter = createSingle(HCTCFilter);
+      HCTC_refresh(): void { this.Filter.refresh(); }
+    }
+  - |
+    const message = "px_alls is not available in Modern UI";
+invalid:
+  - |
+    const grid = px_alls["gridDetails"];
+  - |
+    export class SO301000_HCUS {
+      HCUS_run(): void { px_alls.ds.executeCallback("ProcessRecords"); }
+    }

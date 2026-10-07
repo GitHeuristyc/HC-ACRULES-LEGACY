@@ -1,0 +1,48 @@
+id: acu-wms-obsolete-lotserial-member
+snapshots:
+  ? |
+    public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+    {
+        public static bool IsActive() => true;
+        protected virtual bool NeedsLot() => Base1.ItemHasLotSerial && Base1.IsEnterableLotSerial(isForIssue: true);
+    }
+  : labels:
+    - source: ItemHasLotSerial
+      style: primary
+      start: 175
+      end: 191
+    - source: ': PXGraphExtension<PickPackShip, PickPackShip.Host>'
+      style: secondary
+      start: 31
+      end: 82
+    - source: |-
+        public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+        {
+            public static bool IsActive() => true;
+            protected virtual bool NeedsLot() => Base1.ItemHasLotSerial && Base1.IsEnterableLotSerial(isForIssue: true);
+        }
+      style: secondary
+      start: 0
+      end: 242
+  ? |
+    public sealed class HCExpireDateState : PickPackShip.EntityState<DateTime?>
+    {
+        protected override bool IsStateActive() => Basis.ItemHasExpireDate;
+    }
+  : labels:
+    - source: ItemHasExpireDate
+      style: primary
+      start: 131
+      end: 148
+    - source: ': PickPackShip.EntityState<DateTime?>'
+      style: secondary
+      start: 38
+      end: 75
+    - source: |-
+        public sealed class HCExpireDateState : PickPackShip.EntityState<DateTime?>
+        {
+            protected override bool IsStateActive() => Basis.ItemHasExpireDate;
+        }
+      style: secondary
+      start: 0
+      end: 151

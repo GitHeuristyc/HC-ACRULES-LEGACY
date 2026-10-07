@@ -1,0 +1,16 @@
+id: acu-exception-literal-message
+language: csharp
+severity: warning
+message: "Hardcoded message in a PX exception (PX1050). Move the text to a [PXLocalizable] Messages class and pass the constant."
+metadata:
+  skill: acumatica-strings
+rule:
+  kind: object_creation_expression
+  all:
+    - has: { field: type, regex: '^PX\w*Exception(<.*>)?$' }
+    - has:
+        field: arguments
+        has:
+          kind: argument
+          nthChild: 1
+          has: { any: [ { kind: string_literal }, { kind: interpolated_string_expression } ] }

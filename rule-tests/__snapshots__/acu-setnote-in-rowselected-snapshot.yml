@@ -1,0 +1,64 @@
+id: acu-setnote-in-rowselected
+snapshots:
+  ? |
+    public class HCAPInvoiceEntryExt : PXGraphExtension<APInvoiceEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void APInvoice_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            PX.Data.PXNoteAttribute.SetNote(sender, e.Row, GetSourceNote());
+        }
+    }
+  : labels:
+    - source: PX.Data.PXNoteAttribute.SetNote(sender, e.Row, GetSourceNote())
+      style: primary
+      start: 218
+      end: 281
+    - source: (PXCache sender, PXRowSelectedEventArgs e)
+      style: secondary
+      start: 161
+      end: 203
+    - source: |-
+        protected virtual void APInvoice_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+            {
+                PX.Data.PXNoteAttribute.SetNote(sender, e.Row, GetSourceNote());
+            }
+      style: secondary
+      start: 117
+      end: 288
+    - source: PX.Data.PXNoteAttribute.SetNote
+      style: secondary
+      start: 218
+      end: 249
+  ? |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            PXNoteAttribute.SetNote(e.Cache, e.Row, "Reviewed");
+        }
+    }
+  : labels:
+    - source: PXNoteAttribute.SetNote(e.Cache, e.Row, "Reviewed")
+      style: primary
+      start: 218
+      end: 269
+    - source: (Events.RowSelected<SOOrder> e)
+      style: secondary
+      start: 137
+      end: 168
+    - source: |-
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+            {
+                if (e.Row == null) return;
+                PXNoteAttribute.SetNote(e.Cache, e.Row, "Reviewed");
+            }
+      style: secondary
+      start: 113
+      end: 276
+    - source: PXNoteAttribute.SetNote
+      style: secondary
+      start: 218
+      end: 241

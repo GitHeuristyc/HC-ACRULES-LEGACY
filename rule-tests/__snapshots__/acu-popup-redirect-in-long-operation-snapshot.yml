@@ -1,0 +1,130 @@
+id: acu-popup-redirect-in-long-operation
+snapshots:
+  ? |
+    public class HCTCTimeEntryMaint : PXGraph<HCTCTimeEntryMaint>
+    {
+        public virtual IEnumerable StartClock(PXAdapter adapter)
+        {
+            PXLongOperation.StartOperation(this, () =>
+            {
+                var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                PXRedirectHelper.TryRedirect(graph, PXRedirectHelper.WindowMode.Popup);
+            });
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: PXRedirectHelper.TryRedirect(graph, PXRedirectHelper.WindowMode.Popup)
+      style: primary
+      start: 270
+      end: 340
+    - source: PXRedirectHelper.TryRedirect
+      style: secondary
+      start: 270
+      end: 298
+    - source: (graph, PXRedirectHelper.WindowMode.Popup)
+      style: secondary
+      start: 298
+      end: 340
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 139
+      end: 169
+    - source: |-
+        PXLongOperation.StartOperation(this, () =>
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    PXRedirectHelper.TryRedirect(graph, PXRedirectHelper.WindowMode.Popup);
+                })
+      style: secondary
+      start: 139
+      end: 352
+    - source: |-
+        (this, () =>
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    PXRedirectHelper.TryRedirect(graph, PXRedirectHelper.WindowMode.Popup);
+                })
+      style: secondary
+      start: 169
+      end: 352
+    - source: |-
+        () =>
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    PXRedirectHelper.TryRedirect(graph, PXRedirectHelper.WindowMode.Popup);
+                }
+      style: secondary
+      start: 176
+      end: 351
+    - source: |-
+        () =>
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    PXRedirectHelper.TryRedirect(graph, PXRedirectHelper.WindowMode.Popup);
+                }
+      style: secondary
+      start: 176
+      end: 351
+  ? |
+    public class HCTCTimeEntryMaint : PXGraph<HCTCTimeEntryMaint>
+    {
+        public virtual IEnumerable StartClock(PXAdapter adapter)
+        {
+            PXLongOperation.StartOperation(this, delegate
+            {
+                var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                throw new PXPopupRedirectException(graph, string.Empty, true);
+            });
+            return adapter.Get();
+        }
+    }
+  : labels:
+    - source: new PXPopupRedirectException(graph, string.Empty, true)
+      style: primary
+      start: 279
+      end: 334
+    - source: PXPopupRedirectException
+      style: secondary
+      start: 283
+      end: 307
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 139
+      end: 169
+    - source: |-
+        PXLongOperation.StartOperation(this, delegate
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    throw new PXPopupRedirectException(graph, string.Empty, true);
+                })
+      style: secondary
+      start: 139
+      end: 346
+    - source: |-
+        (this, delegate
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    throw new PXPopupRedirectException(graph, string.Empty, true);
+                })
+      style: secondary
+      start: 169
+      end: 346
+    - source: |-
+        delegate
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    throw new PXPopupRedirectException(graph, string.Empty, true);
+                }
+      style: secondary
+      start: 176
+      end: 345
+    - source: |-
+        delegate
+                {
+                    var graph = PXGraph.CreateInstance<HCTCClockMaint>();
+                    throw new PXPopupRedirectException(graph, string.Empty, true);
+                }
+      style: secondary
+      start: 176
+      end: 345

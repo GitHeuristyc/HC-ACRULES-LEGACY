@@ -1,0 +1,38 @@
+id: acu-persist-in-event-handler
+language: csharp
+severity: error
+message: "Save call inside an event handler (PX1043). Do not call Persist, PressSave or Save.Press from row or field events; save from an action or a [PXOverride] of Persist instead."
+note: |
+  Event handlers run inside cache operations and inside the save pipeline.
+  Persisting there re-enters the pipeline, saves half-edited data during UI
+  refreshes and breaks transaction ownership. RowPersisted is not flagged
+  because the skill allows separately recoverable work after
+  PXTranStatus.Completed. Code inside lambdas (for example a process delegate
+  configured in RowSelected) is not flagged.
+metadata:
+  skill: acumatica-cache-tricks
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    regex: '(^|\.)(Persist|PressSave|PersistInserted|PersistUpdated|PersistDeleted)$|(^|\.)Save\.Press$'
+  not:
+    inside:
+      stopBy: { kind: method_declaration }
+      any:
+        - kind: lambda_expression
+        - kind: anonymous_method_expression
+        - kind: local_function_statement
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has:
+            kind: parameter
+            nthChild: 1
+            has: { field: type, regex: '^(PX\.Data\.)?Events\.(Row(Selecting|Selected|Inserting|Inserted|Updating|Updated|Deleting|Deleted|Persisting)|Field(Defaulting|Verifying|Updating|Updated|Selecting)|CommandPreparing|ExceptionHandling)<' }
+      - all:
+          - has: { field: name, regex: '^\w+_(Row(Selecting|Selected|Inserting|Inserted|Updating|Updated|Deleting|Deleted|Persisting)|Field(Defaulting|Verifying|Updating|Updated|Selecting)|CommandPreparing|ExceptionHandling)$' }
+          - has: { field: parameters, regex: '^\(\s*(PX\.Data\.)?PXCache\s' }

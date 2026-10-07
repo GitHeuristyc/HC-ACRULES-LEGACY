@@ -1,0 +1,106 @@
+id: acu-error-in-rowselected
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            var row = (HCODWidget)e.Row;
+            if (row == null) return;
+            sender.RaiseExceptionHandling<HCODWidget.descr>(row, row.Descr,
+                new PXSetPropertyException(HCODMessages.DescriptionRequired));
+        }
+    }
+  : labels:
+    - source: |-
+        sender.RaiseExceptionHandling<HCODWidget.descr>(row, row.Descr,
+                    new PXSetPropertyException(HCODMessages.DescriptionRequired))
+      style: primary
+      start: 234
+      end: 371
+    - source: sender.RaiseExceptionHandling<HCODWidget.descr>
+      style: secondary
+      start: 234
+      end: 281
+    - source: new PXSetPropertyException(HCODMessages.DescriptionRequired)
+      style: secondary
+      start: 310
+      end: 370
+    - source: new PXSetPropertyException(HCODMessages.DescriptionRequired)
+      style: secondary
+      start: 310
+      end: 370
+    - source: new PXSetPropertyException(HCODMessages.DescriptionRequired)
+      style: secondary
+      start: 310
+      end: 370
+    - source: HCODWidget_RowSelected
+      style: secondary
+      start: 85
+      end: 107
+    - source: (PXCache sender, PXRowSelectedEventArgs e)
+      style: secondary
+      start: 107
+      end: 149
+    - source: |-
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+            {
+                var row = (HCODWidget)e.Row;
+                if (row == null) return;
+                sender.RaiseExceptionHandling<HCODWidget.descr>(row, row.Descr,
+                    new PXSetPropertyException(HCODMessages.DescriptionRequired));
+            }
+      style: secondary
+      start: 62
+      end: 378
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>(e.Row, e.Row.OrderDesc,
+                new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error));
+        }
+    }
+  : labels:
+    - source: |-
+        e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>(e.Row, e.Row.OrderDesc,
+                    new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error))
+      style: primary
+      start: 175
+      end: 342
+    - source: e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>
+      style: secondary
+      start: 175
+      end: 224
+    - source: new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error)
+      style: secondary
+      start: 261
+      end: 341
+    - source: new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error)
+      style: secondary
+      start: 261
+      end: 341
+    - source: Events.RowSelected<SOOrder>
+      style: secondary
+      start: 95
+      end: 122
+    - source: Events.RowSelected<SOOrder> e
+      style: secondary
+      start: 95
+      end: 124
+    - source: Events.RowSelected<SOOrder> e
+      style: secondary
+      start: 95
+      end: 124
+    - source: |-
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+            {
+                if (e.Row == null) return;
+                e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>(e.Row, e.Row.OrderDesc,
+                    new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error));
+            }
+      style: secondary
+      start: 70
+      end: 349

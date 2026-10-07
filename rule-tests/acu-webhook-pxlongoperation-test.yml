@@ -1,0 +1,43 @@
+id: acu-webhook-pxlongoperation
+valid:
+  - |
+    public class HCOrderWebhook : PXGraph<HCOrderWebhook>, IWebhookHandler
+    {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            string body;
+            using (var reader = context.Request.CreateTextReader()) body = await reader.ReadToEndAsync();
+            LongOperationManager.StartOperation(ct => Process(body, ct));
+            context.Response.StatusCode = 202;
+        }
+    }
+  - |
+    public class HCOrderMaint : PXGraph<HCOrderMaint>
+    {
+        public PXAction<HCOrder> process;
+        [PXButton]
+        protected virtual IEnumerable Process(PXAdapter adapter)
+        {
+            PXLongOperation.StartOperation(this, () => DoProcess());
+            return adapter.Get();
+        }
+    }
+invalid:
+  - |
+    public class HCOrderWebhook : PXGraph<HCOrderWebhook>, IWebhookHandler
+    {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            PXLongOperation.StartOperation(this, () => Process(context));
+            context.Response.StatusCode = 202;
+        }
+    }
+  - |
+    public class HCShipWebhook : IWebhookHandler
+    {
+        public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            var graph = PXGraph.CreateInstance<HCShipMaint>();
+            PX.Data.PXLongOperation.StartOperation(graph, delegate { graph.Import(); });
+        }
+    }

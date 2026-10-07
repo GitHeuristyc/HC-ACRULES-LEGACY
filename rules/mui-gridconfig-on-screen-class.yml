@@ -1,0 +1,24 @@
+# Source: skills/acumatica-modern-ui/SKILL.md checklist (Grid Configuration)
+id: mui-gridconfig-on-screen-class
+language: typescript
+severity: error
+message: "@gridConfig is applied to a PXScreen class, where no grid reads it. Move the decorator to the grid view class (the class passed to createCollection())."
+rule:
+  kind: decorator
+  regex: ^@gridConfig\b
+  any:
+    - inside:
+        kind: class_declaration
+        has:
+          kind: class_heritage
+          regex: \bextends\s+PXScreen\b
+    - inside:
+        kind: export_statement
+        has:
+          field: declaration
+          kind: class_declaration
+          has:
+            kind: class_heritage
+            regex: \bextends\s+PXScreen\b
+metadata:
+  skill: acumatica-modern-ui

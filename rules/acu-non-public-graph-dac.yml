@@ -1,0 +1,19 @@
+id: acu-non-public-graph-dac
+language: csharp
+severity: error
+message: "Non-public graph, DAC, or graph or DAC extension (PX1022). The platform recognizes only public types; declare the class `public`, and any containing classes too."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    all:
+      - not: { has: { kind: modifier, regex: '^public$' } }
+      - has:
+          kind: base_list
+          regex: '(^|[\s:,.])(PXGraph(Extension)?<|PXCacheExtension<|IBqlTable\b|PXBqlTable\b)'

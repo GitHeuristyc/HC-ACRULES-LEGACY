@@ -1,0 +1,11 @@
+id: acu-dac-nonnullable-field
+valid:
+  - |
+    public class HCDoc : PXBqlTable, IBqlTable { public virtual decimal? Amount { get; set; } }
+  - |
+    public class Helper { public decimal Amount { get; set; } }
+invalid:
+  - |
+    public class HCDoc : PXBqlTable, IBqlTable { public virtual decimal Amount { get; set; } }
+  - |
+    public sealed class HCSOOrderExt : PXCacheExtension<SOOrder> { public virtual bool UsrFlag { get; set; } }

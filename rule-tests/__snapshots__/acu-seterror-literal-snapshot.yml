@@ -1,0 +1,89 @@
+id: acu-seterror-literal
+snapshots:
+  ? |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint>
+    {
+        protected virtual void _(Events.RowSelected<TGFreightPostTran> e)
+        {
+            PXUIFieldAttribute.SetError(e.Cache, e.Row, "TranNo", "The order was already added.");
+        }
+    }
+  : labels:
+    - source: PXUIFieldAttribute.SetError(e.Cache, e.Row, "TranNo", "The order was already added.")
+      style: primary
+      start: 148
+      end: 233
+    - source: PXUIFieldAttribute.SetError
+      style: secondary
+      start: 148
+      end: 175
+    - source: '"The order was already added."'
+      style: secondary
+      start: 202
+      end: 232
+    - source: '"The order was already added."'
+      style: secondary
+      start: 202
+      end: 232
+    - source: '"The order was already added."'
+      style: secondary
+      start: 202
+      end: 232
+  ? |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint>
+    {
+        protected virtual void _(Events.RowSelected<TGFreightPostTran> e)
+        {
+            PXUIFieldAttribute.SetError<TGFreightPostTran.tranNo>(e.Cache, e.Row, $"This OrderNbr ({e.Row.TranNo}) was added.");
+        }
+    }
+  : labels:
+    - source: PXUIFieldAttribute.SetError<TGFreightPostTran.tranNo>(e.Cache, e.Row, $"This OrderNbr ({e.Row.TranNo}) was added.")
+      style: primary
+      start: 148
+      end: 263
+    - source: PXUIFieldAttribute.SetError<TGFreightPostTran.tranNo>
+      style: secondary
+      start: 148
+      end: 201
+    - source: $"This OrderNbr ({e.Row.TranNo}) was added."
+      style: secondary
+      start: 218
+      end: 262
+    - source: $"This OrderNbr ({e.Row.TranNo}) was added."
+      style: secondary
+      start: 218
+      end: 262
+    - source: $"This OrderNbr ({e.Row.TranNo}) was added."
+      style: secondary
+      start: 218
+      end: 262
+  ? |
+    public class TGFreightPostMaint : PXGraph<TGFreightPostMaint>
+    {
+        protected virtual void _(Events.RowSelected<TGFreightPostTran> e)
+        {
+            PXUIFieldAttribute.SetWarning<TGFreightPostTran.proNo>(e.Cache, e.Row, "Please enter Invoice Number when a Blank PO NO. is added.");
+        }
+    }
+  : labels:
+    - source: PXUIFieldAttribute.SetWarning<TGFreightPostTran.proNo>(e.Cache, e.Row, "Please enter Invoice Number when a Blank PO NO. is added.")
+      style: primary
+      start: 148
+      end: 279
+    - source: PXUIFieldAttribute.SetWarning<TGFreightPostTran.proNo>
+      style: secondary
+      start: 148
+      end: 202
+    - source: '"Please enter Invoice Number when a Blank PO NO. is added."'
+      style: secondary
+      start: 219
+      end: 278
+    - source: '"Please enter Invoice Number when a Blank PO NO. is added."'
+      style: secondary
+      start: 219
+      end: 278
+    - source: '"Please enter Invoice Number when a Blank PO NO. is added."'
+      style: secondary
+      start: 219
+      end: 278

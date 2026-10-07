@@ -1,0 +1,54 @@
+id: acu-graph-extension-igraphwithinitialization
+snapshots:
+  ? |
+    public abstract class HCODDocumentGraphExt<TGraph> : PXGraphExtension<TGraph>, PX.Data.IGraphWithInitialization
+        where TGraph : PXGraph
+    {
+    }
+  : labels:
+    - source: HCODDocumentGraphExt
+      style: primary
+      start: 22
+      end: 42
+    - source: PX.Data.IGraphWithInitialization
+      style: secondary
+      start: 79
+      end: 111
+    - source: ': PXGraphExtension<TGraph>, PX.Data.IGraphWithInitialization'
+      style: secondary
+      start: 51
+      end: 111
+    - source: |-
+        public abstract class HCODDocumentGraphExt<TGraph> : PXGraphExtension<TGraph>, PX.Data.IGraphWithInitialization
+            where TGraph : PXGraph
+        {
+        }
+      style: secondary
+      start: 0
+      end: 142
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>, IGraphWithInitialization
+    {
+        public static bool IsActive() => true;
+    }
+  : labels:
+    - source: HCODxSOOrderEntry
+      style: primary
+      start: 13
+      end: 30
+    - source: IGraphWithInitialization
+      style: secondary
+      start: 65
+      end: 89
+    - source: ': PXGraphExtension<SOOrderEntry>, IGraphWithInitialization'
+      style: secondary
+      start: 31
+      end: 89
+    - source: |-
+        public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>, IGraphWithInitialization
+        {
+            public static bool IsActive() => true;
+        }
+      style: secondary
+      start: 0
+      end: 136

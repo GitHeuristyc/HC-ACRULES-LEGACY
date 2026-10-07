@@ -1,0 +1,28 @@
+# Source: skills/acumatica-modern-ui/assets/extension-patterns.md (Rule 4)
+id: mui-selector-missing-hash
+language: html
+severity: error
+message: "Placement selector `$V` has no # prefix, so html-merge-loader reads it as a tag name, matches no element, and fails the build. Write it as an id selector: `#$V`."
+note: |
+  html-merge-loader passes after/before/append/prepend/modify/remove/replace
+  values to querySelectorAll(). The rule flags only bare words that cannot be
+  an HTML tag name (they contain an underscore, a digit, or a lowercase-to-
+  uppercase transition), so tag selectors such as QP-TABBAR and attribute
+  selectors such as [name='Field'] are not reported.
+rule:
+  kind: attribute
+  has:
+    kind: attribute_name
+    regex: ^(?i:after|before|append|prepend|modify|remove|replace)$
+  all:
+    - has:
+        stopBy: end
+        kind: attribute_value
+        pattern: $V
+        regex: ^[A-Za-z][A-Za-z0-9_]*$
+    - has:
+        stopBy: end
+        kind: attribute_value
+        regex: (_|[0-9]|[a-z][A-Z])
+metadata:
+  skill: acumatica-modern-ui

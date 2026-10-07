@@ -1,0 +1,65 @@
+id: acu-pxoverride-virtual
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        /// Overrides <seealso cref="SOOrderEntry.Persist"/>
+        [PXOverride]
+        public void Persist(Action baseMethod)
+        {
+            ValidateOrder();
+            baseMethod();
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        public void Persist(Action baseMethod)
+        {
+            OnBeforePersist();
+            baseMethod();
+        }
+
+        public virtual void OnBeforePersist()
+        {
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        public virtual void Persist(Action baseMethod)
+        {
+            baseMethod();
+        }
+    }
+  - |
+    public class HCODxARReleaseProcess : PXGraphExtension<ARReleaseProcess>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        protected void ReleaseInvoice(ARRegister doc, Action<ARRegister> baseMethod)
+        {
+            baseMethod(doc);
+        }
+    }
+  - |
+    public class HCODxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXOverride]
+        public override void Persist(Action baseMethod)
+        {
+            baseMethod();
+        }
+    }

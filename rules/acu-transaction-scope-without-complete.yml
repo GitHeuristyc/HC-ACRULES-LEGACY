@@ -1,0 +1,16 @@
+id: acu-transaction-scope-without-complete
+language: csharp
+severity: warning
+message: "PXTransactionScope block never calls Complete(). Disposal without Complete() rolls back every write in the block; call ts.Complete() as the last statement of the success path."
+metadata:
+  skill: acumatica-scopes-and-direct-db
+rule:
+  kind: using_statement
+  regex: '^using\s*\(\s*(var\s+\w+\s*=\s*|(PX\.Data\.)?PXTransactionScope\s+\w+\s*=\s*)?new\s+(PX\.Data\.)?PXTransactionScope\b'
+  not:
+    has:
+      field: body
+      has:
+        stopBy: end
+        kind: invocation_expression
+        has: { field: function, regex: '\.Complete$' }

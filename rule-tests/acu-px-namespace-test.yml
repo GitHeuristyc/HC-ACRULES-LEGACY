@@ -1,0 +1,10 @@
+id: acu-px-namespace
+valid:
+  - |
+    namespace HC.Objects.SO { public class HCSOOrderEntryExt { } }
+invalid:
+  - |
+    namespace PX.Objects.SO { public class HCSOOrderEntryExt { } }
+  - |
+    namespace PX.Objects.AR;
+    public class HCARInvoiceEntryExt { }

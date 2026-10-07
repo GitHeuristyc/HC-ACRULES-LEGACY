@@ -1,0 +1,21 @@
+# Ambient augmentation of a screen module is invisible to generateScreenInfos.
+# Source: skills/acumatica-modern-ui/assets/extension-patterns.md (Rule 6); acumatica-modern-ui-migration Runtime-Breaking Patterns
+id: mui-no-declare-module-screen
+language: typescript
+severity: error
+message: "`declare module` on a screen module compiles but its fields fail at runtime with \"cannot be bound to a FieldState\". Use the named class extension pattern: `export interface HCXXFoo extends Foo {}` plus `export class HCXXFoo { ... }`."
+note: |
+  The webpack generateScreenInfos transformer reads only exported classes, so
+  fields added through module augmentation never reach
+  App_Data/TSScreenInfo/{tenant}/{screenId}.json. The twin rule
+  mui-no-declare-module covers `declare module "client-controls"`.
+rule:
+  kind: module
+  inside:
+    kind: ambient_declaration
+  has:
+    field: name
+    kind: string
+    regex: ^["'](src/screens/|\.\.?/)
+metadata:
+  skill: acumatica-modern-ui-migration

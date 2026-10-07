@@ -1,0 +1,41 @@
+id: acu-throw-in-rowpersisted
+language: csharp
+severity: error
+message: "Exception thrown in a RowPersisted or FieldUpdating handler (PX1073). Validate in RowPersisting or FieldVerifying instead, or report the problem with RaiseExceptionHandling."
+note: |
+  An exception in RowPersisted stops the save but does not roll back PXCache
+  changes. FieldUpdating does not run for every update path, so validation there
+  is skipped in some scenarios. Acuminator allows PXRowPersistedException,
+  PXLockViolationException, NotImplementedException, NotSupportedException and
+  ArgumentException types; this rule does not report them.
+metadata:
+  skill: acumatica-acuminator
+rule:
+  any:
+    - kind: throw_statement
+    - kind: throw_expression
+  has:
+    kind: object_creation_expression
+    has:
+      field: type
+      not:
+        regex: '(PXRowPersistedException|PXLockViolationException|NotImplementedException|NotSupportedException|Argument\w*Exception)$'
+  not:
+    inside:
+      stopBy: end
+      any:
+        - kind: lambda_expression
+        - kind: anonymous_method_expression
+        - kind: local_function_statement
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has:
+            kind: parameter
+            has: { field: type, regex: '(^|\.)(RowPersisted|FieldUpdating)<|^(PX\.Data\.)?PX(RowPersisted|FieldUpdating)EventArgs$' }
+      - all:
+          - has: { field: name, regex: '_(RowPersisted|FieldUpdating)$' }
+          - has: { field: parameters, regex: 'PX(RowPersisted|FieldUpdating)EventArgs' }

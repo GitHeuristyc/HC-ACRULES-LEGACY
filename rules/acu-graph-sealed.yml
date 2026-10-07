@@ -1,0 +1,19 @@
+id: acu-graph-sealed
+language: csharp
+severity: warning
+message: "Sealed graph or graph extension (PX1113). Remove `sealed`; the framework generates derived types from graphs and graph extensions at runtime."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    all:
+      - has: { kind: modifier, regex: '^sealed$' }
+      - has:
+          kind: base_list
+          regex: '(^|[\s:,.])PXGraph(Extension)?<'

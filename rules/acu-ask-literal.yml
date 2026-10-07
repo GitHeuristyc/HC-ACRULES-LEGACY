@@ -1,0 +1,24 @@
+id: acu-ask-literal
+language: csharp
+severity: warning
+message: "Hardcoded message in an Ask dialog. Move the text to a [PXLocalizable] Messages class and pass the constant, for example `Document.Ask(Messages.ConfirmRelease, MessageButtons.YesNo)`."
+metadata:
+  skill: acumatica-strings
+rule:
+  # The message argument always comes right before the MessageButtons argument.
+  kind: argument
+  all:
+    - has:
+        any:
+          - kind: interpolated_string_expression
+          - kind: string_literal
+            not: { regex: '^""$' }
+    - precedes:
+        stopBy: { kind: argument }
+        kind: argument
+        regex: '^(PX\.Data\.)?MessageButtons\.'
+    - inside:
+        kind: argument_list
+        inside:
+          kind: invocation_expression
+          has: { field: function, regex: '\.Ask$' }

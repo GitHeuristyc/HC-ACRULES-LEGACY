@@ -1,0 +1,78 @@
+id: acu-pxdbdecimal-with-composite
+snapshots:
+  ? |
+    public class HCODWorkOrderLine : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(2)]
+        [PXDBQuantity]
+        public virtual decimal? Qty { get; set; }
+    }
+  : labels:
+    - source: |-
+        [PXDBDecimal(2)]
+            [PXDBQuantity]
+            public virtual decimal? Qty { get; set; }
+      style: primary
+      start: 61
+      end: 142
+    - source: PXDBDecimal
+      style: secondary
+      start: 62
+      end: 73
+    - source: PXDBDecimal(2)
+      style: secondary
+      start: 62
+      end: 76
+    - source: '[PXDBDecimal(2)]'
+      style: secondary
+      start: 61
+      end: 77
+    - source: PXDBQuantity
+      style: secondary
+      start: 83
+      end: 95
+    - source: PXDBQuantity
+      style: secondary
+      start: 83
+      end: 95
+    - source: '[PXDBQuantity]'
+      style: secondary
+      start: 82
+      end: 96
+  ? |
+    public class HCODWorkOrderLine : PXBqlTable, IBqlTable
+    {
+        [PXDBPriceCost, PXDBDecimal(4)]
+        public virtual decimal? UnitCost { get; set; }
+    }
+  : labels:
+    - source: |-
+        [PXDBPriceCost, PXDBDecimal(4)]
+            public virtual decimal? UnitCost { get; set; }
+      style: primary
+      start: 61
+      end: 143
+    - source: PXDBDecimal
+      style: secondary
+      start: 77
+      end: 88
+    - source: PXDBDecimal(4)
+      style: secondary
+      start: 77
+      end: 91
+    - source: '[PXDBPriceCost, PXDBDecimal(4)]'
+      style: secondary
+      start: 61
+      end: 92
+    - source: PXDBPriceCost
+      style: secondary
+      start: 62
+      end: 75
+    - source: PXDBPriceCost
+      style: secondary
+      start: 62
+      end: 75
+    - source: '[PXDBPriceCost, PXDBDecimal(4)]'
+      style: secondary
+      start: 61
+      end: 92

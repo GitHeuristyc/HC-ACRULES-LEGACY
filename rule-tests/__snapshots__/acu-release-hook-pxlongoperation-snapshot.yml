@@ -1,0 +1,64 @@
+id: acu-release-hook-pxlongoperation
+snapshots:
+  ? |
+    public class HCARReleaseProcessExt : PXGraphExtension<ARReleaseProcess>
+    {
+        [PXOverride]
+        public virtual ARRegister OnBeforeRelease(ARRegister ardoc, Func<ARRegister, ARRegister> baseMethod)
+        {
+            PXLongOperation.StartOperation(Base, () => NotifyCrm(ardoc));
+            return baseMethod(ardoc);
+        }
+    }
+  : labels:
+    - source: PXLongOperation.StartOperation(Base, () => NotifyCrm(ardoc))
+      style: primary
+      start: 210
+      end: 270
+    - source: ': PXGraphExtension<ARReleaseProcess>'
+      style: secondary
+      start: 35
+      end: 71
+    - source: |-
+        public class HCARReleaseProcessExt : PXGraphExtension<ARReleaseProcess>
+        {
+            [PXOverride]
+            public virtual ARRegister OnBeforeRelease(ARRegister ardoc, Func<ARRegister, ARRegister> baseMethod)
+            {
+                PXLongOperation.StartOperation(Base, () => NotifyCrm(ardoc));
+                return baseMethod(ardoc);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 313
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 210
+      end: 240
+  ? |
+    public class HCINReleaseProcessExt : PXGraphExtension<PX.Objects.IN.INReleaseProcess>
+    {
+        public void Export() { PXLongOperation.StartOperation(Base, delegate { Push(); }); }
+    }
+  : labels:
+    - source: PXLongOperation.StartOperation(Base, delegate { Push(); })
+      style: primary
+      start: 115
+      end: 173
+    - source: ': PXGraphExtension<PX.Objects.IN.INReleaseProcess>'
+      style: secondary
+      start: 35
+      end: 85
+    - source: |-
+        public class HCINReleaseProcessExt : PXGraphExtension<PX.Objects.IN.INReleaseProcess>
+        {
+            public void Export() { PXLongOperation.StartOperation(Base, delegate { Push(); }); }
+        }
+      style: secondary
+      start: 0
+      end: 178
+    - source: PXLongOperation.StartOperation
+      style: secondary
+      start: 115
+      end: 145

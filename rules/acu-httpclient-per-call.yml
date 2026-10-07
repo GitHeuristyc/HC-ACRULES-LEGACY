@@ -1,0 +1,29 @@
+id: acu-httpclient-per-call
+language: csharp
+severity: warning
+message: "New HttpClient created inside a method. A client per call exhausts sockets and keeps stale DNS; inject IHttpClientFactory and call CreateClient, or reuse one static client."
+ignores:
+  - '**/tests/**'
+  - '**/*Tests/**'
+metadata:
+  skill: acumatica-outbound-http
+rule:
+  kind: object_creation_expression
+  has: { field: type, regex: '^(System\.Net\.Http\.)?HttpClient$' }
+  inside:
+    stopBy: end
+    any:
+      - kind: method_declaration
+      - kind: local_function_statement
+      - kind: accessor_declaration
+      - kind: lambda_expression
+      - kind: anonymous_method_expression
+  not:
+    inside:
+      stopBy: end
+      any:
+        - kind: field_declaration
+        - kind: method_declaration
+          has: { field: returns, regex: '^(System\.Net\.Http\.)?HttpClient$' }
+        - kind: local_function_statement
+          has: { field: type, regex: '^(System\.Net\.Http\.)?HttpClient$' }

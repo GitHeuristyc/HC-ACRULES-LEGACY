@@ -1,0 +1,28 @@
+id: acu-graph-extension-igraphwithinitialization
+valid:
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>, IGraphWithInitialization
+    {
+        public void Initialize() { }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>, IGraphWithInitialization
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public abstract class HCODDocumentGraphExt<TGraph> : PXGraphExtension<TGraph>, PX.Data.IGraphWithInitialization
+        where TGraph : PXGraph
+    {
+    }

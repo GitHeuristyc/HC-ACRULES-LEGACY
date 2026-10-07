@@ -1,0 +1,82 @@
+id: acu-savefile-result-ignored
+snapshots:
+  ? |
+    public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+    {
+        public void AttachExcel(PX.SM.FileInfo fileExcel)
+        {
+            PX.SM.UploadFileMaintenance upload = PXGraph.CreateInstance<PX.SM.UploadFileMaintenance>();
+            upload.SaveFile(fileExcel);
+        }
+    }
+  : labels:
+    - source: upload.SaveFile(fileExcel);
+      style: primary
+      start: 238
+      end: 265
+    - source: |
+        public class HCARInvoiceEntryExt : PXGraphExtension<ARInvoiceEntry>
+        {
+            public void AttachExcel(PX.SM.FileInfo fileExcel)
+            {
+                PX.SM.UploadFileMaintenance upload = PXGraph.CreateInstance<PX.SM.UploadFileMaintenance>();
+                upload.SaveFile(fileExcel);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 274
+    - source: SaveFile
+      style: secondary
+      start: 245
+      end: 253
+    - source: upload.SaveFile
+      style: secondary
+      start: 238
+      end: 253
+    - source: upload.SaveFile(fileExcel)
+      style: secondary
+      start: 238
+      end: 264
+  ? |
+    using PX.SM;
+    public class HCPDFileHelper
+    {
+        public static void Attach(PXCache cache, object row, FileInfo file)
+        {
+            var fileGraph = PXGraph.CreateInstance<UploadFileMaintenance>();
+            fileGraph.SaveFile(file, FileExistsAction.CreateVersion);
+            PXNoteAttribute.SetFileNotes(cache, row, file.UID.Value);
+        }
+    }
+  : labels:
+    - source: fileGraph.SaveFile(file, FileExistsAction.CreateVersion);
+      style: primary
+      start: 202
+      end: 259
+    - source: |
+        using PX.SM;
+        public class HCPDFileHelper
+        {
+            public static void Attach(PXCache cache, object row, FileInfo file)
+            {
+                var fileGraph = PXGraph.CreateInstance<UploadFileMaintenance>();
+                fileGraph.SaveFile(file, FileExistsAction.CreateVersion);
+                PXNoteAttribute.SetFileNotes(cache, row, file.UID.Value);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 334
+    - source: SaveFile
+      style: secondary
+      start: 212
+      end: 220
+    - source: fileGraph.SaveFile
+      style: secondary
+      start: 202
+      end: 220
+    - source: fileGraph.SaveFile(file, FileExistsAction.CreateVersion)
+      style: secondary
+      start: 202
+      end: 258

@@ -1,0 +1,19 @@
+id: acu-workflow-infolder
+valid:
+  - |
+    protected static void Configure(WorkflowContext<SOOrderEntry, SOOrder> context)
+    {
+        var customCategory = context.Categories.CreateNew("HCCustom", c => c.DisplayName("Custom"));
+        context.UpdateScreenConfigurationFor(screen => screen
+            .WithActions(actions => actions.Add<HCSOOrderEntryExt>(g => g.hcSendToWms, a => a.WithCategory(customCategory)))
+            .WithCategories(categories => categories.Add(customCategory)));
+    }
+  - |
+    var folder = Directory.CreateDirectory(path);
+    MoveFileInFolder(folder, name);
+invalid:
+  - |
+    context.UpdateScreenConfigurationFor(screen => screen
+        .WithActions(actions => actions.Add<HCSOOrderEntryExt>(g => g.hcSendToWms, a => a.InFolder(FolderType.ActionsFolder))));
+  - |
+    actions.Add(g => g.hcPrintLabel, a => a.InFolder(processingCategory, g => g.printSalesOrder).IsDisabledWhen(conditions.IsOnHold));

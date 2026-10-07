@@ -1,0 +1,57 @@
+id: acu-long-operation-in-scope
+valid:
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public virtual IEnumerable Process(PXAdapter adapter)
+        {
+            PXLongOperation.StartOperation(this, () =>
+            {
+                using (var ts = new PXTransactionScope())
+                {
+                    var graph = PXGraph.CreateInstance<HCODWidgetMaint>();
+                    graph.Actions.PressSave();
+                    ts.Complete();
+                }
+            });
+            return adapter.Get();
+        }
+    }
+  - |
+    public class HCODWebhookHandler
+    {
+        public void Handle(string company)
+        {
+            PXLongOperation.StartOperation(Guid.NewGuid(), () =>
+            {
+                using (new PXLoginScope("admin@" + company))
+                {
+                    HCODSync.Run();
+                }
+            });
+        }
+    }
+invalid:
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public virtual IEnumerable Process(PXAdapter adapter)
+        {
+            using (PXTransactionScope ts = new PXTransactionScope())
+            {
+                Actions.PressSave();
+                PXLongOperation.StartOperation(this, () => HCODSync.Run());
+                ts.Complete();
+            }
+            return adapter.Get();
+        }
+    }
+  - |
+    public class HCODWebhookHandler
+    {
+        public void Handle(PXGraph graph, string company)
+        {
+            using var login = new PXLoginScope("admin@" + company);
+            PXLongOperation.StartOperation(graph, () => HCODSync.Run());
+        }
+    }

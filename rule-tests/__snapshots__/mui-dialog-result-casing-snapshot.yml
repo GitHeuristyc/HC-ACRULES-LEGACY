@@ -1,0 +1,36 @@
+id: mui-dialog-result-casing
+snapshots:
+  ? |
+    <footer>
+      <qp-button id="btnHCTC-Cancel" dialog-result="cancel" caption="Cancel"></qp-button>
+    </footer>
+  : labels:
+    - source: dialog-result="cancel"
+      style: primary
+      start: 42
+      end: 64
+    - source: cancel
+      style: secondary
+      start: 57
+      end: 63
+    - source: dialog-result
+      style: secondary
+      start: 42
+      end: 55
+  ? |
+    <footer>
+      <qp-button id="btnHCTC-Create" state.bind="CreatePayment" dialog-result="Ok"></qp-button>
+    </footer>
+  : labels:
+    - source: dialog-result="Ok"
+      style: primary
+      start: 69
+      end: 87
+    - source: Ok
+      style: secondary
+      start: 84
+      end: 86
+    - source: dialog-result
+      style: secondary
+      start: 69
+      end: 82

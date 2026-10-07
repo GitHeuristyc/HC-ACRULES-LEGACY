@@ -1,0 +1,44 @@
+id: acu-action-handler-attributes
+language: csharp
+severity: error
+message: "Action handler with only one of [PXButton] and [PXUIField] (PX1092). Declare both: [PXButton] (or a successor such as [PXProcessButton]) and [PXUIField(DisplayName = ...)]."
+note: |
+  The rule identifies an action handler by an `IEnumerable Handler(PXAdapter adapter)`
+  signature that already carries one of the two attributes. Handlers with neither
+  attribute look like any other method syntactically, so they are not reported.
+metadata:
+  skill: acumatica-acuminator
+utils:
+  button-attr:
+    kind: attribute_list
+    has: { kind: attribute, has: { field: name, regex: 'Button(Attribute)?$' } }
+  uifield-attr:
+    kind: attribute_list
+    has: { kind: attribute, has: { field: name, regex: '^(PX\.Data\.)?PXUIField(Attribute)?$' } }
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    all:
+      - has: { field: returns, regex: '^(System\.Collections\.)?IEnumerable$' }
+      - has:
+          field: parameters
+          regex: '^\(\s*(PX\.Data\.)?PXAdapter\s+\w+\s*\)$'
+      - any:
+          - all:
+              - has: { matches: button-attr }
+              - not: { has: { matches: uifield-attr } }
+          - all:
+              - has: { matches: uifield-attr }
+              - not: { has: { matches: button-attr } }
+      - inside:
+          kind: declaration_list
+          inside:
+            kind: class_declaration
+            has:
+              kind: base_list
+              regex: '(^|[\s:,.])PXGraph(Extension)?<'

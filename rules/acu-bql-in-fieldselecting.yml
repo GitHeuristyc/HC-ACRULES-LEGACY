@@ -1,0 +1,24 @@
+id: acu-bql-in-fieldselecting
+language: csharp
+severity: warning
+message: "BQL query inside a FieldSelecting handler. FieldSelecting fires on every read of the field; load the data in RowSelecting or a view delegate, or cache the result."
+metadata:
+  skill: acumatica-events
+rule:
+  kind: invocation_expression
+  regex: '^(PXSelect|SelectFrom|PXSelectReadonly|PXSelectJoin|PXSelectGroupBy)'
+  not:
+    inside:
+      stopBy: end
+      kind: invocation_expression
+      regex: '^(PXSelect|SelectFrom|PXSelectReadonly|PXSelectJoin|PXSelectGroupBy)'
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has: { kind: parameter, nthChild: 1, has: { field: type, regex: '^(PX\.Data\.)?Events\.FieldSelecting<' } }
+      - all:
+          - has: { field: name, regex: '^\w+_FieldSelecting$' }
+          - has: { field: parameters, regex: '^\(\s*(PX\.Data\.)?PXCache\s' }

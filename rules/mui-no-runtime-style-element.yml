@@ -1,0 +1,20 @@
+# Source: skills/acumatica-modern-ui/SKILL.md Final Verification; extension-merge-safety.md (Style loading gate)
+id: mui-no-runtime-style-element
+language: typescript
+severity: warning
+message: "Code creates a `<style>` element at runtime. Put the CSS in a package-owned .css or .scss file registered with PerTenantFile and load it with `<require from=\"./file.scss\"></require>`."
+note: |
+  Runtime stylesheet injection bypasses the build, duplicates styles on every
+  screen instance, and leaks rules into other screens. If extension HTML cannot
+  keep the <require>, move the UI into a package-owned custom element that
+  loads its own stylesheet.
+rule:
+  kind: call_expression
+  pattern: document.createElement($TAG)
+  has:
+    field: arguments
+    has:
+      kind: string
+      regex: ^["'](?i:style)["']$
+metadata:
+  skill: acumatica-modern-ui

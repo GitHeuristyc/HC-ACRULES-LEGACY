@@ -1,0 +1,104 @@
+id: acu-gl-batch-curyid-on-insert
+snapshots:
+  ? |
+    Batch batch = je.BatchModule.Insert(new Batch { BranchID = branchID, DateEntered = docDate, CuryID = "EUR" });
+  : labels:
+    - source: new Batch { BranchID = branchID, DateEntered = docDate, CuryID = "EUR" }
+      style: primary
+      start: 36
+      end: 108
+    - source: Batch
+      style: secondary
+      start: 40
+      end: 45
+    - source: CuryID
+      style: secondary
+      start: 92
+      end: 98
+    - source: CuryID = "EUR"
+      style: secondary
+      start: 92
+      end: 106
+    - source: CuryID = "EUR"
+      style: secondary
+      start: 92
+      end: 106
+    - source: je.BatchModule.Insert
+      style: secondary
+      start: 14
+      end: 35
+    - source: je.BatchModule.Insert(new Batch { BranchID = branchID, DateEntered = docDate, CuryID = "EUR" })
+      style: secondary
+      start: 14
+      end: 109
+    - source: (new Batch { BranchID = branchID, DateEntered = docDate, CuryID = "EUR" })
+      style: secondary
+      start: 35
+      end: 109
+    - source: new Batch { BranchID = branchID, DateEntered = docDate, CuryID = "EUR" }
+      style: secondary
+      start: 36
+      end: 108
+  ? |
+    var batch = graph.BatchModule.Insert(new PX.Objects.GL.Batch
+    {
+        BranchID = doc.BranchID,
+        CuryID = doc.CuryID,
+    });
+  : labels:
+    - source: |-
+        new PX.Objects.GL.Batch
+        {
+            BranchID = doc.BranchID,
+            CuryID = doc.CuryID,
+        }
+      style: primary
+      start: 37
+      end: 118
+    - source: PX.Objects.GL.Batch
+      style: secondary
+      start: 41
+      end: 60
+    - source: CuryID
+      style: secondary
+      start: 96
+      end: 102
+    - source: CuryID = doc.CuryID
+      style: secondary
+      start: 96
+      end: 115
+    - source: CuryID = doc.CuryID
+      style: secondary
+      start: 96
+      end: 115
+    - source: graph.BatchModule.Insert
+      style: secondary
+      start: 12
+      end: 36
+    - source: |-
+        graph.BatchModule.Insert(new PX.Objects.GL.Batch
+        {
+            BranchID = doc.BranchID,
+            CuryID = doc.CuryID,
+        })
+      style: secondary
+      start: 12
+      end: 119
+    - source: |-
+        (new PX.Objects.GL.Batch
+        {
+            BranchID = doc.BranchID,
+            CuryID = doc.CuryID,
+        })
+      style: secondary
+      start: 36
+      end: 119
+    - source: |-
+        new PX.Objects.GL.Batch
+        {
+            BranchID = doc.BranchID,
+            CuryID = doc.CuryID,
+        }
+      style: secondary
+      start: 37
+      end: 118

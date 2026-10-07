@@ -1,0 +1,37 @@
+id: acu-pm-pxdbint-on-project-attribute
+valid:
+  - |
+    public sealed class HCSOLineExt : PXCacheExtension<SOLine>
+    {
+        public static bool IsActive() => true;
+        #region UsrProjectID
+        [ProjectBase]
+        public int? UsrProjectID { get; set; }
+        public abstract class usrProjectID : PX.Data.BQL.BqlInt.Field<usrProjectID> { }
+        #endregion
+    }
+  - |
+    public class SSINTransactions : PXBqlTable, IBqlTable
+    {
+        [PXDBInt(BqlField = typeof(INTran.costCenterID))]
+        public virtual int? CostCenterID { get; set; }
+        [ProjectBaseAttribute(BqlField = typeof(INTran.projectID))]
+        public virtual int? ProjectID { get; set; }
+    }
+invalid:
+  - |
+    public sealed class HCSOLineExt : PXCacheExtension<SOLine>
+    {
+        public static bool IsActive() => true;
+        [PXDBInt]
+        [ProjectBase]
+        public int? UsrProjectID { get; set; }
+    }
+  - |
+    public class HCAPInvoiceEntryExt : PXGraphExtension<APInvoiceEntry>
+    {
+        public static bool IsActive() => true;
+        [PXMergeAttributes(Method = MergeMethod.Replace)]
+        [PXDBInt(), BaseProjectTask(typeof(APTran.projectID))]
+        protected virtual void _(Events.CacheAttached<APTran.taskID> e) { }
+    }

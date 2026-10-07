@@ -1,0 +1,48 @@
+id: acu-bql-in-fieldselecting
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.FieldSelecting<SOOrder, HCODxSOOrder.usrStatusText> e)
+        {
+            if (e.Row == null) return;
+            e.ReturnValue = e.Row.Status == SOOrderStatus.Open ? "Open" : "Other";
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelecting<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            using (new PXConnectionScope())
+            {
+                Customer customer = SelectFrom<Customer>
+                    .Where<Customer.bAccountID.IsEqual<@P.AsInt>>
+                    .View.Select(Base, e.Row.CustomerID);
+            }
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.FieldSelecting<SOOrder, HCODxSOOrder.usrCustomerName> e)
+        {
+            if (e.Row == null) return;
+            Customer customer = SelectFrom<Customer>
+                .Where<Customer.bAccountID.IsEqual<@P.AsInt>>
+                .View.Select(Base, e.Row.CustomerID);
+            e.ReturnValue = customer?.AcctName;
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_ItemDesc_FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+        {
+            InventoryItem item = PXSelect<InventoryItem,
+                Where<InventoryItem.inventoryID, Equal<Required<InventoryItem.inventoryID>>>>
+                .Select(this, 1).FirstOrDefault();
+        }
+    }

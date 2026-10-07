@@ -1,0 +1,51 @@
+id: acu-cache-change-in-rowselected
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            PXUIFieldAttribute.SetEnabled<SOOrder.orderDesc>(e.Cache, e.Row, e.Row.Hold == true);
+            Base.Actions["approveOrder"].SetEnabled(e.Row.Hold == true);
+            e.Cache.SetValueExt<HCODxSOOrder.usrIsCreditHold>(e.Row, e.Row.CreditHold == true);
+        }
+
+        protected virtual void _(Events.FieldUpdated<SOOrder, SOOrder.customerID> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.SetDefaultExt<SOOrder.customerLocationID>(e.Row);
+        }
+    }
+  - |
+    public class HCODWidgetProcess : PXGraph<HCODWidgetProcess>
+    {
+        protected virtual void _(Events.RowSelected<HCODWidgetFilter> e)
+        {
+            Widgets.SetProcessDelegate(list =>
+            {
+                var graph = PXGraph.CreateInstance<HCODWidgetMaint>();
+                graph.Widgets.Cache.Update(list[0]);
+            });
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOLine> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.Update(e.Row);
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            var row = (HCODWidget)e.Row;
+            if (row == null) return;
+            Caches[typeof(HCODWidgetLine)].Update(row);
+        }
+    }

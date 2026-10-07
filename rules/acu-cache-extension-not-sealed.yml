@@ -1,0 +1,17 @@
+id: acu-cache-extension-not-sealed
+language: csharp
+severity: warning
+message: "Cache extension is not sealed (PX1011). Declare it as `public sealed class ... : PXCacheExtension<...>`; DAC extensions cannot be abstract or inherited."
+metadata:
+  skill: acumatica-dac-extension
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    has: { kind: base_list, regex: '^:\s*(PX\.Data\.)?PXCacheExtension<' }
+    not:
+      has: { kind: modifier, regex: '^sealed$' }

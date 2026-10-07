@@ -1,0 +1,64 @@
+id: acu-action-handler-returns-null
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public PXAction<SOOrder> approveOrder;
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Approve")]
+        public virtual IEnumerable ApproveOrder(PXAdapter adapter)
+        {
+            if (Base.Document.Current == null)
+            {
+                return adapter.Get();
+            }
+            PXLongOperation.StartOperation(Base, () =>
+            {
+                HCODApprovalService.Approve();
+            });
+            return adapter.Get();
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public PXAction<SOOrder> printLabels;
+        [PXButton]
+        [PXUIField(DisplayName = "Print Labels")]
+        public virtual IEnumerable PrintLabels(PXAdapter adapter)
+        {
+            Func<SOOrder, string> label = order => order == null ? null : order.OrderNbr;
+            return adapter.Get();
+        }
+
+        public virtual string FindLabel(PXAdapter adapter)
+        {
+            return null;
+        }
+    }
+invalid:
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public PXAction<HCODWidget> process;
+        [PXButton]
+        [PXUIField(DisplayName = "Process")]
+        public IEnumerable Process(PXAdapter adapter)
+        {
+            if (Widgets.Current == null)
+            {
+                return null;
+            }
+            return adapter.Get();
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public IEnumerable Release(PXAdapter adapter, Func<PXAdapter, IEnumerable> base_Release)
+        {
+            if (Base.Document.Current?.Hold == true) return null;
+            return base_Release(adapter);
+        }
+    }

@@ -1,0 +1,52 @@
+id: acu-graph-static-member
+valid:
+  - |
+    public class HCODxPOCreate : PXGraphExtension<POCreate>
+    {
+        public static bool IsActive() => true;
+
+        private const int MaxLines = 500;
+        private static readonly string[] DayLabels = { "Mon", "Tue" };
+        public SelectFrom<SOOrder>.View SOOrders;
+    }
+  - |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        public PXAction<HCODWorkOrder> Release;
+        public static string ScreenID => "HC301000";
+    }
+  - |
+    public static class HCODCache
+    {
+        public static bool ProcessingAll;
+    }
+invalid:
+  - |
+    public class HCODxPOCreate : PXGraphExtension<POCreate>
+    {
+        public static bool IsActive() => true;
+
+        public static SelectFrom<SOOrder>.Where<SOOrder.orderNbr.IsEqual<@P.AsString>>.View SOOrders;
+    }
+  - |
+    public class HCODxMRPDisplay : PXGraphExtension<MRPDisplay>
+    {
+        public static bool IsActive() => true;
+
+        public static bool processingAll = false;
+    }
+  - |
+    public class SomeGraph : PXGraph<SomeGraph>
+    {
+        public static PXAction<ARInvoice> Release;
+    }
+  - |
+    public class SomeGraph : PXGraph<SomeGraph>
+    {
+        public static IFinPeriodRepository FinPeriodRepository { get; set; }
+    }
+  - |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        public static readonly PXSelect<HCODWorkOrder> Orders;
+    }

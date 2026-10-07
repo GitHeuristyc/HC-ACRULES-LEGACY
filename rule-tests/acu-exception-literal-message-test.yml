@@ -1,0 +1,13 @@
+id: acu-exception-literal-message
+valid:
+  - |
+    class C { void M() { throw new PXSetPropertyException(Messages.CustomerRefRequired); } }
+  - |
+    class C { void M() { throw new InvalidOperationException("internal"); } }
+invalid:
+  - |
+    class C { void M() { throw new PXSetPropertyException<SOOrder.customerRefNbr>("Customer reference is required."); } }
+  - |
+    class C { void M() { throw new PXSetPropertyException("Customer reference is required."); } }
+  - |
+    class C { void M(string n) { throw new PXException($"Order {n} is closed."); } }

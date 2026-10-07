@@ -1,0 +1,15 @@
+id: acu-report-service-locator
+language: csharp
+severity: warning
+message: "IReportLoaderService or IReportRenderer resolved through ServiceLocator.Current in graph code. Declare the service as an [InjectDependency] property on the graph or extension."
+metadata:
+  skill: acumatica-reports-from-code
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    regex: '(^|\.)ServiceLocator\s*\.\s*Current\s*\??\s*\.\s*GetInstance\s*<\s*([\w.]*\.)?(IReportLoaderService|IReportRenderer)\s*>$'
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: '\bPXGraph(Extension)?<' }

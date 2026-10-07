@@ -1,0 +1,20 @@
+id: acu-gl-batch-curyid-on-insert
+language: csharp
+severity: warning
+message: "CuryID set in the Batch row passed to BatchModule.Insert. CurrencyInfo overwrites it during insert; insert the batch first, then call SetValueExt<Batch.curyID>."
+metadata:
+  skill: acumatica-gl-batch-from-code
+rule:
+  kind: object_creation_expression
+  all:
+    - has: { field: type, regex: '^([\w.]*\.)?Batch$' }
+    - has:
+        field: initializer
+        has: { kind: assignment_expression, has: { field: left, regex: '^CuryID$' } }
+  inside:
+    kind: argument
+    inside:
+      kind: argument_list
+      inside:
+        kind: invocation_expression
+        has: { field: function, regex: '(^|\.)BatchModule\.Insert$' }

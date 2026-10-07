@@ -1,0 +1,34 @@
+# MUI-026 — An import containing "customizationScreens" is ALWAYS a bug.
+# Source: HC.ACAGENTS skills/acumatica-modern-ui/assets/extension-patterns.md (Rule 3)
+id: mui-no-customizationscreens-import
+language: typescript
+severity: error
+message: Import path contains "customizationScreens" — it hardcodes the tenant folder and breaks package publishing on client instances (MUI-026).
+note: |
+  The tenant folder name under customizationScreens/ differs per Acumatica site,
+  so any import that spells it out fails to resolve everywhere else.
+
+  Fix by import target location:
+  - Acumatica base screen (physically under src/screens/): use the absolute form
+    "src/screens/{Module}/{ScreenID}/{ScreenID}".
+  - Screen deployed by another customization package (it lives under
+    customizationScreens/{Tenant}/screens/...): use a RELATIVE import,
+    e.g. "../IGFS3099" — both files deploy to the same tenant tree, so the
+    relative path always resolves.
+rule:
+  any:
+    - kind: import_statement
+      has:
+        field: source
+        regex: (?i)customizationscreens
+    - kind: export_statement
+      has:
+        field: source
+        regex: (?i)customizationscreens
+    - kind: call_expression
+      regex: (?i)customizationscreens
+      has:
+        field: function
+        kind: import
+metadata:
+  skill: acumatica-modern-ui

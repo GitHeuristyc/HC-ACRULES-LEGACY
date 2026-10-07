@@ -1,0 +1,45 @@
+id: acu-dac-underscore-name
+valid:
+  - |
+    [PXCacheName("Sales Invoice")]
+    public class SOInvoice : PXBqlTable, IBqlTable
+    {
+        public abstract class invoiceType : BqlString.Field<invoiceType> { }
+        [PXDBString(3, IsKey = true)]
+        public string InvoiceType { get; set; }
+    }
+  - |
+    public class SOOrderEntry_Extension : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        public string Last_Error { get; set; }
+    }
+  - |
+    public sealed class InventoryItemExt : PXCacheExtension<InventoryItem>
+    {
+        public static bool IsActive() => true;
+        private decimal? cached_Length;
+        protected string Helper_Value { get; set; }
+    }
+invalid:
+  - |
+    [PXCacheName("Sales Invoice")]
+    public class SO_Invoice : PXBqlTable, IBqlTable
+    {
+    }
+  - |
+    public sealed class InventoryItemExt : PXCacheExtension<InventoryItem>
+    {
+        public static bool IsActive() => true;
+        public abstract class usrU_Length : BqlDecimal.Field<usrU_Length> { }
+        [PXDBDecimal(3)]
+        [PXUIField(DisplayName = "Unit Length")]
+        public decimal? UsrU_Length { get; set; }
+    }
+  - |
+    [PXCacheName("Component Usage")]
+    public class SFMRPCompUsage : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(2)]
+        public virtual decimal? AsyQty_12_mo_ago { get; set; }
+    }

@@ -1,0 +1,86 @@
+id: acu-localization-concatenation
+snapshots:
+  ? |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Post(Exception a)
+        {
+            throw new PXException("Report.ProcessReport error : " + a.Message);
+        }
+    }
+  : labels:
+    - source: '"Report.ProcessReport error : " + a.Message'
+      style: primary
+      start: 142
+      end: 185
+    - source: PXException
+      style: secondary
+      start: 130
+      end: 141
+    - source: 'new PXException("Report.ProcessReport error : " + a.Message)'
+      style: secondary
+      start: 126
+      end: 186
+    - source: '("Report.ProcessReport error : " + a.Message)'
+      style: secondary
+      start: 141
+      end: 186
+    - source: '"Report.ProcessReport error : " + a.Message'
+      style: secondary
+      start: 142
+      end: 185
+  ? |
+    public class HCEMxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void Post(string serviceCode)
+        {
+            throw new PXException(HCEMMessages.UnknownShippingMethod + serviceCode);
+        }
+    }
+  : labels:
+    - source: HCEMMessages.UnknownShippingMethod + serviceCode
+      style: primary
+      start: 149
+      end: 197
+    - source: PXException
+      style: secondary
+      start: 137
+      end: 148
+    - source: new PXException(HCEMMessages.UnknownShippingMethod + serviceCode)
+      style: secondary
+      start: 133
+      end: 198
+    - source: (HCEMMessages.UnknownShippingMethod + serviceCode)
+      style: secondary
+      start: 148
+      end: 198
+    - source: HCEMMessages.UnknownShippingMethod + serviceCode
+      style: secondary
+      start: 149
+      end: 197
+  ? |
+    public class LocalizationWithConcatenation
+    {
+        public string All() => PXLocalizer.Localize(MyMessages.Part1 + MyMessages.Part2);
+    }
+  : labels:
+    - source: MyMessages.Part1 + MyMessages.Part2
+      style: primary
+      start: 93
+      end: 128
+    - source: PXLocalizer.Localize
+      style: secondary
+      start: 72
+      end: 92
+    - source: PXLocalizer.Localize(MyMessages.Part1 + MyMessages.Part2)
+      style: secondary
+      start: 72
+      end: 129
+    - source: (MyMessages.Part1 + MyMessages.Part2)
+      style: secondary
+      start: 92
+      end: 129
+    - source: MyMessages.Part1 + MyMessages.Part2
+      style: secondary
+      start: 93
+      end: 128

@@ -1,0 +1,30 @@
+id: acu-throw-in-rowselected
+language: csharp
+severity: warning
+message: "Exception thrown inside RowSelected. RowSelected runs on every UI refresh; show the problem with RaiseExceptionHandling at warning level and validate in FieldVerifying or RowPersisting."
+metadata:
+  skill: acumatica-events
+rule:
+  any:
+    - kind: throw_statement
+    - kind: throw_expression
+  not:
+    any:
+      - regex: 'PXSetupNotEnteredException'
+      - inside:
+          stopBy: { kind: method_declaration }
+          any:
+            - kind: lambda_expression
+            - kind: anonymous_method_expression
+            - kind: local_function_statement
+            - kind: catch_clause
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has: { kind: parameter, nthChild: 1, has: { field: type, regex: '^(PX\.Data\.)?Events\.RowSelected<' } }
+      - all:
+          - has: { field: name, regex: '^\w+_RowSelected$' }
+          - has: { field: parameters, regex: '^\(\s*(PX\.Data\.)?PXCache\s' }

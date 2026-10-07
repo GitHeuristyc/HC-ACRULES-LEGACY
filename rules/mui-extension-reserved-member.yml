@@ -1,0 +1,53 @@
+# A screen extension class (merge interface + class of the same name, no
+# `extends` on the class) must not declare a reserved PXScreen member.
+# Source: skills/acumatica-modern-ui/assets/extension-merge-safety.md (HC rule 2, reserved list)
+id: mui-extension-reserved-member
+language: typescript
+severity: error
+message: "Screen extension declares the reserved PXScreen member `$M`, which replaces the base screen member instead of chaining it. Move the logic to @handleEvent, a package-owned custom element, or the C# graph extension."
+note: |
+  Acumatica applies screen extensions as mixins: applyMixins() copies every own
+  extension prototype member over the screen, so a same-named member silently
+  removes the base implementation (for example AP301100 builds its document
+  recognition controller in onAfterInitialize()). This holds even when the
+  current base method is empty. Lifecycle hooks belong on package-owned full
+  screens or on package-owned custom elements. `afterConstructor` is not
+  checked because 2026R1+ composes it.
+rule:
+  any:
+    - kind: method_definition
+    - kind: public_field_definition
+  has:
+    field: name
+    pattern: $M
+    regex: ^(LAYER_CONTAINER_ID|Messages|actionIsBoundToView|actionNames|actions|activate|appliedMixins|attachScreenEventHandlers|attached|baseApiClient|busyCounter|clearActions|container|detached|dialogHelper|dirtyFlag|element|ensureInitialized|eventAggregator|eventManager|features|featuresService|getCaptionText|getKeys|getRowErrors|getScreenApiSettings|getScreenService|getViewStrategy|graphInfo|hasFeatureInstalled|hasHeaderDescription|initialize|initialized|isClientDirty|isCustomized|isDirty|isNewEntry|isPersistingActionExecuted|loadOnDemand|localizationService|markInitialized|model|modelScreenID|onActivate|onActionsUpdate|onAfterInitialize|onBeforeInitialize|onCommandExecuted|onInitialize|onInitializeError|optimizeDataSelection|redirectHelper|registerService|saveActions|screenEventManager|screenID|screenIdFromConstructor|screenService|services|setActionStates|setColors|setDirty|setTyping|setupParameters|siteMapScreenID|subscribers|suppressInitialization|textValue|tq|typingFlag|update|viewName)$
+  not:
+    has:
+      regex: ^static$
+  inside:
+    kind: class_body
+    inside:
+      kind: class_declaration
+      not:
+        has:
+          kind: class_heritage
+      has:
+        field: name
+        pattern: $EXT
+      inside:
+        kind: program
+        stopBy: end
+        has:
+          kind: interface_declaration
+          stopBy: end
+          all:
+            - has:
+                field: name
+                pattern: $EXT
+            - has:
+                kind: extends_type_clause
+                has:
+                  kind: type_identifier
+                  regex: ^[A-Z]{2}[A-Z0-9]{2}[0-9]{2}[A-Z0-9]{2}$
+metadata:
+  skill: acumatica-modern-ui

@@ -1,0 +1,32 @@
+id: acu-payment-pxlongoperation
+valid:
+  - |
+    public class HCTransactionProcessor : ICCTransactionProcessor
+    {
+        public ProcessingResult DoTransaction(ProcessingInput inputData)
+        {
+            var response = Send(inputData);
+            return Map(response);
+        }
+    }
+  - |
+    public class HCCCPaymentEntryExt : PXGraphExtension<ARPaymentEntry>
+    {
+        public static bool IsActive() => true;
+        public void Sync() { PXLongOperation.StartOperation(Base, () => SyncTokens()); }
+    }
+invalid:
+  - |
+    public class HCTransactionProcessor : ICCTransactionProcessor
+    {
+        public ProcessingResult DoTransaction(ProcessingInput inputData)
+        {
+            PXLongOperation.StartOperation(this, () => Send(inputData));
+            return new ProcessingResult();
+        }
+    }
+  - |
+    public class HCTerminalGetter : ICCTerminalGetter
+    {
+        public IEnumerable<POSTerminalData> GetTerminals() { PX.Data.PXLongOperation.StartOperation(Guid.NewGuid(), () => Refresh()); return null; }
+    }

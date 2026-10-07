@@ -1,0 +1,42 @@
+id: acu-gl-reversebatch-press
+snapshots:
+  ? |
+    JournalEntry je = PXGraph.CreateInstance<JournalEntry>();
+    je.BatchModule.Current = batch;
+    je.reverseBatch.Press();
+  : labels:
+    - source: je.reverseBatch.Press()
+      style: primary
+      start: 90
+      end: 113
+    - source: Press
+      style: secondary
+      start: 106
+      end: 111
+    - source: je.reverseBatch
+      style: secondary
+      start: 90
+      end: 105
+    - source: je.reverseBatch.Press
+      style: secondary
+      start: 90
+      end: 111
+  ? |
+    graph.reverseBatch.Press(adapter);
+  : labels:
+    - source: graph.reverseBatch.Press(adapter)
+      style: primary
+      start: 0
+      end: 33
+    - source: Press
+      style: secondary
+      start: 19
+      end: 24
+    - source: graph.reverseBatch
+      style: secondary
+      start: 0
+      end: 18
+    - source: graph.reverseBatch.Press
+      style: secondary
+      start: 0
+      end: 24

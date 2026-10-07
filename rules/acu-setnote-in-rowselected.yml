@@ -1,0 +1,15 @@
+id: acu-setnote-in-rowselected
+language: csharp
+severity: error
+message: "PXNoteAttribute.SetNote called inside a RowSelected handler. RowSelected is for UI state only; write the note in the action or workflow step that changes it."
+metadata:
+  skill: acumatica-attachments-notes
+rule:
+  kind: invocation_expression
+  has: { field: function, regex: '(^|\.)PXNoteAttribute\.SetNote$' }
+  inside:
+    stopBy: end
+    kind: method_declaration
+    any:
+      - has: { kind: parameter_list, regex: 'RowSelected' }
+      - has: { field: name, regex: '_RowSelected$' }

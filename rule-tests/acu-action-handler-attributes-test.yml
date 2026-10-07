@@ -1,0 +1,60 @@
+id: acu-action-handler-attributes
+valid:
+  - |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        public PXAction<HCODWorkOrder> release;
+
+        [PXButton(CommitChanges = true)]
+        [PXUIField(DisplayName = "Release", MapEnableRights = PXCacheRights.Update)]
+        protected virtual IEnumerable Release(PXAdapter adapter)
+        {
+            return adapter.Get();
+        }
+    }
+  - |
+    public class HCODxPOPrintOrder : PXGraphExtension<POPrintOrder>
+    {
+        public static bool IsActive() => true;
+
+        public virtual IEnumerable records(PXAdapter adapter)
+        {
+            return Base.Records.Select();
+        }
+
+        [PXOverride]
+        public IEnumerable Release(PXAdapter adapter, Func<PXAdapter, IEnumerable> baseMethod)
+        {
+            return baseMethod(adapter);
+        }
+    }
+  - |
+    public class HCCPPXOrderedSelect<TPrimary, TTable> : PXSelect<TTable>
+    {
+        [PXButton()]
+        protected virtual IEnumerable PasteLine(PXAdapter adapter)
+        {
+            return adapter.Get();
+        }
+    }
+invalid:
+  - |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        [PXUIField(DisplayName = "View Document", MapEnableRights = PXCacheRights.Select)]
+        public virtual IEnumerable viewDocument(PXAdapter adapter)
+        {
+            return adapter.Get();
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+
+        [PXProcessButton]
+        protected virtual IEnumerable ProcessAll(PXAdapter adapter)
+        {
+            return adapter.Get();
+        }
+    }

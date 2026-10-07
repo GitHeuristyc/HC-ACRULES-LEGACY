@@ -1,0 +1,46 @@
+id: acu-dac-missing-cachename
+valid:
+  - |
+    [Serializable]
+    [PXCacheName(Messages.WorkOrder)]
+    public class HCODWorkOrder : PXBqlTable, IBqlTable
+    {
+    }
+  - |
+    [Serializable, PXHidden]
+    public class HCODProcessFilter : PXBqlTable, IBqlTable
+    {
+    }
+  - |
+    [PX.Data.PXHidden]
+    public class HCODLookupFilter : PX.Data.PXBqlTable, PX.Data.IBqlTable
+    {
+    }
+  - |
+    public partial class RequestItemFilter : PXBqlTable, IBqlTable
+    {
+    }
+  - |
+    [PXCacheName("Sales Order Extension")]
+    public sealed class HCODxSOOrder : PXCacheExtension<SOOrder>
+    {
+        public static bool IsActive() => true;
+    }
+invalid:
+  - |
+    [Serializable]
+    public class HCODWorkOrder : PXBqlTable, IBqlTable
+    {
+    }
+  - |
+    public class TSRecalculateDiscountsFilters : IBqlTable
+    {
+    }
+  - |
+    public class HCODWarehouseMaint : PXGraph<HCODWarehouseMaint>
+    {
+        [Serializable]
+        public class MasterTable : PXBqlTable, IBqlTable
+        {
+        }
+    }

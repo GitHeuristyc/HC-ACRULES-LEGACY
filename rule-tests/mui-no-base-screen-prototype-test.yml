@@ -1,0 +1,21 @@
+id: mui-no-base-screen-prototype
+valid:
+  - |
+    import { AP301100 } from "src/screens/AP/AP301100/AP301100";
+    export interface AP301100_HCUS extends AP301100 {}
+    export class AP301100_HCUS {
+      HCUS_isReady(): boolean { return true; }
+    }
+  - |
+    import { HcusMapCustomElement } from "./hcus-map";
+    const original = HcusMapCustomElement.prototype.attached;
+invalid:
+  - |
+    import { AP301100 } from "src/screens/AP/AP301100/AP301100";
+    const baseInit = AP301100.prototype.onAfterInitialize;
+    export interface AP301100_HCUS extends AP301100 {}
+    export class AP301100_HCUS {}
+  - |
+    import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+    const descriptor = Object.getOwnPropertyDescriptor(SO301000.prototype, "onAfterInitialize");
+    Object.defineProperty(SO301000.prototype, "onAfterInitialize", { value: () => {} });

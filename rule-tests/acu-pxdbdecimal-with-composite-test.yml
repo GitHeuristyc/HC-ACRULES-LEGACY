@@ -1,0 +1,30 @@
+id: acu-pxdbdecimal-with-composite
+valid:
+  - |
+    public class HCODWorkOrderLine : PXBqlTable, IBqlTable
+    {
+        [PXDBQuantity]
+        [PXDefault(TypeCode.Decimal, "0.0")]
+        public virtual decimal? Qty { get; set; }
+    }
+  - |
+    public class HCODWorkOrderLine : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(6)]
+        [PXDefault(TypeCode.Decimal, "0.0")]
+        public virtual decimal? ConversionRate { get; set; }
+    }
+invalid:
+  - |
+    public class HCODWorkOrderLine : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(2)]
+        [PXDBQuantity]
+        public virtual decimal? Qty { get; set; }
+    }
+  - |
+    public class HCODWorkOrderLine : PXBqlTable, IBqlTable
+    {
+        [PXDBPriceCost, PXDBDecimal(4)]
+        public virtual decimal? UnitCost { get; set; }
+    }

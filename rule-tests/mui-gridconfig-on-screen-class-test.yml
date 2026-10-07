@@ -1,0 +1,29 @@
+id: mui-gridconfig-on-screen-class
+valid:
+  - |
+    @graphInfo({ graphType: "HC.Objects.TC.HCTCMaint", primaryView: "Filter" })
+    export class HCTC1010 extends PXScreen {
+      Details = createCollection(HCTCDetail);
+    }
+
+    @gridConfig({ preset: GridPreset.Details, syncPosition: true })
+    export class HCTCDetail extends PXView {
+      LineNbr: PXFieldState;
+    }
+  - |
+    @gridConfig({ preset: GridPreset.ReadOnly })
+    export class HCEMSOShipLineSplit extends PXView {
+      ShipmentNbr: PXFieldState;
+    }
+invalid:
+  - |
+    @graphInfo({ graphType: "HC.Objects.TC.HCTCMaint", primaryView: "Filter" })
+    @gridConfig({ preset: GridPreset.Details })
+    export class HCTC1010 extends PXScreen {
+      Details = createCollection(HCTCDetail);
+    }
+  - |
+    @gridConfig({ syncPosition: true })
+    export class HCTC4020 extends PXScreen {
+      Filter = createSingle(HCTCFilter);
+    }

@@ -1,0 +1,26 @@
+id: acu-dac-missing-cachename
+language: csharp
+severity: warning
+message: "DAC without [PXCacheName] or [PXHidden] (PX1094). Add [PXCacheName(Messages.X)] when reports and generic inquiries need the DAC, otherwise add [PXHidden]."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    all:
+      - has:
+          kind: base_list
+          regex: '(^|[\s:,.])(IBqlTable|PXBqlTable)\b'
+      # Abstract bases are skipped; partial DACs may carry the attribute in another file.
+      - not: { has: { kind: modifier, regex: '^(abstract|partial)$' } }
+      - not:
+          has:
+            kind: attribute_list
+            has:
+              kind: attribute
+              has: { field: name, regex: '^(PX\.Data\.)?(PXCacheName|PXHidden)(Attribute)?$' }

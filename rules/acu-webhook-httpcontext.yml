@@ -1,0 +1,13 @@
+id: acu-webhook-httpcontext
+language: csharp
+severity: warning
+message: "HttpContext.Current used in a webhook handler. Read the request and write the response through WebhookContext.Request and WebhookContext.Response."
+metadata:
+  skill: acumatica-webhooks
+rule:
+  kind: member_access_expression
+  regex: '^(System\.Web\.)?HttpContext\.Current$'
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: '\bIWebhookHandler\b' }

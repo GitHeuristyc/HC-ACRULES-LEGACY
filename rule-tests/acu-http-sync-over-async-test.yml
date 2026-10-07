@@ -1,0 +1,39 @@
+id: acu-http-sync-over-async
+valid:
+  - |
+    public async Task<string> GetAsync(string url, CancellationToken ct)
+    {
+        using (HttpResponseMessage response = await _client.GetAsync(url, ct))
+            return await response.Content.ReadAsStringAsync();
+    }
+  - |
+    public void Ship(PXResult<SOLine> ss)
+    {
+        sl.OrderType = ((SOLine)ss.Result).OrderType;
+        var rates = request.Result.Result;
+        Task.WhenAll(t1).GetAwaiter().GetResult();
+    }
+invalid:
+  - |
+    public string GetCurrent(string url)
+    {
+        var response = _httpClient.GetAsync(url).GetAwaiter().GetResult();
+        return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+    }
+  - |
+    public string Upload(Stream file)
+    {
+        var res = _httpClient.PostAsync(_baseUrl, new StreamContent(file)).Result;
+        return res.Content.ReadAsStringAsync().Result;
+    }
+  - |
+    public RestService(string baseUrl, string user, string password)
+    {
+        _httpClient.PostAsJsonAsync(baseUrl + "/entity/auth/login", new { name = user, password = password }).Result
+            .EnsureSuccessStatusCode();
+    }
+  - |
+    public void Notify(HttpRequestMessage message)
+    {
+        _client.SendAsync(message).Wait();
+    }

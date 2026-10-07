@@ -1,0 +1,46 @@
+id: acu-wms-decoratescanmode-base-not-called
+valid:
+  - |
+    public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual ScanMode<PickPackShip> DecorateScanMode(ScanMode<PickPackShip> original,
+            Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> base_DecorateScanMode)
+        {
+            var mode = base_DecorateScanMode(original);
+            if (mode is PickPackShip.PickMode pick)
+                pick.Intercept.CreateStates.ByAppend(() => new[] { new HCLabelState() });
+            return mode;
+        }
+    }
+  - |
+    public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public ScanMode<PickPackShip> DecorateScanMode(ScanMode<PickPackShip> original, Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> baseMethod)
+            => Decorate(baseMethod(original));
+    }
+invalid:
+  - |
+    public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual ScanMode<PickPackShip> DecorateScanMode(ScanMode<PickPackShip> original,
+            Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> base_DecorateScanMode)
+        {
+            if (original is PickPackShip.PickMode pick)
+                pick.Intercept.CreateStates.ByAppend(() => new[] { new HCLabelState() });
+            return original;
+        }
+    }
+  - |
+    public class HCReceivePutAwayExt : PXGraphExtension<ReceivePutAway, ReceivePutAway.Host>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public ScanMode<ReceivePutAway> DecorateScanMode(ScanMode<ReceivePutAway> original, Func<ScanMode<ReceivePutAway>, ScanMode<ReceivePutAway>> baseMethod)
+            => original;
+    }

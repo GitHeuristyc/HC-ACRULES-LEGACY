@@ -1,0 +1,18 @@
+id: acu-savefile-result-ignored
+language: csharp
+severity: warning
+message: "Return value of UploadFileMaintenance.SaveFile is ignored. SaveFile returns false when the file was not saved; check it and FileInfo.UID before linking the file."
+metadata:
+  skill: acumatica-attachments-notes
+rule:
+  kind: expression_statement
+  has:
+    kind: invocation_expression
+    has:
+      field: function
+      kind: member_access_expression
+      has: { field: name, regex: '^SaveFile$' }
+  inside:
+    stopBy: end
+    kind: compilation_unit
+    regex: 'UploadFileMaintenance'

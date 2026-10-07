@@ -1,0 +1,46 @@
+id: acu-cache-extension-not-sealed
+snapshots:
+  ? |
+    [PXNonInstantiatedExtension]
+    public abstract class HCODxARInvoice : PX.Data.PXCacheExtension<ARInvoice>
+    {
+    }
+  : labels:
+    - source: HCODxARInvoice
+      style: primary
+      start: 51
+      end: 65
+    - source: ': PX.Data.PXCacheExtension<ARInvoice>'
+      style: secondary
+      start: 66
+      end: 103
+    - source: |-
+        [PXNonInstantiatedExtension]
+        public abstract class HCODxARInvoice : PX.Data.PXCacheExtension<ARInvoice>
+        {
+        }
+      style: secondary
+      start: 0
+      end: 107
+  ? |
+    public class HCODxSOOrder : PXCacheExtension<SOOrder>
+    {
+        public static bool IsActive() => true;
+    }
+  : labels:
+    - source: HCODxSOOrder
+      style: primary
+      start: 13
+      end: 25
+    - source: ': PXCacheExtension<SOOrder>'
+      style: secondary
+      start: 26
+      end: 53
+    - source: |-
+        public class HCODxSOOrder : PXCacheExtension<SOOrder>
+        {
+            public static bool IsActive() => true;
+        }
+      style: secondary
+      start: 0
+      end: 100

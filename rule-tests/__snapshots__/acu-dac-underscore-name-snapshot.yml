@@ -1,0 +1,120 @@
+id: acu-dac-underscore-name
+snapshots:
+  ? |
+    [PXCacheName("Component Usage")]
+    public class SFMRPCompUsage : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(2)]
+        public virtual decimal? AsyQty_12_mo_ago { get; set; }
+    }
+  : labels:
+    - source: |-
+        [PXDBDecimal(2)]
+            public virtual decimal? AsyQty_12_mo_ago { get; set; }
+      style: primary
+      start: 91
+      end: 166
+    - source: AsyQty_12_mo_ago
+      style: secondary
+      start: 136
+      end: 152
+    - source: public
+      style: secondary
+      start: 112
+      end: 118
+    - source: ': PXBqlTable, IBqlTable'
+      style: secondary
+      start: 61
+      end: 84
+    - source: |-
+        [PXCacheName("Component Usage")]
+        public class SFMRPCompUsage : PXBqlTable, IBqlTable
+        {
+            [PXDBDecimal(2)]
+            public virtual decimal? AsyQty_12_mo_ago { get; set; }
+        }
+      style: secondary
+      start: 0
+      end: 168
+    - source: |-
+        {
+            [PXDBDecimal(2)]
+            public virtual decimal? AsyQty_12_mo_ago { get; set; }
+        }
+      style: secondary
+      start: 85
+      end: 168
+  ? |
+    [PXCacheName("Sales Invoice")]
+    public class SO_Invoice : PXBqlTable, IBqlTable
+    {
+    }
+  : labels:
+    - source: |-
+        [PXCacheName("Sales Invoice")]
+        public class SO_Invoice : PXBqlTable, IBqlTable
+        {
+        }
+      style: primary
+      start: 0
+      end: 82
+    - source: SO_Invoice
+      style: secondary
+      start: 44
+      end: 54
+    - source: ': PXBqlTable, IBqlTable'
+      style: secondary
+      start: 55
+      end: 78
+  ? |
+    public sealed class InventoryItemExt : PXCacheExtension<InventoryItem>
+    {
+        public static bool IsActive() => true;
+        public abstract class usrU_Length : BqlDecimal.Field<usrU_Length> { }
+        [PXDBDecimal(3)]
+        [PXUIField(DisplayName = "Unit Length")]
+        public decimal? UsrU_Length { get; set; }
+    }
+  : labels:
+    - source: |-
+        [PXDBDecimal(3)]
+            [PXUIField(DisplayName = "Unit Length")]
+            public decimal? UsrU_Length { get; set; }
+      style: primary
+      start: 194
+      end: 301
+    - source: UsrU_Length
+      style: secondary
+      start: 276
+      end: 287
+    - source: public
+      style: secondary
+      start: 260
+      end: 266
+    - source: ': PXCacheExtension<InventoryItem>'
+      style: secondary
+      start: 37
+      end: 70
+    - source: |-
+        public sealed class InventoryItemExt : PXCacheExtension<InventoryItem>
+        {
+            public static bool IsActive() => true;
+            public abstract class usrU_Length : BqlDecimal.Field<usrU_Length> { }
+            [PXDBDecimal(3)]
+            [PXUIField(DisplayName = "Unit Length")]
+            public decimal? UsrU_Length { get; set; }
+        }
+      style: secondary
+      start: 0
+      end: 303
+    - source: |-
+        {
+            public static bool IsActive() => true;
+            public abstract class usrU_Length : BqlDecimal.Field<usrU_Length> { }
+            [PXDBDecimal(3)]
+            [PXUIField(DisplayName = "Unit Length")]
+            public decimal? UsrU_Length { get; set; }
+        }
+      style: secondary
+      start: 71
+      end: 303

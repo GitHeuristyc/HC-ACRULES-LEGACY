@@ -1,0 +1,82 @@
+id: acu-pm-pxdbint-on-project-attribute
+snapshots:
+  ? |
+    public class HCAPInvoiceEntryExt : PXGraphExtension<APInvoiceEntry>
+    {
+        public static bool IsActive() => true;
+        [PXMergeAttributes(Method = MergeMethod.Replace)]
+        [PXDBInt(), BaseProjectTask(typeof(APTran.projectID))]
+        protected virtual void _(Events.CacheAttached<APTran.taskID> e) { }
+    }
+  : labels:
+    - source: |-
+        [PXMergeAttributes(Method = MergeMethod.Replace)]
+            [PXDBInt(), BaseProjectTask(typeof(APTran.projectID))]
+            protected virtual void _(Events.CacheAttached<APTran.taskID> e) { }
+      style: primary
+      start: 117
+      end: 297
+    - source: PXDBInt
+      style: secondary
+      start: 172
+      end: 179
+    - source: PXDBInt()
+      style: secondary
+      start: 172
+      end: 181
+    - source: '[PXDBInt(), BaseProjectTask(typeof(APTran.projectID))]'
+      style: secondary
+      start: 171
+      end: 225
+    - source: BaseProjectTask
+      style: secondary
+      start: 183
+      end: 198
+    - source: BaseProjectTask(typeof(APTran.projectID))
+      style: secondary
+      start: 183
+      end: 224
+    - source: '[PXDBInt(), BaseProjectTask(typeof(APTran.projectID))]'
+      style: secondary
+      start: 171
+      end: 225
+  ? |
+    public sealed class HCSOLineExt : PXCacheExtension<SOLine>
+    {
+        public static bool IsActive() => true;
+        [PXDBInt]
+        [ProjectBase]
+        public int? UsrProjectID { get; set; }
+    }
+  : labels:
+    - source: |-
+        [PXDBInt]
+            [ProjectBase]
+            public int? UsrProjectID { get; set; }
+      style: primary
+      start: 108
+      end: 178
+    - source: PXDBInt
+      style: secondary
+      start: 109
+      end: 116
+    - source: PXDBInt
+      style: secondary
+      start: 109
+      end: 116
+    - source: '[PXDBInt]'
+      style: secondary
+      start: 108
+      end: 117
+    - source: ProjectBase
+      style: secondary
+      start: 123
+      end: 134
+    - source: ProjectBase
+      style: secondary
+      start: 123
+      end: 134
+    - source: '[ProjectBase]'
+      style: secondary
+      start: 122
+      end: 135

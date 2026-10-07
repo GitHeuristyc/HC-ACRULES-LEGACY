@@ -1,0 +1,28 @@
+id: acu-cache-extension-not-sealed
+valid:
+  - |
+    public sealed class HCODxSOOrder : PXCacheExtension<SOOrder>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public sealed class HCODxSOLine2 : PXCacheExtension<HCODxSOLine, SOLine>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public class HCODWorkOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+    }
+invalid:
+  - |
+    public class HCODxSOOrder : PXCacheExtension<SOOrder>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    [PXNonInstantiatedExtension]
+    public abstract class HCODxARInvoice : PX.Data.PXCacheExtension<ARInvoice>
+    {
+    }

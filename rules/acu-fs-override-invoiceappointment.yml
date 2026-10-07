@@ -1,0 +1,21 @@
+id: acu-fs-override-invoiceappointment
+language: csharp
+severity: error
+message: "[PXOverride] on AppointmentEntry.InvoiceAppointment. The action handler is not virtual, so graph creation throws \"original method not found\"; hook CreateInvoiceByAppointmentPost.CreateInvoices or redeclare the action."
+metadata:
+  skill: acumatica-field-service-hooks
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    all:
+      - has: { kind: attribute_list, regex: 'PXOverride' }
+      - has: { field: name, regex: '^InvoiceAppointment$' }
+    inside:
+      stopBy: end
+      kind: class_declaration
+      has: { kind: base_list, regex: '\bAppointmentEntry\b' }

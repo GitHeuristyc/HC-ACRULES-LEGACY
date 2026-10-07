@@ -1,0 +1,45 @@
+id: acu-error-in-rowselected
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>(e.Row, e.Row.OrderDesc,
+                new PXSetPropertyException(HCODMessages.DescriptionRecommended, PXErrorLevel.Warning));
+            e.Cache.RaiseExceptionHandling<SOOrder.customerRefNbr>(e.Row, e.Row.CustomerRefNbr, null);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowPersisting<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>(e.Row, e.Row.OrderDesc,
+                new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error));
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            e.Cache.RaiseExceptionHandling<SOOrder.orderDesc>(e.Row, e.Row.OrderDesc,
+                new PXSetPropertyException(HCODMessages.DescriptionRequired, PXErrorLevel.Error));
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            var row = (HCODWidget)e.Row;
+            if (row == null) return;
+            sender.RaiseExceptionHandling<HCODWidget.descr>(row, row.Descr,
+                new PXSetPropertyException(HCODMessages.DescriptionRequired));
+        }
+    }

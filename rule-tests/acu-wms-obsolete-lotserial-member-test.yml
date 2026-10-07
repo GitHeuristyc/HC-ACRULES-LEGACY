@@ -1,0 +1,26 @@
+id: acu-wms-obsolete-lotserial-member
+valid:
+  - |
+    public class HCPickPackShipExt : PickPackShip.ScanExtension
+    {
+        public static bool IsActive() => true;
+        protected virtual bool NeedsLot() => Basis.LotSerialTrack.IsTracked && Basis.LotSerialTrack.IsEnterable;
+    }
+  - |
+    public class HCINLotHelper : PXGraphExtension<INReceiptEntry>
+    {
+        public static bool IsActive() => true;
+        public bool ItemHasLotSerial(InventoryItem item) => item.LotSerClassID != null;
+    }
+invalid:
+  - |
+    public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+    {
+        public static bool IsActive() => true;
+        protected virtual bool NeedsLot() => Base1.ItemHasLotSerial && Base1.IsEnterableLotSerial(isForIssue: true);
+    }
+  - |
+    public sealed class HCExpireDateState : PickPackShip.EntityState<DateTime?>
+    {
+        protected override bool IsStateActive() => Basis.ItemHasExpireDate;
+    }

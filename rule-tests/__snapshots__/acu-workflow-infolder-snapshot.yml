@@ -1,0 +1,33 @@
+id: acu-workflow-infolder
+snapshots:
+  ? |
+    actions.Add(g => g.hcPrintLabel, a => a.InFolder(processingCategory, g => g.printSalesOrder).IsDisabledWhen(conditions.IsOnHold));
+  : labels:
+    - source: a.InFolder(processingCategory, g => g.printSalesOrder)
+      style: primary
+      start: 38
+      end: 92
+    - source: InFolder
+      style: secondary
+      start: 40
+      end: 48
+    - source: a.InFolder
+      style: secondary
+      start: 38
+      end: 48
+  ? |
+    context.UpdateScreenConfigurationFor(screen => screen
+        .WithActions(actions => actions.Add<HCSOOrderEntryExt>(g => g.hcSendToWms, a => a.InFolder(FolderType.ActionsFolder))));
+  : labels:
+    - source: a.InFolder(FolderType.ActionsFolder)
+      style: primary
+      start: 138
+      end: 174
+    - source: InFolder
+      style: secondary
+      start: 140
+      end: 148
+    - source: a.InFolder
+      style: secondary
+      start: 138
+      end: 148

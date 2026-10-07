@@ -1,0 +1,19 @@
+id: acu-wms-obsolete-lotserial-member
+language: csharp
+severity: warning
+message: "Obsolete WMS lot/serial member (ItemHasLotSerial, ItemHasExpireDate or IsEnterableLotSerial). Read LotSerialTrack instead: IsTracked, HasExpiration or IsEnterable."
+metadata:
+  skill: acumatica-wms-extension
+rule:
+  kind: identifier
+  regex: '^(ItemHasLotSerial|ItemHasExpireDate|IsEnterableLotSerial)$'
+  not:
+    any:
+      - inside: { field: name, kind: method_declaration }
+      - inside: { field: name, kind: property_declaration }
+      - inside: { field: name, kind: variable_declarator }
+      - inside: { field: name, kind: parameter }
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: '\b(PickPackShip|ReceivePutAway|WorksheetPicking|INScan\w+|\w*ScanExtension|ScanState|EntityState|WarehouseManagementSystem|WMSBase)\b' }

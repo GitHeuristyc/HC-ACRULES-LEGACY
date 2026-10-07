@@ -1,0 +1,19 @@
+id: acu-pxdbcalced-with-pxdb-type
+language: csharp
+severity: error
+message: "[PXDBCalced] field also carries a bound PXDB* type attribute. Calculated fields are unbound; use the unbound type attribute instead, for example [PXDecimal] instead of [PXDBDecimal]."
+metadata:
+  skill: acumatica-projection
+rule:
+  kind: property_declaration
+  all:
+    - has:
+        kind: attribute_list
+        has: { kind: attribute, has: { field: name, regex: '(^|\.)PXDBCalced(Attribute)?$' } }
+    - has:
+        kind: attribute_list
+        has:
+          kind: attribute
+          has:
+            field: name
+            regex: '(^|\.)PXDB(Int|Short|Long|String|Decimal|Bool|Date|DateAndTime|Guid|Byte|Double|Float|Text|Time|Quantity|PriceCost|Currency|BaseCury|Identity|LongIdentity|Email|Weblink|LocalString|Binary)(Attribute)?$'

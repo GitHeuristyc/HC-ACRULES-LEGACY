@@ -1,0 +1,133 @@
+id: acu-throw-in-rowpersisted
+snapshots:
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            var status = e.Row?.Status ?? throw new InvalidOperationException(Messages.StatusMissing);
+        }
+    }
+  : labels:
+    - source: throw new InvalidOperationException(Messages.StatusMissing)
+      style: primary
+      start: 171
+      end: 230
+    - source: Events.RowPersisted<SOOrder>
+      style: secondary
+      start: 95
+      end: 123
+    - source: Events.RowPersisted<SOOrder> e
+      style: secondary
+      start: 95
+      end: 125
+    - source: Events.RowPersisted<SOOrder> e
+      style: secondary
+      start: 95
+      end: 125
+    - source: |-
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+            {
+                var status = e.Row?.Status ?? throw new InvalidOperationException(Messages.StatusMissing);
+            }
+      style: secondary
+      start: 70
+      end: 237
+    - source: InvalidOperationException
+      style: secondary
+      start: 181
+      end: 206
+    - source: new InvalidOperationException(Messages.StatusMissing)
+      style: secondary
+      start: 177
+      end: 230
+  ? |
+    public class PEWOOrderMaint : PXGraph<PEWOOrderMaint, PEWOOrder>
+    {
+        protected virtual void PEWOOrder_RowPersisted(PXCache sender, PXRowPersistedEventArgs e)
+        {
+            if (MailAccountManager.DefaultMailAccountID == null)
+            {
+                throw new PXException(Messages.AccountIDNotSet);
+            }
+        }
+    }
+  : labels:
+    - source: throw new PXException(Messages.AccountIDNotSet);
+      style: primary
+      start: 249
+      end: 297
+    - source: PXRowPersistedEventArgs
+      style: secondary
+      start: 133
+      end: 156
+    - source: PXRowPersistedEventArgs e
+      style: secondary
+      start: 133
+      end: 158
+    - source: PXRowPersistedEventArgs e
+      style: secondary
+      start: 133
+      end: 158
+    - source: |-
+        protected virtual void PEWOOrder_RowPersisted(PXCache sender, PXRowPersistedEventArgs e)
+            {
+                if (MailAccountManager.DefaultMailAccountID == null)
+                {
+                    throw new PXException(Messages.AccountIDNotSet);
+                }
+            }
+      style: secondary
+      start: 71
+      end: 313
+    - source: PXException
+      style: secondary
+      start: 259
+      end: 270
+    - source: new PXException(Messages.AccountIDNotSet)
+      style: secondary
+      start: 255
+      end: 296
+  ? |
+    public class SSINOutageEntry : PXGraph<SSINOutageEntry, SSINOutage>
+    {
+        protected void _(Events.FieldUpdating<SSINOutage.hold> e)
+        {
+            if (e.NewValue == null)
+                throw new PXException(Messages.OutageRequestedQty0);
+        }
+    }
+  : labels:
+    - source: throw new PXException(Messages.OutageRequestedQty0);
+      style: primary
+      start: 182
+      end: 234
+    - source: Events.FieldUpdating<SSINOutage.hold>
+      style: secondary
+      start: 91
+      end: 128
+    - source: Events.FieldUpdating<SSINOutage.hold> e
+      style: secondary
+      start: 91
+      end: 130
+    - source: Events.FieldUpdating<SSINOutage.hold> e
+      style: secondary
+      start: 91
+      end: 130
+    - source: |-
+        protected void _(Events.FieldUpdating<SSINOutage.hold> e)
+            {
+                if (e.NewValue == null)
+                    throw new PXException(Messages.OutageRequestedQty0);
+            }
+      style: secondary
+      start: 74
+      end: 240
+    - source: PXException
+      style: secondary
+      start: 192
+      end: 203
+    - source: new PXException(Messages.OutageRequestedQty0)
+      style: secondary
+      start: 188
+      end: 233

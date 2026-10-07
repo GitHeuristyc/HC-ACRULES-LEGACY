@@ -1,0 +1,48 @@
+id: acu-ask-literal
+valid:
+  - |
+    public class TGPickerMaint : PXGraph<TGPickerMaint>
+    {
+        public void Disable()
+        {
+            if (UserPicker.Ask(ActionsMessages.ConfirmDisableUser, MessageButtons.YesNo) == WebDialogResult.Yes) { }
+        }
+    }
+  - |
+    public class TGShippingInq : PXGraph<TGShippingInq>
+    {
+        public void Delete()
+        {
+            if (Shippings.Ask("deleteLineKey", Messages.ConfirmDelete, MessageButtons.YesNo) == WebDialogResult.Yes) { }
+        }
+    }
+  - |
+    public class HCODHttpClient
+    {
+        public void Ping() => client.Ask("status", "now");
+    }
+invalid:
+  - |
+    public class PhysicalInventoryBase : PXGraph<PhysicalInventoryBase>
+    {
+        public void Clear()
+        {
+            if (GridRecords.Ask("Confirm", "Are you sure?", MessageButtons.OKCancel, MessageIcon.Question) == WebDialogResult.OK) { }
+        }
+    }
+  - |
+    public class PEITMoveFinishedMaint : PXGraph<PEITMoveFinishedMaint>
+    {
+        public void MoveAll()
+        {
+            if (this.Header.Ask("Would you like to move all remaining pallets?", MessageButtons.YesNo) == WebDialogResult.Yes) { }
+        }
+    }
+  - |
+    public class ARPaymentEntryTGExt : PXGraphExtension<ARPaymentEntry>
+    {
+        public void Show(string cm)
+        {
+            Base.Document.View.Ask(Base.Document.Current, Messages.Results, $"Credit Memo: {cm}", MessageButtons.OK, MessageIcon.Information);
+        }
+    }

@@ -1,0 +1,22 @@
+id: acu-plugin-graph-field
+language: csharp
+severity: error
+message: "PXGraph stored in a CustomizationPlugin field or property. The publisher can reuse one plugin instance across company scopes; create the graph inside each UpdateDatabase() call and pass it to helpers."
+metadata:
+  skill: hc-plugin-standards
+utils:
+  graph-type:
+    regex: '^(PX\.Data\.)?(PXGraph|[A-Z]\w*(Maint|Entry|Process|Inq|Enq|Graph))$'
+rule:
+  any:
+    - kind: field_declaration
+      has: { kind: variable_declaration, has: { field: type, matches: graph-type } }
+    - kind: property_declaration
+      has: { field: type, matches: graph-type }
+  inside:
+    kind: declaration_list
+    inside:
+      kind: class_declaration
+      has:
+        kind: base_list
+        regex: '(^|[\s:,.])CustomizationPlugin\b'

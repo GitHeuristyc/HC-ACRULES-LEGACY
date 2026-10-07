@@ -1,0 +1,17 @@
+id: acu-report-removed-api
+valid:
+  - |
+    var parameters = new Dictionary<string, string> { ["RefNbr"] = doc.RefNbr };
+    throw new PXReportRequiredException(parameters, "SO641010", PXBaseRedirectException.WindowMode.New, "Sales Order");
+  - |
+    try { SendReport(); }
+    catch (Exception e)
+    {
+        PXTrace.WriteError("PXReportMailer.Send error : " + e.Message);
+    }
+invalid:
+  - |
+    var mailer = new PXReportMailer(report, parameters, null);
+    mailer.Send();
+  - |
+    Report report = PXReportTools.LoadReport(reportID, null);

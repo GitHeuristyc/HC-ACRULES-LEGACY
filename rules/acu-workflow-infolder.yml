@@ -1,0 +1,12 @@
+id: acu-workflow-infolder
+language: csharp
+severity: warning
+message: "InFolder is obsolete in workflow action configuration. Create the category with context.Categories.CreateNew(...), register it in WithCategories(), and call WithCategory(category)."
+metadata:
+  skill: acumatica-workflow-extension
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    kind: member_access_expression
+    has: { field: name, regex: '^InFolder$' }

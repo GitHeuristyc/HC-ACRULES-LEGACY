@@ -1,0 +1,29 @@
+id: acu-pxdbcalced-with-pxdb-type
+valid:
+  - |
+    public class HCODOrderTotals : PXBqlTable, IBqlTable
+    {
+        [PXDecimal(4)]
+        [PXDBCalced(typeof(Mult<SOLine.orderQty, SOLine.curyUnitPrice>), typeof(decimal))]
+        public virtual decimal? LineTotal { get; set; }
+    }
+  - |
+    public class HCODOrderTotals : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(4, BqlField = typeof(SOLine.curyLineAmt))]
+        public virtual decimal? CuryLineAmt { get; set; }
+    }
+invalid:
+  - |
+    public class HCODOrderTotals : PXBqlTable, IBqlTable
+    {
+        [PXDBDecimal(4)]
+        [PXDBCalced(typeof(Mult<SOLine.orderQty, SOLine.curyUnitPrice>), typeof(decimal))]
+        public virtual decimal? LineTotal { get; set; }
+    }
+  - |
+    public class HCODOrderInfo : PXBqlTable, IBqlTable
+    {
+        [PXDBCalced(typeof(Switch<Case<Where<SOOrder.hold, Equal<True>>, statusHold>, statusOpen>), typeof(string)), PXDBString(1)]
+        public virtual string DisplayStatus { get; set; }
+    }

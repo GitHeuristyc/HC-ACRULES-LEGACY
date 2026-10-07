@@ -1,0 +1,92 @@
+id: acu-wms-decoratescanmode-base-not-called
+snapshots:
+  ? |
+    public class HCPickPackShipExt : PXGraphExtension<PickPackShip, PickPackShip.Host>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual ScanMode<PickPackShip> DecorateScanMode(ScanMode<PickPackShip> original,
+            Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> base_DecorateScanMode)
+        {
+            if (original is PickPackShip.PickMode pick)
+                pick.Intercept.CreateStates.ByAppend(() => new[] { new HCLabelState() });
+            return original;
+        }
+    }
+  : labels:
+    - source: DecorateScanMode
+      style: primary
+      start: 187
+      end: 203
+    - source: '[PXOverride]'
+      style: secondary
+      start: 132
+      end: 144
+    - source: DecorateScanMode
+      style: secondary
+      start: 187
+      end: 203
+    - source: base_DecorateScanMode
+      style: secondary
+      start: 298
+      end: 319
+    - source: Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> base_DecorateScanMode
+      style: secondary
+      start: 245
+      end: 319
+    - source: Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> base_DecorateScanMode
+      style: secondary
+      start: 245
+      end: 319
+    - source: |-
+        [PXOverride]
+            public virtual ScanMode<PickPackShip> DecorateScanMode(ScanMode<PickPackShip> original,
+                Func<ScanMode<PickPackShip>, ScanMode<PickPackShip>> base_DecorateScanMode)
+            {
+                if (original is PickPackShip.PickMode pick)
+                    pick.Intercept.CreateStates.ByAppend(() => new[] { new HCLabelState() });
+                return original;
+            }
+      style: secondary
+      start: 132
+      end: 495
+  ? |
+    public class HCReceivePutAwayExt : PXGraphExtension<ReceivePutAway, ReceivePutAway.Host>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public ScanMode<ReceivePutAway> DecorateScanMode(ScanMode<ReceivePutAway> original, Func<ScanMode<ReceivePutAway>, ScanMode<ReceivePutAway>> baseMethod)
+            => original;
+    }
+  : labels:
+    - source: DecorateScanMode
+      style: primary
+      start: 187
+      end: 203
+    - source: '[PXOverride]'
+      style: secondary
+      start: 138
+      end: 150
+    - source: DecorateScanMode
+      style: secondary
+      start: 187
+      end: 203
+    - source: baseMethod
+      style: secondary
+      start: 296
+      end: 306
+    - source: Func<ScanMode<ReceivePutAway>, ScanMode<ReceivePutAway>> baseMethod
+      style: secondary
+      start: 239
+      end: 306
+    - source: Func<ScanMode<ReceivePutAway>, ScanMode<ReceivePutAway>> baseMethod
+      style: secondary
+      start: 239
+      end: 306
+    - source: |-
+        [PXOverride]
+            public ScanMode<ReceivePutAway> DecorateScanMode(ScanMode<ReceivePutAway> original, Func<ScanMode<ReceivePutAway>, ScanMode<ReceivePutAway>> baseMethod)
+                => original;
+      style: secondary
+      start: 138
+      end: 328

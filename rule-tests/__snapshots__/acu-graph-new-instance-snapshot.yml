@@ -1,0 +1,144 @@
+id: acu-graph-new-instance
+snapshots:
+  ? |
+    public class TGPOShippingInq : PXGraph<TGPOShippingInq>
+    {
+        public void Reprint()
+        {
+            TGPOShippingInq invGraph = new TGPOShippingInq();
+            invGraph.Filter.Current = Filter.Current;
+        }
+    }
+  : labels:
+    - source: new TGPOShippingInq()
+      style: primary
+      start: 125
+      end: 146
+    - source: TGPOShippingInq
+      style: secondary
+      start: 129
+      end: 144
+    - source: TGPOShippingInq
+      style: secondary
+      start: 13
+      end: 28
+    - source: ': PXGraph<TGPOShippingInq>'
+      style: secondary
+      start: 29
+      end: 55
+    - source: |-
+        public class TGPOShippingInq : PXGraph<TGPOShippingInq>
+        {
+            public void Reprint()
+            {
+                TGPOShippingInq invGraph = new TGPOShippingInq();
+                invGraph.Filter.Current = Filter.Current;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 205
+    - source: |
+        public class TGPOShippingInq : PXGraph<TGPOShippingInq>
+        {
+            public void Reprint()
+            {
+                TGPOShippingInq invGraph = new TGPOShippingInq();
+                invGraph.Filter.Current = Filter.Current;
+            }
+        }
+      style: secondary
+      start: 0
+      end: 206
+  ? |
+    using PX.Data;
+    using PX.Objects.GL;
+
+    namespace HC.Objects.OD.GL
+    {
+    public class HCODPostingService
+    {
+        public void Post()
+        {
+            var je = new JournalEntry();
+            je.Save.Press();
+        }
+    }
+    }
+  : labels:
+    - source: new JournalEntry()
+      style: primary
+      start: 146
+      end: 164
+    - source: JournalEntry
+      style: secondary
+      start: 150
+      end: 162
+    - source: using PX.Objects.GL;
+      style: secondary
+      start: 15
+      end: 35
+    - source: |
+        using PX.Data;
+        using PX.Objects.GL;
+
+        namespace HC.Objects.OD.GL
+        {
+        public class HCODPostingService
+        {
+            public void Post()
+            {
+                var je = new JournalEntry();
+                je.Save.Press();
+            }
+        }
+        }
+      style: secondary
+      start: 0
+      end: 201
+    - source: JournalEntry
+      style: secondary
+      start: 150
+      end: 162
+  ? |
+    using PX.Objects.SO;
+
+    public class HCODxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+    {
+        public void CreateOrder()
+        {
+            SOOrderEntry graph = new SOOrderEntry();
+            graph.Document.Insert(new SOOrder());
+        }
+    }
+  : labels:
+    - source: new SOOrderEntry()
+      style: primary
+      start: 159
+      end: 177
+    - source: SOOrderEntry
+      style: secondary
+      start: 163
+      end: 175
+    - source: using PX.Objects.SO;
+      style: secondary
+      start: 0
+      end: 20
+    - source: |
+        using PX.Objects.SO;
+
+        public class HCODxSOShipmentEntry : PXGraphExtension<SOShipmentEntry>
+        {
+            public void CreateOrder()
+            {
+                SOOrderEntry graph = new SOOrderEntry();
+                graph.Document.Insert(new SOOrder());
+            }
+        }
+      style: secondary
+      start: 0
+      end: 233
+    - source: SOOrderEntry
+      style: secondary
+      start: 163
+      end: 175

@@ -1,0 +1,17 @@
+# Source: skills/acumatica-modern-ui/SKILL.md checklist (Grid Configuration)
+id: mui-merge-toolbar-with-toolbar
+language: typescript
+severity: error
+message: "`mergeToolbarWith` targets \"toolbar\", which is not a toolbar id. Use \"ScreenToolbar\" or a GridPreset that already merges into the screen toolbar."
+rule:
+  kind: pair
+  has:
+    field: key
+    regex: ^["']?mergeToolbarWith["']?$
+  all:
+    - has:
+        field: value
+        kind: string
+        regex: ^["'](?i:toolbar)["']$
+metadata:
+  skill: acumatica-modern-ui

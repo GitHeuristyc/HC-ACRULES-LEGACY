@@ -1,0 +1,72 @@
+id: mui-extension-reserved-member
+valid:
+  - |
+    import { CustomEventType, CellCssHandlerArgs, handleEvent } from "client-controls";
+    import { EP507010 } from "src/screens/EP/EP507010/EP507010";
+
+    export interface EP507010_HCTC extends EP507010 { }
+    export class EP507010_HCTC {
+      @handleEvent(CustomEventType.GetCellCss, { view: "Activity", allColumns: true })
+      HCTC_getDistanceStatusCellCss(args: CellCssHandlerArgs): string | undefined {
+        return undefined;
+      }
+    }
+  - |
+    import { autoinject, customElement } from "aurelia-framework";
+    import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+
+    export interface SO301000_HCUS extends SO301000 { }
+    export class SO301000_HCUS { }
+
+    @autoinject
+    @customElement("hcus-banner")
+    export class HcusBannerCustomElement {
+      constructor(private readonly element: Element) {}
+      attached(): void { this.element.classList.add("hcus-ready"); }
+      detached(): void { }
+    }
+  - |
+    import { PXScreen, graphInfo } from "client-controls";
+
+    @graphInfo({ graphType: "HC.Objects.TC.HCTCMaint", primaryView: "Filter" })
+    export class HCTC4020 extends PXScreen {
+      onAfterInitialize(): void { }
+    }
+  - |
+    import { PXFieldState } from "client-controls";
+    import { APSetup } from "src/screens/AP/AP101000/AP101000";
+
+    export interface HCEMAPSetup extends APSetup { }
+    export class HCEMAPSetup {
+      UsrEMFTPSourceUri: PXFieldState;
+    }
+  - |
+    import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+    export interface SO301000_HCUS extends SO301000 {}
+    export class SO301000_HCUS {
+      private static update(): void { }
+    }
+invalid:
+  - |
+    import { EP507010 } from "src/screens/EP/EP507010/EP507010";
+
+    export interface EP507010_HCTIMECLOCK_CssHCTCStyles extends EP507010 { }
+    export class EP507010_HCTIMECLOCK_CssHCTCStyles {
+      onAfterInitialize(): void {
+        this.setupGridCssBackgroundColor();
+      }
+      private setupGridCssBackgroundColor(): void { }
+    }
+  - |
+    import { IGFS3099 } from "../IGFS3099";
+
+    export interface IGFS3099_HCLG extends IGFS3099 {}
+    export class IGFS3099_HCLG {
+      attached() { }
+    }
+  - |
+    import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+    export interface SO301000_HCUS extends SO301000 {}
+    export class SO301000_HCUS {
+      update = () => { };
+    }

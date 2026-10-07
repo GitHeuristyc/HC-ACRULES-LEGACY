@@ -1,0 +1,39 @@
+id: acu-messages-without-pxlocalizable
+language: csharp
+severity: warning
+message: "Messages class without [PXLocalizable] (PX1051). Add [PXLocalizable(Messages.Prefix)] to a module-wide Messages class, or [PXLocalizable] to a nested Msg or DisplayNames class."
+note: |
+  Without the attribute the localization engine never sees the strings, and
+  Acuminator reports every exception or Localize call that uses them.
+metadata:
+  skill: acumatica-strings
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    all:
+      - has: { field: name, regex: '^(\w*Messages|Msg|DisplayNames)$' }
+      - has:
+          field: body
+          has:
+            kind: field_declaration
+            all:
+              - has: { kind: modifier, regex: '^const$' }
+              - has:
+                  kind: variable_declaration
+                  has: { field: type, regex: '^(string|String|System\.String)$' }
+      # Only Acumatica code: the file imports a PX namespace.
+      - inside:
+          stopBy: end
+          kind: compilation_unit
+          has: { stopBy: end, kind: using_directive, regex: '\bPX\.' }
+      - not:
+          has:
+            kind: attribute_list
+            has:
+              kind: attribute
+              has: { field: name, regex: '^((PX\.)?Common\.)?PXLocalizable(Attribute)?$' }

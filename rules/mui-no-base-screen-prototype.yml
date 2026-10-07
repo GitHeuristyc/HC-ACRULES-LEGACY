@@ -1,0 +1,39 @@
+# Source: skills/acumatica-modern-ui/assets/extension-merge-safety.md (HC rule 7)
+id: mui-no-base-screen-prototype
+language: typescript
+severity: error
+message: "Code reaches `$S.prototype` on a screen imported from src/screens. Do not read, capture, wrap, or redefine base screen members through its prototype; use @handleEvent, a package-owned custom element, or the C# graph."
+note: |
+  applyMixins() discards the prior property descriptor, and extension modules
+  load before the concrete screen class is declared, so prototype captures and
+  wrappers are unreliable and can remove base behavior. This includes
+  Object.getOwnPropertyDescriptor() and Object.defineProperty() on the
+  prototype.
+rule:
+  kind: member_expression
+  has:
+    field: property
+    regex: ^prototype$
+  all:
+    - has:
+        field: object
+        kind: identifier
+        pattern: $S
+    - inside:
+        kind: program
+        stopBy: end
+        has:
+          kind: import_statement
+          stopBy: end
+          all:
+            - has:
+                field: source
+                regex: ^["']src/screens/
+            - has:
+                kind: import_specifier
+                stopBy: end
+                has:
+                  field: name
+                  pattern: $S
+metadata:
+  skill: acumatica-modern-ui

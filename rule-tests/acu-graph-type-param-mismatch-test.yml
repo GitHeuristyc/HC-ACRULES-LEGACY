@@ -1,0 +1,34 @@
+id: acu-graph-type-param-mismatch
+valid:
+  - |
+    public class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+        public SelectFrom<HCODWorkOrder>.View Document;
+    }
+  - |
+    public class HCODSetupMaint : PXGraph<HCODSetupMaint>
+    {
+        public PXSave<HCODSetup> Save;
+        public PXCancel<HCODSetup> Cancel;
+    }
+  - |
+    public abstract class HCODDocumentGraph<TGraph, TPrimary> : PXGraph<TGraph, TPrimary>
+        where TGraph : PXGraph
+        where TPrimary : class, IBqlTable, new()
+    {
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+    }
+invalid:
+  - |
+    public class TGMonthlyProductionReportMaint : PXGraph<TGMonthlySalesReportMaint>
+    {
+    }
+  - |
+    public class PENCFMaintAdmin : PXGraph<PENCFMaint, PENCF>
+    {
+        public SelectFrom<PENCF>.View Document;
+    }

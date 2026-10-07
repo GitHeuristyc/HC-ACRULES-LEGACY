@@ -1,0 +1,17 @@
+id: acu-report-removed-api
+snapshots:
+  ? |
+    Report report = PXReportTools.LoadReport(reportID, null);
+  : labels:
+    - source: PXReportTools
+      style: primary
+      start: 16
+      end: 29
+  ? |
+    var mailer = new PXReportMailer(report, parameters, null);
+    mailer.Send();
+  : labels:
+    - source: PXReportMailer
+      style: primary
+      start: 17
+      end: 31

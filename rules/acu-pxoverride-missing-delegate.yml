@@ -1,0 +1,22 @@
+id: acu-pxoverride-missing-delegate
+language: csharp
+severity: warning
+message: "[PXOverride] method without a base delegate parameter. Add the base method delegate (`Func<...>`, `Action<...>` or a named delegate) as the last parameter, name it `base_<MethodName>`, and call it unless you replace the base logic on purpose."
+metadata:
+  skill: acumatica-blc-extension
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: method_declaration
+    has: { kind: attribute_list, regex: '^\[\s*(PX\.Data\.)?PXOverride(Attribute)?\s*(\(\s*\))?\s*\]$' }
+    not:
+      has:
+        field: parameters
+        has:
+          kind: parameter
+          nthChild: { position: 1, reverse: true, ofRule: { kind: parameter } }
+          has: { field: type, regex: '^(System\.)?(Func|Action)\b|(Delegate|Del|Handler|Method|Callback)$' }

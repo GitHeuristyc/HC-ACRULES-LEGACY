@@ -1,0 +1,44 @@
+id: acu-transaction-scope-without-complete
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public virtual void SaveBoth(HCODWidgetMaint other)
+        {
+            using (var ts = new PXTransactionScope())
+            {
+                Actions.PressSave();
+                other.Actions.PressSave();
+            }
+        }
+    }
+  : labels:
+    - source: |-
+        using (var ts = new PXTransactionScope())
+                {
+                    Actions.PressSave();
+                    other.Actions.PressSave();
+                }
+      style: primary
+      start: 128
+      end: 261
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        public virtual void SaveLog()
+        {
+            using (new PXTransactionScope())
+            {
+                Actions.PressSave();
+            }
+        }
+    }
+  : labels:
+    - source: |-
+        using (new PXTransactionScope())
+                {
+                    Actions.PressSave();
+                }
+      style: primary
+      start: 106
+      end: 191

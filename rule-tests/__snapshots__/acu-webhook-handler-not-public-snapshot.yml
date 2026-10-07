@@ -1,0 +1,46 @@
+id: acu-webhook-handler-not-public
+snapshots:
+  ? |
+    class HCOrderWebhook : PXGraph<HCOrderWebhook>, PX.Api.Webhooks.IWebhookHandler
+    {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation) { }
+    }
+  : labels:
+    - source: HCOrderWebhook
+      style: primary
+      start: 6
+      end: 20
+    - source: ': PXGraph<HCOrderWebhook>, PX.Api.Webhooks.IWebhookHandler'
+      style: secondary
+      start: 21
+      end: 79
+    - source: |-
+        class HCOrderWebhook : PXGraph<HCOrderWebhook>, PX.Api.Webhooks.IWebhookHandler
+        {
+            async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation) { }
+        }
+      style: secondary
+      start: 0
+      end: 186
+  ? |
+    internal class HCFedexWebhookHandler : IWebhookHandler
+    {
+        public Task HandleAsync(WebhookContext context, CancellationToken cancellation) => Task.CompletedTask;
+    }
+  : labels:
+    - source: HCFedexWebhookHandler
+      style: primary
+      start: 15
+      end: 36
+    - source: ': IWebhookHandler'
+      style: secondary
+      start: 37
+      end: 54
+    - source: |-
+        internal class HCFedexWebhookHandler : IWebhookHandler
+        {
+            public Task HandleAsync(WebhookContext context, CancellationToken cancellation) => Task.CompletedTask;
+        }
+      style: secondary
+      start: 0
+      end: 165

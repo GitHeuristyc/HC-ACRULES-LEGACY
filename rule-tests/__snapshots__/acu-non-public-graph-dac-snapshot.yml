@@ -1,0 +1,71 @@
+id: acu-non-public-graph-dac
+snapshots:
+  ? |
+    [Serializable]
+    [PXCacheName(HCCCMessages.LabelPrintParameter)]
+    class INLabelPrintParameter : PXBqlTable, IBqlTable, PX.SM.IPrintable
+    {
+    }
+  : labels:
+    - source: INLabelPrintParameter
+      style: primary
+      start: 69
+      end: 90
+    - source: ': PXBqlTable, IBqlTable, PX.SM.IPrintable'
+      style: secondary
+      start: 91
+      end: 132
+    - source: |-
+        [Serializable]
+        [PXCacheName(HCCCMessages.LabelPrintParameter)]
+        class INLabelPrintParameter : PXBqlTable, IBqlTable, PX.SM.IPrintable
+        {
+        }
+      style: secondary
+      start: 0
+      end: 136
+  ? |
+    internal class HCCCxINReceiptEntry : PXGraphExtension<INReceiptEntry>
+    {
+        public static bool IsActive() => true;
+    }
+  : labels:
+    - source: HCCCxINReceiptEntry
+      style: primary
+      start: 15
+      end: 34
+    - source: ': PXGraphExtension<INReceiptEntry>'
+      style: secondary
+      start: 35
+      end: 69
+    - source: |-
+        internal class HCCCxINReceiptEntry : PXGraphExtension<INReceiptEntry>
+        {
+            public static bool IsActive() => true;
+        }
+      style: secondary
+      start: 0
+      end: 116
+  ? |
+    public class HCCCTestBase
+    {
+        private class ResolverGraph : PXGraph<ResolverGraph>
+        {
+        }
+    }
+  : labels:
+    - source: ResolverGraph
+      style: primary
+      start: 46
+      end: 59
+    - source: ': PXGraph<ResolverGraph>'
+      style: secondary
+      start: 60
+      end: 84
+    - source: |-
+        private class ResolverGraph : PXGraph<ResolverGraph>
+            {
+            }
+      style: secondary
+      start: 32
+      end: 96

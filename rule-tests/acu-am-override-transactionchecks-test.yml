@@ -1,0 +1,37 @@
+id: acu-am-override-transactionchecks
+valid:
+  - |
+    public class HCMoveEntryExt : PXGraphExtension<MoveEntry>
+    {
+        public static bool IsActive() => PXAccess.FeatureInstalled<FeaturesSet.manufacturing>();
+        protected virtual void _(Events.RowPersisting<AMMTran> e)
+        {
+            if (e.Row?.Qty < 0) throw new PXRowPersistingException(nameof(AMMTran.qty), e.Row.Qty, Messages.QtyNegative);
+        }
+    }
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public void TransactionChecks(SOLine line, Action<SOLine> baseMethod) { baseMethod(line); }
+    }
+invalid:
+  - |
+    public class HCMoveEntryExt : PXGraphExtension<MoveEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual void TransactionChecks(PXCache sender, AMMTran row, Action<PXCache, AMMTran> baseMethod)
+        {
+            baseMethod(sender, row);
+            CheckOperation(row);
+        }
+    }
+  - |
+    public class HCMaterialEntryExt : PXGraphExtension<MaterialEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public void TransactionChecks(PXCache cache, PX.Objects.AM.AMMTran tran, TransactionChecksDelegate del) => del(cache, tran);
+    }

@@ -1,0 +1,13 @@
+id: acu-dac-nonnullable-field
+language: csharp
+severity: error
+message: "DAC field with a non-nullable value type (PX1014). Use int?, bool?, decimal?, DateTime? and so on."
+metadata:
+  skill: acumatica-dac
+rule:
+  kind: property_declaration
+  has: { field: type, regex: '^(int|bool|decimal|DateTime|Guid|short|long|double|byte)$' }
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: 'IBqlTable|PXBqlTable|PXCacheExtension<' }

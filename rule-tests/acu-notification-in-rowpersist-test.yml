@@ -1,0 +1,43 @@
+id: acu-notification-in-rowpersist
+valid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public void Persist(Action base_Persist)
+        {
+            base_Persist();
+            var sender = TemplateNotificationGenerator.Create(Base, Base.Document.Current, NotificationCD);
+            sender.Send();
+        }
+    }
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            if (e.TranStatus == PXTranStatus.Completed) PXTrace.WriteInformation("saved");
+        }
+    }
+invalid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void _(Events.RowPersisted<SOOrder> e)
+        {
+            var sender = TemplateNotificationGenerator.Create(Base, e.Row, NotificationCD);
+            sender.Send();
+        }
+    }
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        protected virtual void SOOrder_RowPersisting(PXCache sender, PXRowPersistingEventArgs e)
+        {
+            PX.Objects.EP.TemplateNotificationGenerator.Create(e.Row, "HCORDERSAVED").Send();
+        }
+    }

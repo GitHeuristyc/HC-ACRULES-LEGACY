@@ -1,0 +1,46 @@
+id: acu-http-sync-over-async
+language: csharp
+severity: warning
+message: "Blocking wait on an async HTTP call (.Result, .Wait() or GetAwaiter().GetResult()). Await the call and pass a CancellationToken; from synchronous graph code, run the request inside a long operation that awaits it."
+ignores:
+  - '**/tests/**'
+  - '**/*Tests/**'
+metadata:
+  skill: acumatica-outbound-http
+utils:
+  http-async-call:
+    kind: invocation_expression
+    has:
+      field: function
+      kind: member_access_expression
+      has:
+        field: name
+        regex: '^(SendAsync|GetAsync|PostAsync|PutAsync|PatchAsync|DeleteAsync|GetStringAsync|GetByteArrayAsync|GetStreamAsync|PostAsJsonAsync|PutAsJsonAsync|ReadAsStringAsync|ReadAsByteArrayAsync|ReadAsStreamAsync|ReadAsAsync)$'
+rule:
+  any:
+    - kind: member_access_expression
+      all:
+        - has: { field: name, regex: '^Result$' }
+        - has: { field: expression, matches: http-async-call }
+    - kind: invocation_expression
+      has:
+        field: function
+        kind: member_access_expression
+        all:
+          - has: { field: name, regex: '^Wait$' }
+          - has: { field: expression, matches: http-async-call }
+    - kind: invocation_expression
+      has:
+        field: function
+        kind: member_access_expression
+        all:
+          - has: { field: name, regex: '^GetResult$' }
+          - has:
+              field: expression
+              kind: invocation_expression
+              has:
+                field: function
+                kind: member_access_expression
+                all:
+                  - has: { field: name, regex: '^GetAwaiter$' }
+                  - has: { field: expression, matches: http-async-call }

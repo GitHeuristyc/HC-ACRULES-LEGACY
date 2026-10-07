@@ -1,0 +1,41 @@
+id: acu-localize-literal
+valid:
+  - |
+    public class HCODMailer
+    {
+        public void Send()
+        {
+            throw new PXException(PXMessages.Localize(Messages.ToEmailNotSpecified));
+        }
+    }
+  - |
+    public class HCODMailer
+    {
+        public string Describe(string name) =>
+            PXMessages.LocalizeFormatNoPrefix(Messages.FieldCannotBeEmpty, name);
+    }
+  - |
+    public class HCODMailer
+    {
+        public string Empty() => PXMessages.LocalizeNoPrefix("");
+    }
+invalid:
+  - |
+    public class HCODMailer
+    {
+        public void Send()
+        {
+            throw new PXException(PXMessages.Localize("To E-mail is not specified"));
+        }
+    }
+  - |
+    public class HCODMailer
+    {
+        public string Describe(string name) =>
+            PXMessages.LocalizeFormatNoPrefix("\"{0}\" cannot be empty.", name);
+    }
+  - |
+    public class HCODMailer
+    {
+        public string Describe(string name) => PXLocalizer.Localize($"Order {name} processed");
+    }

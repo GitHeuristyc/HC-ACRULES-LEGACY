@@ -1,0 +1,9 @@
+id: acu-smtpclient
+language: csharp
+severity: error
+message: "Direct SMTP client. It bypasses the system email accounts, the outgoing queue and the Activities record; build the email with TemplateNotificationGenerator.Create(...) and call Send()."
+metadata:
+  skill: acumatica-notifications
+rule:
+  kind: object_creation_expression
+  has: { field: type, regex: '(^|\.)SmtpClient$' }

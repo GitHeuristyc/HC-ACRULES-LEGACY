@@ -1,0 +1,11 @@
+# Source: skills/acumatica-modern-ui/SKILL.md NEVER 4; acumatica-modern-ui-migration js-to-typescript-patterns
+id: mui-no-px-alls
+language: typescript
+severity: error
+message: "`$G` is a Classic UI JavaScript global and does not exist in Modern UI. Use typed view properties (`this.ViewName.Field`) and @handleEvent instead."
+rule:
+  kind: identifier
+  pattern: $G
+  regex: ^px_(alls|callback)$
+metadata:
+  skill: acumatica-modern-ui

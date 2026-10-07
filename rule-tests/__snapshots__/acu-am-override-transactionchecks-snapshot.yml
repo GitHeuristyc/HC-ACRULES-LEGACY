@@ -1,0 +1,70 @@
+id: acu-am-override-transactionchecks
+snapshots:
+  ? |
+    public class HCMaterialEntryExt : PXGraphExtension<MaterialEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public void TransactionChecks(PXCache cache, PX.Objects.AM.AMMTran tran, TransactionChecksDelegate del) => del(cache, tran);
+    }
+  : labels:
+    - source: TransactionChecks
+      style: primary
+      start: 144
+      end: 161
+    - source: '[PXOverride]'
+      style: secondary
+      start: 115
+      end: 127
+    - source: TransactionChecks
+      style: secondary
+      start: 144
+      end: 161
+    - source: (PXCache cache, PX.Objects.AM.AMMTran tran, TransactionChecksDelegate del)
+      style: secondary
+      start: 161
+      end: 235
+    - source: |-
+        [PXOverride]
+            public void TransactionChecks(PXCache cache, PX.Objects.AM.AMMTran tran, TransactionChecksDelegate del) => del(cache, tran);
+      style: secondary
+      start: 115
+      end: 256
+  ? |
+    public class HCMoveEntryExt : PXGraphExtension<MoveEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual void TransactionChecks(PXCache sender, AMMTran row, Action<PXCache, AMMTran> baseMethod)
+        {
+            baseMethod(sender, row);
+            CheckOperation(row);
+        }
+    }
+  : labels:
+    - source: TransactionChecks
+      style: primary
+      start: 144
+      end: 161
+    - source: '[PXOverride]'
+      style: secondary
+      start: 107
+      end: 119
+    - source: TransactionChecks
+      style: secondary
+      start: 144
+      end: 161
+    - source: (PXCache sender, AMMTran row, Action<PXCache, AMMTran> baseMethod)
+      style: secondary
+      start: 161
+      end: 227
+    - source: |-
+        [PXOverride]
+            public virtual void TransactionChecks(PXCache sender, AMMTran row, Action<PXCache, AMMTran> baseMethod)
+            {
+                baseMethod(sender, row);
+                CheckOperation(row);
+            }
+      style: secondary
+      start: 107
+      end: 301

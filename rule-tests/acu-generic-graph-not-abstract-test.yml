@@ -1,0 +1,30 @@
+id: acu-generic-graph-not-abstract
+valid:
+  - |
+    public abstract class HCUSVendorSupplyDialog<TGraph, TPrimary> : PXGraphExtension<TGraph>
+        where TGraph : PXGraph
+        where TPrimary : class, IBqlTable, new()
+    {
+    }
+  - |
+    public class HCUSxPOOrderEntryVendorSupply : HCUSVendorSupplyDialog<POOrderEntry, POOrder>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public class HCODResultCache<T> where T : class
+    {
+        private readonly List<T> items = new List<T>();
+    }
+invalid:
+  - |
+    public class HCUSVendorSupplyDialog<TGraph, TPrimary, TSecondary> : PXGraphExtension<TGraph>
+        where TGraph : PXGraph
+    {
+    }
+  - |
+    public class GenericOrderGraph<TOrderDac> : PXGraph<GenericOrderGraph<TOrderDac>>
+        where TOrderDac : PXBqlTable, IBqlTable, new()
+    {
+        public PXSelect<TOrderDac> Orders;
+    }

@@ -1,0 +1,29 @@
+id: mui-qp-template-invalid-name
+valid:
+  - |
+    <template>
+      <qp-template id="tplMain" name="17-17-14">
+        <qp-fieldset id="fsA" view.bind="Document" slot="A"></qp-fieldset>
+      </qp-template>
+      <qp-template id="tplRecord" name="record-1-1-1-compact"></qp-template>
+    </template>
+  - |
+    <template>
+      <qp-template id="tplOptional" name.bind="mlFeatureInstalled ? '2-1' : '1'"></qp-template>
+      <qp-template id="PXFormView1" class="label-size-s" wg-container></qp-template>
+    </template>
+invalid:
+  - |
+    <template>
+      <qp-template id="tplMain" name="formArea">
+        <qp-fieldset id="fsA" view.bind="Document" slot="A"></qp-fieldset>
+      </qp-template>
+    </template>
+  - |
+    <template>
+      <qp-template id="tplSetup" name="Main"></qp-template>
+    </template>
+  - |
+    <template>
+      <qp-template id="tplCols" name="1-1-1-1"></qp-template>
+    </template>

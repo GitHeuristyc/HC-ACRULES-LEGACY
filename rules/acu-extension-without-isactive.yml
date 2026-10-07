@@ -1,0 +1,23 @@
+id: acu-extension-without-isactive
+language: csharp
+severity: warning
+message: "Extension without `public static bool IsActive()` (PX1016). Declare it as the first member; return true, or a feature check when the extension must be conditional."
+metadata:
+  skill: acumatica-blc-extension
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    has: { kind: base_list, regex: '(PXGraphExtension|PXCacheExtension)<' }
+    not:
+      any:
+        - has: { kind: modifier, regex: '^abstract$' }
+        - has:
+            field: body
+            has:
+              kind: method_declaration
+              regex: '^public\s+static\s+bool\s+IsActive\s*\('

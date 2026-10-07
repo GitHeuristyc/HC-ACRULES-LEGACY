@@ -1,0 +1,13 @@
+id: acu-placeholder-namespace
+language: csharp
+severity: error
+message: "Placeholder namespace such as MyCompany or MyCustomization. Use `HC.Objects.<ClientAbbr>.<Folder>.<SubFolder>`, derived from the file's folder."
+metadata:
+  skill: acumatica-namespaces
+rule:
+  any:
+    - kind: namespace_declaration
+    - kind: file_scoped_namespace_declaration
+  has:
+    field: name
+    regex: '(^|\.)(TODO_)?(MyCompany|MyCustomization|MyProject|MyNamespace|YourCompany|YourNamespace|CompanyName|ProjectName)(\.|$)'

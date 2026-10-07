@@ -1,0 +1,32 @@
+id: mui-qp-tab-missing-id
+snapshots:
+  ? |
+    <template>
+      <qp-tab caption="${captionText}" after="#tabGeneral"></qp-tab>
+    </template>
+  : labels:
+    - source: <qp-tab caption="${captionText}" after="#tabGeneral">
+      style: primary
+      start: 13
+      end: 66
+    - source: qp-tab
+      style: secondary
+      start: 14
+      end: 20
+  ? |
+    <template>
+      <qp-tabbar id="tabsBody">
+        <qp-tab caption.bind="HCEM_caption">
+          <qp-fieldset id="fsHCEM" view.bind="Document"></qp-fieldset>
+        </qp-tab>
+      </qp-tabbar>
+    </template>
+  : labels:
+    - source: <qp-tab caption.bind="HCEM_caption">
+      style: primary
+      start: 43
+      end: 79
+    - source: qp-tab
+      style: secondary
+      start: 44
+      end: 50

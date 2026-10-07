@@ -1,0 +1,80 @@
+id: acu-workflow-ext-add-screen-config
+snapshots:
+  ? |
+    public class HCOpportunityMaint_Workflow : PXGraphExtension<PX.Objects.CR.Workflows.OpportunityWorkflow, OpportunityMaint>
+    {
+        public static bool IsActive() => true;
+        protected static void Configure(WorkflowContext<OpportunityMaint, CROpportunity> context)
+        {
+            context.AddScreenConfigurationFor(screen => screen.WithActions(actions => { }));
+        }
+    }
+  : labels:
+    - source: context.AddScreenConfigurationFor(screen => screen.WithActions(actions => { }))
+      style: primary
+      start: 276
+      end: 355
+    - source: ': PXGraphExtension<PX.Objects.CR.Workflows.OpportunityWorkflow, OpportunityMaint>'
+      style: secondary
+      start: 41
+      end: 122
+    - source: |-
+        public class HCOpportunityMaint_Workflow : PXGraphExtension<PX.Objects.CR.Workflows.OpportunityWorkflow, OpportunityMaint>
+        {
+            public static bool IsActive() => true;
+            protected static void Configure(WorkflowContext<OpportunityMaint, CROpportunity> context)
+            {
+                context.AddScreenConfigurationFor(screen => screen.WithActions(actions => { }));
+            }
+        }
+      style: secondary
+      start: 0
+      end: 364
+    - source: AddScreenConfigurationFor
+      style: secondary
+      start: 284
+      end: 309
+    - source: context.AddScreenConfigurationFor
+      style: secondary
+      start: 276
+      end: 309
+  ? |
+    public class HCSOOrderEntry_Workflow : PXGraphExtension<SOOrderEntry_Workflow, SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+        public sealed override void Configure(PXScreenConfiguration config)
+        {
+            var context = config.GetScreenConfigurationContext<SOOrderEntry, SOOrder>();
+            context.AddScreenConfigurationFor(screen => screen.StateIdentifierIs<SOOrder.status>());
+        }
+    }
+  : labels:
+    - source: context.AddScreenConfigurationFor(screen => screen.StateIdentifierIs<SOOrder.status>())
+      style: primary
+      start: 309
+      end: 396
+    - source: ': PXGraphExtension<SOOrderEntry_Workflow, SOOrderEntry>'
+      style: secondary
+      start: 37
+      end: 92
+    - source: |-
+        public class HCSOOrderEntry_Workflow : PXGraphExtension<SOOrderEntry_Workflow, SOOrderEntry>
+        {
+            public static bool IsActive() => true;
+            public sealed override void Configure(PXScreenConfiguration config)
+            {
+                var context = config.GetScreenConfigurationContext<SOOrderEntry, SOOrder>();
+                context.AddScreenConfigurationFor(screen => screen.StateIdentifierIs<SOOrder.status>());
+            }
+        }
+      style: secondary
+      start: 0
+      end: 405
+    - source: AddScreenConfigurationFor
+      style: secondary
+      start: 317
+      end: 342
+    - source: context.AddScreenConfigurationFor
+      style: secondary
+      start: 309
+      end: 342

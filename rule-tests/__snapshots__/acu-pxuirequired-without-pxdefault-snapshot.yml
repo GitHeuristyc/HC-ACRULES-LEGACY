@@ -1,0 +1,62 @@
+id: acu-pxuirequired-without-pxdefault
+snapshots:
+  ? |
+    public class HCODSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXDBString(40, IsUnicode = true)]
+        [PXUIField(DisplayName = "Customer Order Nbr.")]
+        [PXUIRequired(typeof(Where<SOOrder.hold, Equal<False>>))]
+        protected virtual void _(Events.CacheAttached<SOOrder.customerRefNbr> e) { }
+    }
+  : labels:
+    - source: |-
+        [PXDBString(40, IsUnicode = true)]
+            [PXUIField(DisplayName = "Customer Order Nbr.")]
+            [PXUIRequired(typeof(Where<SOOrder.hold, Equal<False>>))]
+            protected virtual void _(Events.CacheAttached<SOOrder.customerRefNbr> e) { }
+      style: primary
+      start: 72
+      end: 302
+    - source: PXUIRequired
+      style: secondary
+      start: 165
+      end: 177
+    - source: PXUIRequired(typeof(Where<SOOrder.hold, Equal<False>>))
+      style: secondary
+      start: 165
+      end: 220
+    - source: '[PXUIRequired(typeof(Where<SOOrder.hold, Equal<False>>))]'
+      style: secondary
+      start: 164
+      end: 221
+  ? |
+    public class HCODWorkOrder : PXBqlTable, IBqlTable
+    {
+        [PXDBString(255, IsUnicode = true)]
+        [PXUIEnabled(typeof(verifyByVersion))]
+        [PXUIRequired(typeof(verifyByVersion))]
+        [PXUIField(DisplayName = "Versions")]
+        public virtual string Versions { get; set; }
+    }
+  : labels:
+    - source: |-
+        [PXDBString(255, IsUnicode = true)]
+            [PXUIEnabled(typeof(verifyByVersion))]
+            [PXUIRequired(typeof(verifyByVersion))]
+            [PXUIField(DisplayName = "Versions")]
+            public virtual string Versions { get; set; }
+      style: primary
+      start: 57
+      end: 270
+    - source: PXUIRequired
+      style: secondary
+      start: 141
+      end: 153
+    - source: PXUIRequired(typeof(verifyByVersion))
+      style: secondary
+      start: 141
+      end: 178
+    - source: '[PXUIRequired(typeof(verifyByVersion))]'
+      style: secondary
+      start: 140
+      end: 179

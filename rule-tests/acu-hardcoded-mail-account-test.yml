@@ -1,0 +1,15 @@
+id: acu-hardcoded-mail-account
+valid:
+  - |
+    var sender = TemplateNotificationGenerator.Create(Base, row, notification);
+    sender.MailAccountId = notification.NFrom ?? MailAccountManager.DefaultMailAccountID;
+  - |
+    var sender = TemplateNotificationGenerator.Create(Base, row, setup.NotificationID);
+    sender.MailAccountId = setup.DefaultMailAccountID;
+    sender.Send();
+invalid:
+  - |
+    var sender = TemplateNotificationGenerator.Create(Base, row, setup.NotificationID);
+    sender.MailAccountId = 5;
+  - |
+    var sender = new NotificationGenerator(Base) { MailAccountId = 12, To = contact.EMail };

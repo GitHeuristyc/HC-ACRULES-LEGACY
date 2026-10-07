@@ -1,0 +1,37 @@
+id: acu-status-code-literal
+language: csharp
+severity: warning
+message: "Status or type code compared with or assigned from an inline string literal. Use the constant from the constants class, for example `row.Status == WorkOrderStatus.Hold` or `row.DocType = ARDocType.Invoice`."
+note: |
+  Inline codes such as "H" or "INV" are not refactor-safe and break silently when
+  the list of values changes. Keep each code in a `public const string` of a
+  constants class (with BQL constants and a ListAttribute) and reference it.
+metadata:
+  skill: acumatica-strings
+utils:
+  status-member:
+    kind: member_access_expression
+    has: { field: name, regex: '^([A-Z]\w*)?(Status|Type)$' }
+  code-literal:
+    kind: string_literal
+    regex: '^"[A-Z][A-Z0-9]{0,2}"$'
+rule:
+  # Only Acumatica code: the file imports a PX namespace.
+  inside:
+    stopBy: end
+    kind: compilation_unit
+    has: { stopBy: end, kind: using_directive, regex: '\bPX\.' }
+  any:
+    - kind: binary_expression
+      regex: '[!=]='
+      any:
+        - all:
+            - has: { field: left, matches: status-member }
+            - has: { field: right, matches: code-literal }
+        - all:
+            - has: { field: left, matches: code-literal }
+            - has: { field: right, matches: status-member }
+    - kind: assignment_expression
+      all:
+        - has: { field: left, matches: status-member }
+        - has: { field: right, matches: code-literal }

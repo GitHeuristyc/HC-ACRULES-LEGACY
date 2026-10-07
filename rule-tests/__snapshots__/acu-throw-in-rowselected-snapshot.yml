@@ -1,0 +1,68 @@
+id: acu-throw-in-rowselected
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            var row = e.Row as HCODWidget ?? throw new PXArgumentException(nameof(e));
+        }
+    }
+  : labels:
+    - source: throw new PXArgumentException(nameof(e))
+      style: primary
+      start: 197
+      end: 237
+    - source: HCODWidget_RowSelected
+      style: secondary
+      start: 85
+      end: 107
+    - source: (PXCache sender, PXRowSelectedEventArgs e)
+      style: secondary
+      start: 107
+      end: 149
+    - source: |-
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+            {
+                var row = e.Row as HCODWidget ?? throw new PXArgumentException(nameof(e));
+            }
+      style: secondary
+      start: 62
+      end: 244
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            if (e.Row.CustomerID == null)
+                throw new PXException(HCODMessages.CustomerRequired);
+        }
+    }
+  : labels:
+    - source: throw new PXException(HCODMessages.CustomerRequired);
+      style: primary
+      start: 217
+      end: 270
+    - source: Events.RowSelected<SOOrder>
+      style: secondary
+      start: 95
+      end: 122
+    - source: Events.RowSelected<SOOrder> e
+      style: secondary
+      start: 95
+      end: 124
+    - source: Events.RowSelected<SOOrder> e
+      style: secondary
+      start: 95
+      end: 124
+    - source: |-
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+            {
+                if (e.Row == null) return;
+                if (e.Row.CustomerID == null)
+                    throw new PXException(HCODMessages.CustomerRequired);
+            }
+      style: secondary
+      start: 70
+      end: 276

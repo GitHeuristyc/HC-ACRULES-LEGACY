@@ -1,0 +1,14 @@
+id: acu-gl-reversebatch-press
+language: csharp
+severity: error
+message: "JournalEntry.reverseBatch pressed from code. The action asks the user for confirmation; call je.ReverseBatchProc(batch), then take it off hold, save and release."
+metadata:
+  skill: acumatica-gl-batch-from-code
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    kind: member_access_expression
+    all:
+      - has: { field: name, regex: '^Press$' }
+      - has: { field: expression, regex: '(^|\.)reverseBatch$' }

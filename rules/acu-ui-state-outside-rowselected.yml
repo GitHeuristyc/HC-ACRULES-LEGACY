@@ -1,0 +1,49 @@
+id: acu-ui-state-outside-rowselected
+language: csharp
+severity: error
+message: "Field state changed outside RowSelected (PX1070 in event handlers, PX1089 in action handlers). Move SetEnabled, SetVisible, SetRequired, SetDisplayName and similar calls to a RowSelected handler, or to the graph constructor when the state does not depend on the record."
+note: |
+  Only RowSelected runs when the UI asks for field state, so calls made in other
+  events or in action handlers have no effect or are overwritten on the next
+  round trip. Calls in helper methods are not reported because the caller is unknown.
+metadata:
+  skill: acumatica-dynamic-ui
+utils:
+  event-handler-not-rowselected:
+    kind: method_declaration
+    any:
+      # Generic handlers: _(Events.RowUpdated<SOOrder> e)
+      - has:
+          field: parameters
+          has:
+            kind: parameter
+            nthChild: 1
+            has:
+              field: type
+              all:
+                - regex: '^(PX\.Data\.)?Events\.\w+<'
+                - not: { regex: '^(PX\.Data\.)?Events\.(RowSelected|CacheAttached)<' }
+      # Classic handlers: SOOrder_RowUpdated(PXCache sender, PXRowUpdatedEventArgs e)
+      - all:
+          - has: { field: name, regex: '_(Row|Field)\w+$' }
+          - has: { field: parameters, regex: 'PX(Row|Field)\w+EventArgs\b' }
+          - not: { has: { field: parameters, regex: 'PXRowSelectedEventArgs\b' } }
+  action-handler:
+    kind: method_declaration
+    all:
+      - has:
+          kind: attribute_list
+          has: { kind: attribute, has: { field: name, regex: 'Button(Attribute)?$' } }
+      - has:
+          kind: attribute_list
+          has: { kind: attribute, has: { field: name, regex: '^(PX\.Data\.)?PXUIField(Attribute)?$' } }
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    regex: '^(PX\.Data\.)?(PXUIFieldAttribute\.Set(Enabled|Visible|Required|DisplayName|ReadOnly|Visibility|NeutralDisplayName)|PX(String|Int)ListAttribute\.(SetList|AppendList|SetLocalizable))\b'
+  inside:
+    stopBy: end
+    any:
+      - matches: event-handler-not-rowselected
+      - matches: action-handler

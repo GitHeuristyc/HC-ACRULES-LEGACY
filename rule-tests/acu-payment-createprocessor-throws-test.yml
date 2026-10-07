@@ -1,0 +1,38 @@
+id: acu-payment-createprocessor-throws
+valid:
+  - |
+    [PXDisplayTypeName("HC Gateway")]
+    public class HCGatewayPlugin : ICCProcessingPlugin
+    {
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+        {
+            if (typeof(T) == typeof(ICCTransactionProcessor))
+                return new HCTransactionProcessor(settingValues) as T;
+            return null;
+        }
+    }
+  - |
+    public class HCTransactionProcessor : ICCTransactionProcessor
+    {
+        public HCTransactionProcessor(IEnumerable<SettingsValue> settings)
+        {
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
+        }
+    }
+invalid:
+  - |
+    public class HCGatewayPlugin : ICCProcessingPlugin
+    {
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+        {
+            if (typeof(T) == typeof(ICCTransactionProcessor))
+                return new HCTransactionProcessor(settingValues) as T;
+            throw new NotSupportedException(typeof(T).Name);
+        }
+    }
+  - |
+    public class HCGatewayPlugin : ICCProcessingPlugin
+    {
+        public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues) where T : class
+            => typeof(T) == typeof(ICCTransactionProcessor) ? new HCTransactionProcessor(settingValues) as T : throw new NotImplementedException();
+    }

@@ -1,0 +1,71 @@
+id: acu-status-code-literal
+valid:
+  - |
+    using PX.Objects.SO;
+
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            bool onHold = e.Row.Status == SOOrderStatus.Hold;
+            e.Row.OrderType = SOOrderTypeConstants.SalesOrder;
+        }
+    }
+  - |
+    public static class WorkOrderStatus
+    {
+        public const string Hold = "H";
+        public const string Open = "O";
+    }
+  - |
+    using System.Net.Http;
+
+    public class HCODWebhook
+    {
+        public bool IsPost(HttpRequest request) => request.Method == "POST";
+        public void Init(DOC_INFO docInfo) { docInfo.pDataType = "RAW"; }
+        public bool IsOk(ApiResponse response) => response.Status == "success";
+    }
+  - |
+    using System.Net.Http;
+
+    public class HCODStatusClient
+    {
+        public bool IsActive(ApiCustomer customer) => customer.Status == "A";
+    }
+invalid:
+  - |
+    using PX.Data;
+
+    public class AGMasterProjectEntry : PXGraph<AGMasterProjectEntry, AGMasterProject>
+    {
+        protected virtual void _(Events.RowSelected<AGMasterProject> e)
+        {
+            if (e.Row.Status == "C" && e.Row.EndDate == null) { }
+        }
+    }
+  - |
+    using PX.Data;
+
+    public class PEBomMaint : PXGraph<PEBomMaint, PEBOM>
+    {
+        public void Activate(PEBOM row)
+        {
+            row.Status = "A";
+        }
+    }
+  - |
+    using PX.Data;
+
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public bool IsReturn(SOOrder row) => "RC" == row.OrderType;
+    }
+  - |
+    using PX.Data;
+
+    public class HCODxPOReceiptEntry : PXGraphExtension<POReceiptEntry>
+    {
+        public void Prepare(INRegister invoice) { invoice.DocType = "INV"; }
+    }

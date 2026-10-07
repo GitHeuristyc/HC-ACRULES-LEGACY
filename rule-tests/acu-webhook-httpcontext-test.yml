@@ -1,0 +1,36 @@
+id: acu-webhook-httpcontext
+valid:
+  - |
+    public class HCFedexWebhookHandler : IWebhookHandler
+    {
+        public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            string signature = context.Request.Headers["X-Signature"];
+            context.Response.StatusCode = 200;
+        }
+    }
+  - |
+    public partial class ReportLauncher : PXPage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            string id = HttpContext.Current.Request.QueryString["id"];
+        }
+    }
+invalid:
+  - |
+    public class HCFedexWebhookHandler : IWebhookHandler
+    {
+        public async Task HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            if (!IsRequestFromAllowedIP(HttpContext.Current.Request)) return;
+        }
+    }
+  - |
+    public class HCTestWebhookHandler : PXGraph<HCTestWebhookHandler>, IWebhookHandler
+    {
+        async Task IWebhookHandler.HandleAsync(WebhookContext context, CancellationToken cancellation)
+        {
+            HttpRequest aspNetRequest = System.Web.HttpContext.Current?.Request;
+        }
+    }

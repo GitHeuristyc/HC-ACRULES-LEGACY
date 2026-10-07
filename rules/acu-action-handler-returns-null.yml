@@ -1,0 +1,32 @@
+id: acu-action-handler-returns-null
+language: csharp
+severity: error
+message: "Action handler returns null. Return `adapter.Get()` or the list of processed records."
+note: |
+  The framework enumerates the result of an IEnumerable action handler.
+  Returning null breaks the adapter pipeline and mass processing.
+metadata:
+  skill: acumatica-actions
+rule:
+  kind: return_statement
+  has: { kind: null_literal }
+  not:
+    inside:
+      stopBy: { kind: method_declaration }
+      any:
+        - kind: lambda_expression
+        - kind: anonymous_method_expression
+        - kind: local_function_statement
+  inside:
+    stopBy: end
+    kind: method_declaration
+    all:
+      - has: { field: returns, regex: '^(System\.Collections\.)?IEnumerable$' }
+      - has:
+          field: parameters
+          has: { kind: parameter, has: { field: type, regex: '^(PX\.Data\.)?PXAdapter$' } }
+      - has:
+          kind: attribute_list
+          has:
+            kind: attribute
+            has: { field: name, regex: '^(PX\.Data\.)?(PX\w*Button|PXUIField|PXOverride)(Attribute)?$' }

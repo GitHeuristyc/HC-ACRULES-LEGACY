@@ -1,0 +1,18 @@
+id: acu-gl-reversebatch-press
+valid:
+  - |
+    JournalEntry je = PXGraph.CreateInstance<JournalEntry>();
+    Batch reversal = je.ReverseBatchProc(batch);
+    reversal.Hold = false;
+    je.BatchModule.Update(reversal);
+    je.Save.Press();
+  - |
+    je.BatchModule.Current = batch;
+    je.release.Press();
+invalid:
+  - |
+    JournalEntry je = PXGraph.CreateInstance<JournalEntry>();
+    je.BatchModule.Current = batch;
+    je.reverseBatch.Press();
+  - |
+    graph.reverseBatch.Press(adapter);

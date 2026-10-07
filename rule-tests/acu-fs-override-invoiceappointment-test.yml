@@ -1,0 +1,38 @@
+id: acu-fs-override-invoiceappointment
+valid:
+  - |
+    public class HCAppointmentEntryExt : PXGraphExtension<AppointmentEntry>
+    {
+        public static bool IsActive() => PXAccess.FeatureInstalled<FeaturesSet.serviceManagementModule>();
+        [PXOverride]
+        public virtual void SetServiceOrderStatusFromAppointment(FSServiceOrder fsServiceOrderRow, FSAppointment fsAppointmentRow,
+            AppointmentEntry.ActionButton action, Action<FSServiceOrder, FSAppointment, AppointmentEntry.ActionButton> baseMethod)
+        {
+            baseMethod(fsServiceOrderRow, fsAppointmentRow, action);
+        }
+    }
+  - |
+    public class HCCreateInvoiceByAppointmentPostExt : PXGraphExtension<CreateInvoiceByAppointmentPost>
+    {
+        public static bool IsActive() => true;
+        public IEnumerable InvoiceAppointment(PXAdapter adapter) => adapter.Get();
+    }
+invalid:
+  - |
+    public class HCAppointmentEntryExt : PXGraphExtension<AppointmentEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public IEnumerable InvoiceAppointment(PXAdapter adapter, Func<PXAdapter, IEnumerable> baseMethod)
+        {
+            ValidateBeforeInvoice();
+            return baseMethod(adapter);
+        }
+    }
+  - |
+    public class HCAppointmentEntryExt2 : PXGraphExtension<SM_AppointmentEntry, PX.Objects.FS.AppointmentEntry>
+    {
+        public static bool IsActive() => true;
+        [PXOverride]
+        public virtual IEnumerable InvoiceAppointment(PXAdapter adapter, InvoiceDelegate baseMethod) => baseMethod(adapter);
+    }

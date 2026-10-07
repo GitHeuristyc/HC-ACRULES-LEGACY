@@ -1,0 +1,30 @@
+id: acu-graph-type-param-mismatch
+language: csharp
+severity: error
+message: "The first type argument of PXGraph is not the graph itself (PX1093). Declare the graph as `class MyGraph : PXGraph<MyGraph>` or `PXGraph<MyGraph, TPrimary>`."
+metadata:
+  skill: acumatica-acuminator
+rule:
+  # Reported on the declared name so that only edits to the declaration line raise it.
+  any:
+    - kind: identifier
+    - kind: qualified_name
+  inside:
+    field: name
+    kind: class_declaration
+    all:
+      - has: { field: name, pattern: $GRAPH }
+      - not: { has: { kind: type_parameter_list } }
+      - has:
+          kind: base_list
+          has:
+            stopBy: end
+            kind: generic_name
+            all:
+              - has: { kind: identifier, regex: '^PXGraph$' }
+              - has:
+                  kind: type_argument_list
+                  has:
+                    nthChild: 1
+                    kind: identifier
+                    not: { pattern: $GRAPH }

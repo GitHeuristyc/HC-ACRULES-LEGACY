@@ -1,0 +1,28 @@
+id: acu-popup-redirect-in-long-operation
+language: csharp
+severity: error
+message: "Pop-up redirect raised inside a long operation. The pop-up loses its popupCommand binding, so OnClosingPopup never fires in Modern UI; call TryRedirect(graph, PXRedirectHelper.WindowMode.Popup) or throw PXPopupRedirectException directly from the action handler."
+metadata:
+  skill: acumatica-actions
+rule:
+  any:
+    - kind: invocation_expression
+      all:
+        - has: { field: function, regex: '(^|\.)PXRedirectHelper\.TryRedirect$' }
+        - has: { field: arguments, regex: '\bWindowMode\.Popup\b' }
+    - kind: object_creation_expression
+      has: { field: type, regex: '^(PX\.Data\.)?PXPopupRedirectException$' }
+  inside:
+    stopBy: end
+    any:
+      - kind: lambda_expression
+      - kind: anonymous_method_expression
+    inside:
+      kind: argument
+      inside:
+        kind: argument_list
+        inside:
+          kind: invocation_expression
+          has:
+            field: function
+            regex: '(^|\.)(PXLongOperation|LongOperationManager)\.(StartOperation|StartAsyncOperation)$'

@@ -1,0 +1,55 @@
+id: mui-no-declare-module-screen
+snapshots:
+  ? |
+    declare module '../SO301000' {
+      interface SOLine { UsrRoute: PXFieldState; }
+    }
+  : labels:
+    - source: |-
+        module '../SO301000' {
+          interface SOLine { UsrRoute: PXFieldState; }
+        }
+      style: primary
+      start: 8
+      end: 79
+    - source: |-
+        declare module '../SO301000' {
+          interface SOLine { UsrRoute: PXFieldState; }
+        }
+      style: secondary
+      start: 0
+      end: 79
+    - source: '''../SO301000'''
+      style: secondary
+      start: 15
+      end: 28
+  ? |
+    import { PXFieldState } from "client-controls";
+    declare module "src/screens/AP/AP101000/AP101000" {
+      interface APSetup {
+        UsrEMFTPSourceUri: PXFieldState;
+      }
+    }
+  : labels:
+    - source: |-
+        module "src/screens/AP/AP101000/AP101000" {
+          interface APSetup {
+            UsrEMFTPSourceUri: PXFieldState;
+          }
+        }
+      style: primary
+      start: 56
+      end: 164
+    - source: |-
+        declare module "src/screens/AP/AP101000/AP101000" {
+          interface APSetup {
+            UsrEMFTPSourceUri: PXFieldState;
+          }
+        }
+      style: secondary
+      start: 48
+      end: 164
+    - source: '"src/screens/AP/AP101000/AP101000"'
+      style: secondary
+      start: 63
+      end: 97

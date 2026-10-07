@@ -1,0 +1,27 @@
+id: mui-qp-tab-missing-id
+valid:
+  - |
+    <template>
+      <qp-tab caption="Custom Data" after="#tabLastExisting">
+        <qp-grid id="gridHCEM" view.bind="CustomItems"></qp-grid>
+      </qp-tab>
+    </template>
+  - |
+    <template>
+      <qp-tab id="tabHCEM" caption.bind="tabCaption" after="#tabGeneral"></qp-tab>
+      <qp-tab remove="#tabAttributes"></qp-tab>
+      <qp-tab repeat.for="tab of HCEM_filters" id.to-view="tab.filterID" caption="${tab.filterName}"></qp-tab>
+    </template>
+invalid:
+  - |
+    <template>
+      <qp-tab caption="${captionText}" after="#tabGeneral"></qp-tab>
+    </template>
+  - |
+    <template>
+      <qp-tabbar id="tabsBody">
+        <qp-tab caption.bind="HCEM_caption">
+          <qp-fieldset id="fsHCEM" view.bind="Document"></qp-fieldset>
+        </qp-tab>
+      </qp-tabbar>
+    </template>

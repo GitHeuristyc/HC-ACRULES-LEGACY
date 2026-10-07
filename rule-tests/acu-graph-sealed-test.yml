@@ -1,0 +1,33 @@
+id: acu-graph-sealed
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    [PXCacheName("Sales Order Extension")]
+    public sealed class HCODxSOOrder : PXCacheExtension<SOOrder>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public sealed class HCODOrderHelper
+    {
+        private readonly SOOrderEntry graph;
+    }
+invalid:
+  - |
+    public sealed class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+    }
+  - |
+    public sealed class HCODWorkOrderEntry : PXGraph<HCODWorkOrderEntry, HCODWorkOrder>
+    {
+    }
+  - |
+    public sealed class HCODxLevel2 : PXGraphExtension<HCODxSOOrderEntry, SOOrderEntry>
+    {
+        public static bool IsActive() => true;
+    }

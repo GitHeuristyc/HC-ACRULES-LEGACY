@@ -1,0 +1,24 @@
+id: mui-no-customizationscreens-import
+snapshots:
+  ? |
+    export { X } from "customizationScreens/T/screens/X";
+  : labels:
+    - source: export { X } from "customizationScreens/T/screens/X";
+      style: primary
+      start: 0
+      end: 53
+    - source: '"customizationScreens/T/screens/X"'
+      style: secondary
+      start: 18
+      end: 52
+  ? |
+    import { AP301000 } from "../../../customizationScreens/TenantA/screens/AP/AP301000/AP301000";
+  : labels:
+    - source: import { AP301000 } from "../../../customizationScreens/TenantA/screens/AP/AP301000/AP301000";
+      style: primary
+      start: 0
+      end: 94
+    - source: '"../../../customizationScreens/TenantA/screens/AP/AP301000/AP301000"'
+      style: secondary
+      start: 25
+      end: 93

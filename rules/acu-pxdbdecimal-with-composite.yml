@@ -1,0 +1,17 @@
+id: acu-pxdbdecimal-with-composite
+language: csharp
+severity: error
+message: "[PXDBDecimal] stacked with a composite decimal attribute that already maps the column. Remove [PXDBDecimal]; [PXDBQuantity], [PXDBPriceCost], [PXDBCurrency] and [PXDBBaseCury] include it."
+metadata:
+  skill: acumatica-dac-attributes
+rule:
+  kind: property_declaration
+  all:
+    - has:
+        kind: attribute_list
+        has: { kind: attribute, has: { field: name, regex: '(^|\.)PXDBDecimal(Attribute)?$' } }
+    - has:
+        kind: attribute_list
+        has:
+          kind: attribute
+          has: { field: name, regex: '(^|\.)PXDB(Quantity|PriceCost|Currency|BaseCury)(Attribute)?$' }

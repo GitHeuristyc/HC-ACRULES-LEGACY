@@ -1,0 +1,54 @@
+id: acu-pxoverride-base-not-called
+valid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Persist(Action base_Persist)
+        {
+            ValidateCustomFields();
+            base_Persist();
+        }
+    }
+  - |
+    public class HCConfirmShipmentExt : PXGraphExtension<ConfirmShipmentExtension, SOShipmentEntry>
+    {
+        public delegate void ConfirmShipmentDelegate(ConfirmShipmentArgs args);
+        [PXOverride]
+        public virtual void ConfirmShipment(ConfirmShipmentArgs args, ConfirmShipmentDelegate baseMethod)
+            => baseMethod?.Invoke(args);
+    }
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public virtual void Persist(PersistDelegate del)
+        {
+            using (var ts = new PXTransactionScope())
+            {
+                WriteLinks();
+                RunInScope(del);
+                ts.Complete();
+            }
+        }
+    }
+invalid:
+  - |
+    public class HCSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXOverride]
+        public void Persist(Action base_Persist)
+        {
+            ValidateCustomFields();
+            Base.Persist();
+        }
+    }
+  - |
+    public class HCConfirmShipmentExt : PXGraphExtension<ConfirmShipmentExtension, SOShipmentEntry>
+    {
+        [PXOverride]
+        public virtual void ConfirmShipment(ConfirmShipmentArgs args, Action<ConfirmShipmentArgs> baseMethod)
+        {
+            MarkShipped(args.Shipment);
+        }
+    }

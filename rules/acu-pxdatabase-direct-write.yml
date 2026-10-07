@@ -1,0 +1,10 @@
+id: acu-pxdatabase-direct-write
+language: csharp
+severity: warning
+message: "Direct PXDatabase write. It bypasses the graph cache, events and business logic; save through a graph unless the skill's exception applies and is documented."
+metadata:
+  skill: acumatica-blc
+rule:
+  pattern: PXDatabase.$M($$$)
+constraints:
+  M: { regex: '^(Update|Insert|Delete)' }

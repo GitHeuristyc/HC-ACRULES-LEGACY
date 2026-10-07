@@ -1,0 +1,11 @@
+id: acu-pxdbstring-without-length
+valid:
+  - |
+    class D { [PXDBString(15, IsUnicode = true)] public virtual string Code { get; set; } }
+  - |
+    class D { [PXDBString(MaxCodeLength)] public virtual string Code { get; set; } }
+invalid:
+  - |
+    class D { [PXDBString] public virtual string Code { get; set; } }
+  - |
+    class D { [PXDBString(IsUnicode = true)] public virtual string Code { get; set; } }

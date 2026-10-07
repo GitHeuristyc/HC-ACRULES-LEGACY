@@ -1,0 +1,13 @@
+id: acu-payment-pxlongoperation
+language: csharp
+severity: warning
+message: "PXLongOperation.StartOperation called in payment plugin code. Plugins already run inside Acumatica's long operation; do the work synchronously, or use a graph's LongOperationManager when a separate operation is required."
+metadata:
+  skill: acumatica-payment-processor
+rule:
+  kind: invocation_expression
+  has: { field: function, regex: '(^|\.)PXLongOperation\.StartOperation$' }
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: '\bICC\w*(Plugin|Processor|Getter|Resolver)\b' }

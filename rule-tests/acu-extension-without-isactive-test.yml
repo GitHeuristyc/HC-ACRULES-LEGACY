@@ -1,0 +1,15 @@
+id: acu-extension-without-isactive
+valid:
+  - |
+    public class HCExt : PXGraphExtension<SOOrderEntry> { public static bool IsActive() => true; }
+  - |
+    public abstract class HCBaseExt<T> : PXGraphExtension<T> where T : PXGraph { }
+invalid:
+  - |
+    public class HCExt : PXGraphExtension<SOOrderEntry> { private void IsActive() { } }
+  - |
+    public class HCExt : PXGraphExtension<SOOrderEntry> { class Nested { public static bool IsActive() => true; } }
+  - |
+    public class HCExt : PXGraphExtension<SOOrderEntry> { public void M() { } }
+  - |
+    public sealed class HCSOOrderExt : PXCacheExtension<SOOrder> { public virtual string UsrNote { get; set; } }

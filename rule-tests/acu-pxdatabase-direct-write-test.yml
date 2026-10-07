@@ -1,0 +1,11 @@
+id: acu-pxdatabase-direct-write
+valid:
+  - |
+    class C { void M() { graph.Actions.PressSave(); } }
+  - |
+    class C { void M() { PXDatabase.SelectSingle<SOOrder>(new PXDataField<SOOrder.status>()); } }
+invalid:
+  - |
+    class C { void M() { PXDatabase.Update<SOOrder>(new PXDataFieldAssign<SOOrder.status>("C")); } }
+  - |
+    class C { void M() { PXDatabase.Delete<SOOrder>(new PXDataFieldRestrict<SOOrder.status>("X")); } }

@@ -1,0 +1,103 @@
+id: mui-view-extension-extends-pxview
+snapshots:
+  ? |
+    import { PXFieldState, PXView } from "client-controls";
+
+    export interface HCEMMyView extends PXView {}
+    export class HCEMMyView {
+      UsrCustomField1: PXFieldState;
+      UsrCustomField2: PXFieldState;
+    }
+  : labels:
+    - source: interface HCEMMyView extends PXView {}
+      style: primary
+      start: 64
+      end: 102
+    - source: HCEMMyView
+      style: secondary
+      start: 74
+      end: 84
+    - source: HCEMMyView
+      style: secondary
+      start: 116
+      end: 126
+    - source: |-
+        class HCEMMyView {
+          UsrCustomField1: PXFieldState;
+          UsrCustomField2: PXFieldState;
+        }
+      style: secondary
+      start: 110
+      end: 196
+    - source: |
+        import { PXFieldState, PXView } from "client-controls";
+
+        export interface HCEMMyView extends PXView {}
+        export class HCEMMyView {
+          UsrCustomField1: PXFieldState;
+          UsrCustomField2: PXFieldState;
+        }
+      style: secondary
+      start: 0
+      end: 197
+    - source: PXView
+      style: secondary
+      start: 93
+      end: 99
+    - source: extends PXView
+      style: secondary
+      start: 85
+      end: 99
+  ? |
+    import { PXFieldState, PXView } from "client-controls";
+    import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+
+    export interface SO301000_HCUS extends SO301000 {}
+    export class SO301000_HCUS {}
+
+    export interface HCUSTransactions extends PXView { }
+    export class HCUSTransactions {
+      UsrRoute: PXFieldState;
+    }
+  : labels:
+    - source: interface HCUSTransactions extends PXView { }
+      style: primary
+      start: 207
+      end: 252
+    - source: HCUSTransactions
+      style: secondary
+      start: 217
+      end: 233
+    - source: HCUSTransactions
+      style: secondary
+      start: 266
+      end: 282
+    - source: |-
+        class HCUSTransactions {
+          UsrRoute: PXFieldState;
+        }
+      style: secondary
+      start: 260
+      end: 312
+    - source: |
+        import { PXFieldState, PXView } from "client-controls";
+        import { SO301000 } from "src/screens/SO/SO301000/SO301000";
+
+        export interface SO301000_HCUS extends SO301000 {}
+        export class SO301000_HCUS {}
+
+        export interface HCUSTransactions extends PXView { }
+        export class HCUSTransactions {
+          UsrRoute: PXFieldState;
+        }
+      style: secondary
+      start: 0
+      end: 313
+    - source: PXView
+      style: secondary
+      start: 242
+      end: 248
+    - source: extends PXView
+      style: secondary
+      start: 234
+      end: 248

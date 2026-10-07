@@ -1,0 +1,39 @@
+id: mui-qp-missing-id
+valid:
+  - |
+    <template>
+      <qp-template id="tplMain" name="1-1">
+        <qp-fieldset id="fsHeader" view.bind="Document" slot="A">
+          <field name="OrderNbr"></field>
+        </qp-fieldset>
+      </qp-template>
+      <qp-tabbar id="tabsBody">
+        <qp-tab id="tabDetails" caption="Details"></qp-tab>
+      </qp-tabbar>
+    </template>
+  - |
+    <template>
+      <qp-fieldset remove="#groupFinancialInfo"></qp-fieldset>
+      <qp-fieldset
+        modify="#fsVendor"
+        caption="Vendor Info"></qp-fieldset>
+    </template>
+invalid:
+  - |
+    <template>
+      <qp-fieldset view.bind="Document" after="#fsVendor">
+        <field name="UsrTrackingNbr"></field>
+      </qp-fieldset>
+    </template>
+  - |
+    <template>
+      <qp-template name="1-1">
+        <qp-fieldset id="fsA" view.bind="Document" slot="A"></qp-fieldset>
+      </qp-template>
+    </template>
+  - |
+    <template>
+      <qp-tabbar>
+        <qp-tab id="tabGeneral" caption="General"></qp-tab>
+      </qp-tabbar>
+    </template>

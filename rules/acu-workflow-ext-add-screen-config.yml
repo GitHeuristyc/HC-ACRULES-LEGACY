@@ -1,0 +1,16 @@
+id: acu-workflow-ext-add-screen-config
+language: csharp
+severity: error
+message: "AddScreenConfigurationFor in an extension of an existing workflow. It starts a new configuration and discards the base screen configuration; use UpdateScreenConfigurationFor to apply a delta."
+metadata:
+  skill: acumatica-workflow-extension
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    kind: member_access_expression
+    has: { field: name, regex: '^AddScreenConfigurationFor$' }
+  inside:
+    stopBy: end
+    kind: class_declaration
+    has: { kind: base_list, regex: 'PXGraphExtension<\s*[\w.]*Workflow\s*,' }

@@ -1,0 +1,35 @@
+id: acu-report-printjob-not-awaited
+snapshots:
+  ? |
+    PX.SM.SMPrintJobMaint.CreatePrintJobGroups(reportsToPrint, CancellationToken.None);
+  : labels:
+    - source: PX.SM.SMPrintJobMaint.CreatePrintJobGroups(reportsToPrint, CancellationToken.None);
+      style: primary
+      start: 0
+      end: 83
+    - source: PX.SM.SMPrintJobMaint.CreatePrintJobGroups
+      style: secondary
+      start: 0
+      end: 42
+    - source: PX.SM.SMPrintJobMaint.CreatePrintJobGroups(reportsToPrint, CancellationToken.None)
+      style: secondary
+      start: 0
+      end: 82
+  ? |
+    PXLongOperation.StartOperation(this, () =>
+    {
+        SMPrintJobMaint.CreatePrintJobGroup(printerSettings, reportToPrint, reportID, CancellationToken.None);
+    });
+  : labels:
+    - source: SMPrintJobMaint.CreatePrintJobGroup(printerSettings, reportToPrint, reportID, CancellationToken.None);
+      style: primary
+      start: 49
+      end: 151
+    - source: SMPrintJobMaint.CreatePrintJobGroup
+      style: secondary
+      start: 49
+      end: 84
+    - source: SMPrintJobMaint.CreatePrintJobGroup(printerSettings, reportToPrint, reportID, CancellationToken.None)
+      style: secondary
+      start: 49
+      end: 150

@@ -1,0 +1,43 @@
+id: acu-pxuirequired-without-pxdefault
+valid:
+  - |
+    public class HCODWorkOrder : PXBqlTable, IBqlTable
+    {
+        [PXDBString(255, IsUnicode = true)]
+        [PXDefault(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIRequired(typeof(Where<hold, Equal<False>>))]
+        [PXUIField(DisplayName = "Reason")]
+        public virtual string Reason { get; set; }
+    }
+  - |
+    public class HCODFilter : PXBqlTable, IBqlTable
+    {
+        [Branch(PersistingCheck = PXPersistingCheck.Nothing)]
+        [PXUIRequired(typeof(Where<FeatureInstalled<FeaturesSet.branch>>))]
+        public virtual int? BranchID { get; set; }
+    }
+  - |
+    public class HCODSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXMergeAttributes(Method = MergeMethod.Append)]
+        [PXUIRequired(typeof(Where<SOOrder.hold, Equal<False>>))]
+        protected virtual void _(Events.CacheAttached<SOOrder.customerRefNbr> e) { }
+    }
+invalid:
+  - |
+    public class HCODWorkOrder : PXBqlTable, IBqlTable
+    {
+        [PXDBString(255, IsUnicode = true)]
+        [PXUIEnabled(typeof(verifyByVersion))]
+        [PXUIRequired(typeof(verifyByVersion))]
+        [PXUIField(DisplayName = "Versions")]
+        public virtual string Versions { get; set; }
+    }
+  - |
+    public class HCODSOOrderEntryExt : PXGraphExtension<SOOrderEntry>
+    {
+        [PXDBString(40, IsUnicode = true)]
+        [PXUIField(DisplayName = "Customer Order Nbr.")]
+        [PXUIRequired(typeof(Where<SOOrder.hold, Equal<False>>))]
+        protected virtual void _(Events.CacheAttached<SOOrder.customerRefNbr> e) { }
+    }

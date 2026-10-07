@@ -1,0 +1,129 @@
+id: acu-http-sync-over-async
+snapshots:
+  ? |
+    public RestService(string baseUrl, string user, string password)
+    {
+        _httpClient.PostAsJsonAsync(baseUrl + "/entity/auth/login", new { name = user, password = password }).Result
+            .EnsureSuccessStatusCode();
+    }
+  : labels:
+    - source: _httpClient.PostAsJsonAsync(baseUrl + "/entity/auth/login", new { name = user, password = password }).Result
+      style: primary
+      start: 71
+      end: 179
+    - source: Result
+      style: secondary
+      start: 173
+      end: 179
+    - source: PostAsJsonAsync
+      style: secondary
+      start: 83
+      end: 98
+    - source: _httpClient.PostAsJsonAsync
+      style: secondary
+      start: 71
+      end: 98
+    - source: _httpClient.PostAsJsonAsync(baseUrl + "/entity/auth/login", new { name = user, password = password })
+      style: secondary
+      start: 71
+      end: 172
+  ? |
+    public string GetCurrent(string url)
+    {
+        var response = _httpClient.GetAsync(url).GetAwaiter().GetResult();
+        return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+    }
+  : labels:
+    - source: _httpClient.GetAsync(url).GetAwaiter().GetResult()
+      style: primary
+      start: 58
+      end: 108
+    - source: GetResult
+      style: secondary
+      start: 97
+      end: 106
+    - source: GetAwaiter
+      style: secondary
+      start: 84
+      end: 94
+    - source: GetAsync
+      style: secondary
+      start: 70
+      end: 78
+    - source: _httpClient.GetAsync
+      style: secondary
+      start: 58
+      end: 78
+    - source: _httpClient.GetAsync(url)
+      style: secondary
+      start: 58
+      end: 83
+    - source: _httpClient.GetAsync(url).GetAwaiter
+      style: secondary
+      start: 58
+      end: 94
+    - source: _httpClient.GetAsync(url).GetAwaiter()
+      style: secondary
+      start: 58
+      end: 96
+    - source: _httpClient.GetAsync(url).GetAwaiter().GetResult
+      style: secondary
+      start: 58
+      end: 106
+  ? |
+    public string Upload(Stream file)
+    {
+        var res = _httpClient.PostAsync(_baseUrl, new StreamContent(file)).Result;
+        return res.Content.ReadAsStringAsync().Result;
+    }
+  : labels:
+    - source: _httpClient.PostAsync(_baseUrl, new StreamContent(file)).Result
+      style: primary
+      start: 50
+      end: 113
+    - source: Result
+      style: secondary
+      start: 107
+      end: 113
+    - source: PostAsync
+      style: secondary
+      start: 62
+      end: 71
+    - source: _httpClient.PostAsync
+      style: secondary
+      start: 50
+      end: 71
+    - source: _httpClient.PostAsync(_baseUrl, new StreamContent(file))
+      style: secondary
+      start: 50
+      end: 106
+  ? |
+    public void Notify(HttpRequestMessage message)
+    {
+        _client.SendAsync(message).Wait();
+    }
+  : labels:
+    - source: _client.SendAsync(message).Wait()
+      style: primary
+      start: 53
+      end: 86
+    - source: Wait
+      style: secondary
+      start: 80
+      end: 84
+    - source: SendAsync
+      style: secondary
+      start: 61
+      end: 70
+    - source: _client.SendAsync
+      style: secondary
+      start: 53
+      end: 70
+    - source: _client.SendAsync(message)
+      style: secondary
+      start: 53
+      end: 79
+    - source: _client.SendAsync(message).Wait
+      style: secondary
+      start: 53
+      end: 84

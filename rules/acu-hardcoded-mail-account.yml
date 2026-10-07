@@ -1,0 +1,11 @@
+id: acu-hardcoded-mail-account
+language: csharp
+severity: warning
+message: "MailAccountId set to a numeric literal. Account IDs differ per tenant; read MailAccountId from the notification template or the setup record."
+metadata:
+  skill: acumatica-notifications
+rule:
+  kind: assignment_expression
+  all:
+    - has: { field: left, regex: '(^|\.)MailAccountI[dD]$' }
+    - has: { field: right, kind: integer_literal }
