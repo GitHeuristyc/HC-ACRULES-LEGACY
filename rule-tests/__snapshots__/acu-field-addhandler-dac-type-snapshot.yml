@@ -1,0 +1,147 @@
+id: acu-field-addhandler-dac-type
+snapshots:
+  ? |
+    public class HCODInvoiceEntry : PXGraph<HCODInvoiceEntry, ARInvoice>
+    {
+        public HCODInvoiceEntry()
+        {
+            FieldDefaulting.AddHandler<ARTran>(DefaultProject);
+            this.ExceptionHandling.RemoveHandler<ARTran>(OnException);
+        }
+    }
+  : labels:
+    - source: AddHandler<ARTran>
+      style: primary
+      start: 131
+      end: 149
+    - source: AddHandler
+      style: secondary
+      start: 131
+      end: 141
+    - source: ARTran
+      style: secondary
+      start: 142
+      end: 148
+    - source: <ARTran>
+      style: secondary
+      start: 141
+      end: 149
+    - source: FieldDefaulting
+      style: secondary
+      start: 115
+      end: 130
+    - source: FieldDefaulting.AddHandler<ARTran>
+      style: secondary
+      start: 115
+      end: 149
+    - source: <ARTran>
+      style: secondary
+      start: 141
+      end: 149
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public override void Initialize()
+        {
+            Base.FieldUpdated.AddHandler<SOLine>((cache, e) => SetWarehouse(cache, (SOLine)e.Row));
+        }
+    }
+  : labels:
+    - source: AddHandler<SOLine>
+      style: primary
+      start: 136
+      end: 154
+    - source: AddHandler
+      style: secondary
+      start: 136
+      end: 146
+    - source: SOLine
+      style: secondary
+      start: 147
+      end: 153
+    - source: <SOLine>
+      style: secondary
+      start: 146
+      end: 154
+    - source: Base.FieldUpdated
+      style: secondary
+      start: 118
+      end: 135
+    - source: Base.FieldUpdated.AddHandler<SOLine>
+      style: secondary
+      start: 118
+      end: 154
+    - source: <SOLine>
+      style: secondary
+      start: 146
+      end: 154
+  ? |
+    public class usrConShipBox : PXBqlTable, IBqlTable
+    {
+        public abstract class boxID : PX.Data.BQL.BqlInt.Field<boxID> { }
+    }
+
+    public class HCODConsolidatedShipmentEntry : PXGraph<HCODConsolidatedShipmentEntry>
+    {
+        public HCODConsolidatedShipmentEntry()
+        {
+            FieldVerifying.AddHandler<usrConShipBox>(VerifyBox);
+        }
+    }
+  : labels:
+    - source: AddHandler<usrConShipBox>
+      style: primary
+      start: 284
+      end: 309
+    - source: AddHandler
+      style: secondary
+      start: 284
+      end: 294
+    - source: usrConShipBox
+      style: secondary
+      start: 295
+      end: 308
+    - source: <usrConShipBox>
+      style: secondary
+      start: 294
+      end: 309
+    - source: FieldVerifying
+      style: secondary
+      start: 269
+      end: 283
+    - source: FieldVerifying.AddHandler<usrConShipBox>
+      style: secondary
+      start: 269
+      end: 309
+    - source: usrConShipBox
+      style: secondary
+      start: 13
+      end: 26
+    - source: ': PXBqlTable, IBqlTable'
+      style: secondary
+      start: 27
+      end: 50
+    - source: |-
+        public class usrConShipBox : PXBqlTable, IBqlTable
+        {
+            public abstract class boxID : PX.Data.BQL.BqlInt.Field<boxID> { }
+        }
+      style: secondary
+      start: 0
+      end: 124
+    - source: |
+        public class usrConShipBox : PXBqlTable, IBqlTable
+        {
+            public abstract class boxID : PX.Data.BQL.BqlInt.Field<boxID> { }
+        }
+
+        public class HCODConsolidatedShipmentEntry : PXGraph<HCODConsolidatedShipmentEntry>
+        {
+            public HCODConsolidatedShipmentEntry()
+            {
+                FieldVerifying.AddHandler<usrConShipBox>(VerifyBox);
+            }
+        }
+      style: secondary
+      start: 0
+      end: 330

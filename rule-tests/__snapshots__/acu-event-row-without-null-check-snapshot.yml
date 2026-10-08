@@ -1,0 +1,393 @@
+id: acu-event-row-without-null-check
+snapshots:
+  ? |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            HCODWidget row = (HCODWidget)e.Row;
+            if (row.CustomerID == null) return;
+            PXUIFieldAttribute.SetEnabled<HCODWidget.descr>(sender, row, row.Active == true);
+        }
+    }
+  : labels:
+    - source: row.CustomerID
+      style: primary
+      start: 212
+      end: 226
+    - source: row
+      style: secondary
+      start: 212
+      end: 215
+    - source: row
+      style: secondary
+      start: 175
+      end: 178
+    - source: e.Row
+      style: secondary
+      start: 193
+      end: 198
+    - source: (HCODWidget)e.Row
+      style: secondary
+      start: 181
+      end: 198
+    - source: row = (HCODWidget)e.Row
+      style: secondary
+      start: 175
+      end: 198
+    - source: |-
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+            {
+                HCODWidget row = (HCODWidget)e.Row;
+                if (row.CustomerID == null) return;
+                PXUIFieldAttribute.SetEnabled<HCODWidget.descr>(sender, row, row.Active == true);
+            }
+      style: secondary
+      start: 62
+      end: 339
+    - source: PXRowSelectedEventArgs
+      style: secondary
+      start: 124
+      end: 146
+    - source: PXRowSelectedEventArgs e
+      style: secondary
+      start: 124
+      end: 148
+    - source: PXRowSelectedEventArgs e
+      style: secondary
+      start: 124
+      end: 148
+    - source: |-
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+            {
+                HCODWidget row = (HCODWidget)e.Row;
+                if (row.CustomerID == null) return;
+                PXUIFieldAttribute.SetEnabled<HCODWidget.descr>(sender, row, row.Active == true);
+            }
+      style: secondary
+      start: 62
+      end: 339
+  ? |
+    public class HCODWidgetStateAttribute : PXEventSubscriberAttribute, IPXFieldSelectingSubscriber
+    {
+        public virtual void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+        {
+            e.ReturnValue = ((HCODWidget)e.Row).Descr;
+        }
+    }
+  : labels:
+    - source: ((HCODWidget)e.Row).Descr
+      style: primary
+      start: 212
+      end: 237
+    - source: e.Row
+      style: secondary
+      start: 225
+      end: 230
+    - source: (HCODWidget)e.Row
+      style: secondary
+      start: 213
+      end: 230
+    - source: ((HCODWidget)e.Row)
+      style: secondary
+      start: 212
+      end: 231
+    - source: PXFieldSelectingEventArgs
+      style: secondary
+      start: 153
+      end: 178
+    - source: PXFieldSelectingEventArgs e
+      style: secondary
+      start: 153
+      end: 180
+    - source: PXFieldSelectingEventArgs e
+      style: secondary
+      start: 153
+      end: 180
+    - source: |-
+        public virtual void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+            {
+                e.ReturnValue = ((HCODWidget)e.Row).Descr;
+            }
+      style: secondary
+      start: 102
+      end: 244
+  ? |
+    public class HCODxInventoryItemMaint : PXGraphExtension<InventoryItemMaint>
+    {
+        protected virtual void HCODItemManufacturer_IsDefault_FieldUpdating(PXCache sender, PXFieldUpdatingEventArgs e)
+        {
+            var row = e.Row as HCODItemManufacturer;
+            if ((bool?)e.NewValue == true && row.BranchID != null)
+            {
+                ClearOtherDefaults(row.InventoryID, row.BranchID);
+            }
+        }
+    }
+  : labels:
+    - source: row.BranchID
+      style: primary
+      start: 290
+      end: 302
+    - source: row
+      style: secondary
+      start: 290
+      end: 293
+    - source: row
+      style: secondary
+      start: 212
+      end: 215
+    - source: e.Row
+      style: secondary
+      start: 218
+      end: 223
+    - source: e.Row as HCODItemManufacturer
+      style: secondary
+      start: 218
+      end: 247
+    - source: row = e.Row as HCODItemManufacturer
+      style: secondary
+      start: 212
+      end: 247
+    - source: |-
+        protected virtual void HCODItemManufacturer_IsDefault_FieldUpdating(PXCache sender, PXFieldUpdatingEventArgs e)
+            {
+                var row = e.Row as HCODItemManufacturer;
+                if ((bool?)e.NewValue == true && row.BranchID != null)
+                {
+                    ClearOtherDefaults(row.InventoryID, row.BranchID);
+                }
+            }
+      style: secondary
+      start: 82
+      end: 400
+    - source: PXFieldUpdatingEventArgs
+      style: secondary
+      start: 166
+      end: 190
+    - source: PXFieldUpdatingEventArgs e
+      style: secondary
+      start: 166
+      end: 192
+    - source: PXFieldUpdatingEventArgs e
+      style: secondary
+      start: 166
+      end: 192
+    - source: |-
+        protected virtual void HCODItemManufacturer_IsDefault_FieldUpdating(PXCache sender, PXFieldUpdatingEventArgs e)
+            {
+                var row = e.Row as HCODItemManufacturer;
+                if ((bool?)e.NewValue == true && row.BranchID != null)
+                {
+                    ClearOtherDefaults(row.InventoryID, row.BranchID);
+                }
+            }
+      style: secondary
+      start: 82
+      end: 400
+  ? |
+    public class HCODxNonStockItemMaint : PXGraphExtension<NonStockItemMaint>
+    {
+        protected virtual void _(Events.FieldSelecting<HCODItemManufacturer, HCODItemManufacturer.descr> e)
+        {
+            e.ReturnValue = e.Row.Descr;
+        }
+    }
+  : labels:
+    - source: e.Row.Descr
+      style: primary
+      start: 210
+      end: 221
+    - source: e.Row
+      style: secondary
+      start: 210
+      end: 215
+    - source: Events.FieldSelecting<HCODItemManufacturer, HCODItemManufacturer.descr>
+      style: secondary
+      start: 105
+      end: 176
+    - source: Events.FieldSelecting<HCODItemManufacturer, HCODItemManufacturer.descr> e
+      style: secondary
+      start: 105
+      end: 178
+    - source: Events.FieldSelecting<HCODItemManufacturer, HCODItemManufacturer.descr> e
+      style: secondary
+      start: 105
+      end: 178
+    - source: |-
+        protected virtual void _(Events.FieldSelecting<HCODItemManufacturer, HCODItemManufacturer.descr> e)
+            {
+                e.ReturnValue = e.Row.Descr;
+            }
+      style: secondary
+      start: 80
+      end: 228
+  ? |
+    public class HCODxPOReceiptEntry : PXGraphExtension<POReceiptEntry>
+    {
+        protected virtual void _(Events.RowSelected<HCODNcmFilter> e)
+        {
+            HCODNcmFilter row = (HCODNcmFilter)e.Row;
+            PXUIFieldAttribute.SetEnabled<HCODNcmFilter.descr>(e.Cache, row, row.ReasonCode == HCODNcmReasons.WrongItem);
+            PXUIFieldAttribute.SetEnabled<HCODNcmFilter.uoM>(e.Cache, row, row?.ReasonCode == HCODNcmReasons.WrongItem);
+        }
+    }
+  : labels:
+    - source: row.ReasonCode
+      style: primary
+      start: 265
+      end: 279
+    - source: row
+      style: secondary
+      start: 265
+      end: 268
+    - source: row
+      style: secondary
+      start: 164
+      end: 167
+    - source: e.Row
+      style: secondary
+      start: 185
+      end: 190
+    - source: (HCODNcmFilter)e.Row
+      style: secondary
+      start: 170
+      end: 190
+    - source: row = (HCODNcmFilter)e.Row
+      style: secondary
+      start: 164
+      end: 190
+    - source: |-
+        protected virtual void _(Events.RowSelected<HCODNcmFilter> e)
+            {
+                HCODNcmFilter row = (HCODNcmFilter)e.Row;
+                PXUIFieldAttribute.SetEnabled<HCODNcmFilter.descr>(e.Cache, row, row.ReasonCode == HCODNcmReasons.WrongItem);
+                PXUIFieldAttribute.SetEnabled<HCODNcmFilter.uoM>(e.Cache, row, row?.ReasonCode == HCODNcmReasons.WrongItem);
+            }
+      style: secondary
+      start: 74
+      end: 432
+    - source: Events.RowSelected<HCODNcmFilter>
+      style: secondary
+      start: 99
+      end: 132
+    - source: Events.RowSelected<HCODNcmFilter> e
+      style: secondary
+      start: 99
+      end: 134
+    - source: Events.RowSelected<HCODNcmFilter> e
+      style: secondary
+      start: 99
+      end: 134
+    - source: |-
+        protected virtual void _(Events.RowSelected<HCODNcmFilter> e)
+            {
+                HCODNcmFilter row = (HCODNcmFilter)e.Row;
+                PXUIFieldAttribute.SetEnabled<HCODNcmFilter.descr>(e.Cache, row, row.ReasonCode == HCODNcmReasons.WrongItem);
+                PXUIFieldAttribute.SetEnabled<HCODNcmFilter.uoM>(e.Cache, row, row?.ReasonCode == HCODNcmReasons.WrongItem);
+            }
+      style: secondary
+      start: 74
+      end: 432
+  ? |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            Base.Document.Cache.AllowDelete = e.Row.Hold == true;
+            Base.Transactions.Cache.AllowInsert = e.Row.Hold == true;
+        }
+    }
+  : labels:
+    - source: e.Row.Hold
+      style: primary
+      start: 174
+      end: 184
+    - source: e.Row
+      style: secondary
+      start: 174
+      end: 179
+    - source: Events.RowSelected<SOOrder>
+      style: secondary
+      start: 95
+      end: 122
+    - source: Events.RowSelected<SOOrder> e
+      style: secondary
+      start: 95
+      end: 124
+    - source: Events.RowSelected<SOOrder> e
+      style: secondary
+      start: 95
+      end: 124
+    - source: |-
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+            {
+                Base.Document.Cache.AllowDelete = e.Row.Hold == true;
+                Base.Transactions.Cache.AllowInsert = e.Row.Hold == true;
+            }
+      style: secondary
+      start: 70
+      end: 265
+  ? |
+    public class HCODxTermsMaint : PXGraphExtension<TermsMaint>
+    {
+        protected virtual void _(Events.RowSelected<Terms> e, PXRowSelected baseHandler)
+        {
+            baseHandler?.Invoke(e.Cache, e.Args);
+            Terms term = e.Row;
+            PXUIFieldAttribute.SetEnabled<Terms.dayDue00>(e.Cache, term, term.DueType != HCODTermsDueType.SecondDay);
+        }
+    }
+  : labels:
+    - source: term.DueType
+      style: primary
+      start: 296
+      end: 308
+    - source: term
+      style: secondary
+      start: 296
+      end: 300
+    - source: term
+      style: secondary
+      start: 213
+      end: 217
+    - source: e.Row
+      style: secondary
+      start: 220
+      end: 225
+    - source: term = e.Row
+      style: secondary
+      start: 213
+      end: 225
+    - source: |-
+        protected virtual void _(Events.RowSelected<Terms> e, PXRowSelected baseHandler)
+            {
+                baseHandler?.Invoke(e.Cache, e.Args);
+                Terms term = e.Row;
+                PXUIFieldAttribute.SetEnabled<Terms.dayDue00>(e.Cache, term, term.DueType != HCODTermsDueType.SecondDay);
+            }
+      style: secondary
+      start: 66
+      end: 346
+    - source: Events.RowSelected<Terms>
+      style: secondary
+      start: 91
+      end: 116
+    - source: Events.RowSelected<Terms> e
+      style: secondary
+      start: 91
+      end: 118
+    - source: Events.RowSelected<Terms> e
+      style: secondary
+      start: 91
+      end: 118
+    - source: |-
+        protected virtual void _(Events.RowSelected<Terms> e, PXRowSelected baseHandler)
+            {
+                baseHandler?.Invoke(e.Cache, e.Args);
+                Terms term = e.Row;
+                PXUIFieldAttribute.SetEnabled<Terms.dayDue00>(e.Cache, term, term.DueType != HCODTermsDueType.SecondDay);
+            }
+      style: secondary
+      start: 66
+      end: 346

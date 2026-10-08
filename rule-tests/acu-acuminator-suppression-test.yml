@@ -1,0 +1,104 @@
+id: acu-acuminator-suppression
+valid:
+  - |
+    class E : PXGraphExtension<INReplenishmentCreate> {
+      protected virtual void _(Events.RowSelected<INReplenishmentItem> e) { PXUIFieldAttribute.SetEnabled<INReplenishmentItem.qtyProcess>(e.Cache, e.Row, true); }
+      protected virtual void _(Events.FieldUpdated<INReplenishmentItem, INReplenishmentItem.preferredVendorID> e) { UpdateVendorPriceStatus(e.Row); }
+    }
+  - |
+    class P : CustomizationPlugin {
+      public override void UpdateDatabase() {
+        // Acuminator disable once PX1003 NonSpecificPXGraphCreateInstance UpdateDatabase needs a plain PXGraph in the current publish company scope, without graph extensions or a primary view.
+        PXGraph graph = new PXGraph();
+      }
+    }
+  - |
+    class E : PXCacheExtension<ARTran> {
+      // Acuminator disable once PX1016 ExtensionDoesNotDeclareIsActiveMethod extension should be constantly active
+      public int? UsrValue { get; set; }
+    }
+  - |
+    class D : PXBqlTable, IBqlTable {
+      // Acuminator disable once PX1055 DacKeyFieldsWithIdentityKeyField [Such PK is needed for good SQL performance]
+      [PXDBIdentity(IsKey = true)]
+      public int? RecordID { get; set; }
+    }
+  - |
+    class E {
+      protected virtual void _(Events.RowPersisted<SOOrder> e) {
+        //        // Acuminator disable once PX1043 SavingChangesInEventHandlers [Justification]
+        Total();
+      }
+    }
+  - |
+    class E {
+      // Acuminator flags PX1049 here only when the query runs in RowSelected.
+      void M() { }
+    }
+invalid:
+  - |
+    class E : PXGraphExtension<INReplenishmentCreate> {
+      protected virtual void _(Events.RowSelected<INReplenishmentItem> e, PXRowSelected baseHandler) {
+        baseHandler?.Invoke(e.Cache, e.Args);
+        // Acuminator disable once PX1049 DatabaseQueriesInRowSelected Reprice only when the native handler changes quantity; unchanged UI refreshes perform no price lookup.
+        UpdateVendorPriceStatus(e.Row);
+      }
+    }
+  - |
+    class E {
+      protected virtual void _(Events.FieldUpdated<TGShipping.shipped> e) {
+        // Acuminator disable once PX1043 SavingChangesInEventHandlers [BADIA's Design]
+        this.Persist();
+      }
+    }
+  - |
+    class E {
+      protected virtual void _(Events.RowSelected<HCPDDocument> e) {
+        // Acuminator disable once PX1045 PXGraphCreateInstanceInEventHandlers [No instance is being created.]
+        SetFieldListAttribute(e.Cache, e.Row, "FieldName", false);
+      }
+    }
+  - |
+    class E {
+      public IEnumerable process(PXAdapter adapter) {
+        /* Acuminator disable once PX1008 LongOperationDelegateSynchronousExecution */
+        PXLongOperation.StartOperation(this, delegate () { Filter.Current.Process(); });
+        return adapter.Get();
+      }
+    }
+  - |
+    class E {
+      protected virtual void _(Events.RowPersisted<SOOrder> e) {
+    #pragma warning disable PX1043 // Changes cannot be saved to the database from the event handler
+        Base.Save.Press();
+    #pragma warning restore PX1043
+      }
+    }
+  - |
+    class E {
+      [SuppressMessage("Acuminator", "PX1045:PXGraphCreateInstanceInEventHandlers", Justification = "Reads the file only")]
+      protected virtual void _(Events.FieldUpdated<HCPSDocument, HCPSDocument.fileID> e) { }
+    }
+  - |
+    class P : CustomizationPlugin {
+      public override void UpdateDatabase() {
+        // Acuminator disable once PX1003 NonSpecificPXGraphCreateInstance.
+        PXGraph graph = new PXGraph();
+      }
+    }
+  - |
+    class D : PXBqlTable, IBqlTable {
+      // Acuminator disable once PX1023 MultipleTypeAttributesOnProperty [Justification]
+      [PXDBInt]
+      public int? CustomerID { get; set; }
+    }
+  - |
+    class E {
+      // Acuminator disable once PX1086 Legacy
+      void M() { throw new PXSetupNotEnteredException<ARSetup>(null); }
+    }
+  - |
+    class E : PXCacheExtension<SOShipment> {
+      // Acuminator disable once PX1007 NoXmlCommentForPublicEntityOrDacProperty to be documented later
+      public int? UsrValue { get; set; }
+    }

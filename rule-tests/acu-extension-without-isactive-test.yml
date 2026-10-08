@@ -4,6 +4,12 @@ valid:
     public class HCExt : PXGraphExtension<SOOrderEntry> { public static bool IsActive() => true; }
   - |
     public abstract class HCBaseExt<T> : PXGraphExtension<T> where T : PXGraph { }
+  - |
+    public class HCExt : PXGraphExtension<SOOrderEntry> { static public bool IsActive() => true; }
+  - |
+    public class HCExt : PXGraphExtension<SOOrderEntry> { [Obsolete] public static bool IsActive() => true; }
+  - |
+    public class HCExt : PXGraphExtension<HCBaseExt, SOOrderEntry> { public new static bool IsActive() => true; }
 invalid:
   - |
     public class HCExt : PXGraphExtension<SOOrderEntry> { private void IsActive() { } }

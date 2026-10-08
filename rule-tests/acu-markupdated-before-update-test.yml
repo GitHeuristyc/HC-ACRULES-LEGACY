@@ -1,0 +1,151 @@
+id: acu-markupdated-before-update
+valid:
+  # Fixed POS shape: Update first, then copy the note and files.
+  - |
+    public class QuoteToOrder
+    {
+        void CreateLine(SOOrderEntry graph, QuickLine source)
+        {
+            SOLine newLine = graph.Transactions.Insert();
+            newLine.InventoryID = source.InventoryID;
+            newLine.OrderQty = source.OrderQty;
+            newLine = graph.Transactions.Update(newLine);
+            Helper.CopyLineNoteAndFilesToGeneratedDocument(defaults, sourceCache, source, graph.Transactions.Cache, newLine);
+        }
+    }
+  # Fields assigned before Insert are processed by Insert itself.
+  - |
+    public class BankTran
+    {
+        void CreateAdj(CATranEntry te, CABankTran parameters)
+        {
+            CAAdj adj = new CAAdj();
+            adj.CashAccountID = parameters.CashAccountID;
+            adj = te.CAAdjRecords.Insert(adj);
+            PXNoteAttribute.CopyNoteAndFiles(sourceCache, parameters, te.CAAdjRecords.Cache, adj);
+            adj.Hold = false;
+            adj = te.CAAdjRecords.Update(adj);
+        }
+    }
+  # An Update between the assignments and the copy already ran the field events.
+  - |
+    public class NewItem
+    {
+        void Create(InventoryItemMaint graph, InventoryItem item)
+        {
+            item = graph.Item.Insert(item);
+            item.Descr = descr;
+            item = graph.Item.Update(item);
+            PXNoteAttribute.CopyNoteAndFiles(srcCache, src, graph.Item.Cache, item, true, true);
+            graph.Item.Update(item);
+        }
+    }
+  # Update receives a copy, so it diffs against the cached row, not the refreshed snapshot.
+  - |
+    public class Contracts
+    {
+        void CreateDetail(ServiceOrderEntry graph, FSScheduleDet det)
+        {
+            FSSODet line = graph.ServiceOrderDetails.Insert(new FSSODet());
+            line.UOM = det.UOM;
+            PXNoteAttribute.CopyNoteAndFiles(scheduleCache, det, graph.ServiceOrderDetails.Cache, line, copyNotes: true, copyFiles: true);
+            line = (FSSODet)graph.ServiceOrderDetails.Cache.CreateCopy(line);
+            line.TranDesc = det.TranDesc;
+            graph.ServiceOrderDetails.Update(line);
+        }
+    }
+  # Row read from the database, not inserted.
+  - |
+    public class Labels
+    {
+        void Attach(SOShipmentEntry graph, SOPackageDetailEx sdp, Guid fileId)
+        {
+            sdp = PXSelect<SOPackageDetailEx>.Select(graph);
+            sdp.ReturnTrackNumber = number;
+            PXNoteAttribute.SetFileNotes(graph.Packages.Cache, sdp, fileId);
+            graph.Packages.Update(sdp);
+        }
+    }
+  # SetNote only writes the Note cache and SetStatus(Modified) does not refresh the snapshot.
+  - |
+    public class InterCompany
+    {
+        void CreateLine(SOOrderEntry graph, POLine source)
+        {
+            SOLine newLine = graph.Transactions.Insert();
+            newLine.InventoryID = source.InventoryID;
+            PXNoteAttribute.SetNote(graph.Transactions.Cache, newLine, note);
+            graph.Transactions.Cache.SetStatus(newLine, PXEntryStatus.Modified);
+            newLine = graph.Transactions.Update(newLine);
+        }
+    }
+  # The save between the assignments and the attachment already persisted the row.
+  - |
+    public class Submission
+    {
+        void AddFile(SolutionSubmissionEntry graph, Guid fileId)
+        {
+            SolutionFile solutionFile = graph.Files.Insert();
+            solutionFile.FileName = name;
+            graph.Actions.PressSave();
+            PXNoteAttribute.SetFileNotes(graph.Files.Cache, solutionFile, fileId);
+            graph.Files.Update(solutionFile);
+        }
+    }
+invalid:
+  # Real POS defect: the helper wraps PXNoteAttribute.CopyNoteAndFiles.
+  - |
+    public class QuoteToOrder
+    {
+        void CreateLine(SOOrderEntry graph, QuickLine source)
+        {
+            SOLine newLine = graph.Transactions.Insert();
+            newLine.InventoryID = source.InventoryID;
+            if (lotSerialRequired)
+            {
+                newLine.LocationID = source.LocationID;
+            }
+            newLine.OrderQty = source.OrderQty;
+            Helper.CopyLineNoteAndFilesToGeneratedDocument(defaults, sourceCache, source, graph.Transactions.Cache, newLine);
+            newLine = graph.Transactions.Update(newLine);
+        }
+    }
+  - |
+    public class Posting
+    {
+        void CreateProjectTran(RegisterEntry graph, GLTran tran)
+        {
+            PMTran pmt = (PMTran)graph.Transactions.Cache.Insert();
+            pmt.ProjectID = tran.ProjectID;
+            pmt.TaskID = tran.TaskID;
+            PXNoteAttribute.CopyNoteAndFiles(glCache, tran, graph.Transactions.Cache, pmt);
+            try
+            {
+                graph.Transactions.Update(pmt);
+            }
+            catch (PXFieldValueProcessingException) { throw; }
+        }
+    }
+  - |
+    public class Quotes
+    {
+        void Copy(QuoteMaint graph, Guid[] files)
+        {
+            var quote = graph.Quote.Insert(new CRQuote());
+            quote = graph.Quote.Update(quote);
+            quote.TermsID = terms;
+            PXNoteAttribute.SetFileNotes(graph.Quote.Cache, quote, files);
+            graph.Quote.Update(quote);
+        }
+    }
+  - |
+    public class Lines
+    {
+        void Add(SOOrderEntry graph)
+        {
+            SOLine line = graph.Transactions.Insert();
+            line.InventoryID = inventoryID;
+            graph.Transactions.Cache.MarkUpdated(line);
+            graph.Transactions.Update(line);
+        }
+    }

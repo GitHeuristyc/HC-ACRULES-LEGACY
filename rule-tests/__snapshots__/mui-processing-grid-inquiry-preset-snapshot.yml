@@ -1,0 +1,150 @@
+id: mui-processing-grid-inquiry-preset
+snapshots:
+  ? "@gridConfig({\n\tpreset: GridPreset.Inquiry,\n\tmergeToolbarWith: \"ScreenToolbar\",\n\tsyncPosition: true\n})\nexport class MyProcessRecord extends PXView {\n\t@columnConfig({allowSort: false, allowNull: false})\n\tSelected: PXFieldState;\n\t@columnConfig({allowUpdate: false})\n\tDocNbr: PXFieldState;\n}\n"
+  : labels:
+    - source: "@gridConfig({\n\tpreset: GridPreset.Inquiry,\n\tmergeToolbarWith: \"ScreenToolbar\",\n\tsyncPosition: true\n})\nexport class MyProcessRecord extends PXView {\n\t@columnConfig({allowSort: false, allowNull: false})\n\tSelected: PXFieldState;\n\t@columnConfig({allowUpdate: false})\n\tDocNbr: PXFieldState;\n}"
+      style: primary
+      start: 0
+      end: 287
+    - source: preset
+      style: secondary
+      start: 15
+      end: 21
+    - source: GridPreset.Inquiry
+      style: secondary
+      start: 23
+      end: 41
+    - source: 'preset: GridPreset.Inquiry'
+      style: secondary
+      start: 15
+      end: 41
+    - source: "@gridConfig({\n\tpreset: GridPreset.Inquiry,\n\tmergeToolbarWith: \"ScreenToolbar\",\n\tsyncPosition: true\n})"
+      style: secondary
+      start: 0
+      end: 101
+    - source: Selected
+      style: secondary
+      start: 202
+      end: 210
+    - source: "@columnConfig({allowSort: false, allowNull: false})\n\tSelected: PXFieldState"
+      style: secondary
+      start: 149
+      end: 224
+    - source: "@columnConfig({allowSort: false, allowNull: false})\n\tSelected: PXFieldState"
+      style: secondary
+      start: 149
+      end: 224
+    - source: "class MyProcessRecord extends PXView {\n\t@columnConfig({allowSort: false, allowNull: false})\n\tSelected: PXFieldState;\n\t@columnConfig({allowUpdate: false})\n\tDocNbr: PXFieldState;\n}"
+      style: secondary
+      start: 109
+      end: 287
+  ? "@gridConfig({\n\tsyncPosition: true,\n\tshowFastFilter: GridFastFilterVisibility.False,\n\tmergeToolbarWith: \"ScreenToolbar\",\n\tpreset: GridPreset.Inquiry\n})\nexport class HCCOCorfixEntity extends PXView  {\n\n\t@columnConfig({width: 80})\tSelected : PXFieldState;\n\tEntityType : PXFieldState;\n}\n"
+  : labels:
+    - source: "@gridConfig({\n\tsyncPosition: true,\n\tshowFastFilter: GridFastFilterVisibility.False,\n\tmergeToolbarWith: \"ScreenToolbar\",\n\tpreset: GridPreset.Inquiry\n})\nexport class HCCOCorfixEntity extends PXView  {\n\n\t@columnConfig({width: 80})\tSelected : PXFieldState;\n\tEntityType : PXFieldState;\n}"
+      style: primary
+      start: 0
+      end: 282
+    - source: preset
+      style: secondary
+      start: 121
+      end: 127
+    - source: GridPreset.Inquiry
+      style: secondary
+      start: 129
+      end: 147
+    - source: 'preset: GridPreset.Inquiry'
+      style: secondary
+      start: 121
+      end: 147
+    - source: "@gridConfig({\n\tsyncPosition: true,\n\tshowFastFilter: GridFastFilterVisibility.False,\n\tmergeToolbarWith: \"ScreenToolbar\",\n\tpreset: GridPreset.Inquiry\n})"
+      style: secondary
+      start: 0
+      end: 150
+    - source: Selected
+      style: secondary
+      start: 228
+      end: 236
+    - source: "@columnConfig({width: 80})\tSelected : PXFieldState"
+      style: secondary
+      start: 201
+      end: 251
+    - source: "@columnConfig({width: 80})\tSelected : PXFieldState"
+      style: secondary
+      start: 201
+      end: 251
+    - source: "class HCCOCorfixEntity extends PXView  {\n\n\t@columnConfig({width: 80})\tSelected : PXFieldState;\n\tEntityType : PXFieldState;\n}"
+      style: secondary
+      start: 158
+      end: 282
+  ? "@gridConfig({ preset: GridPreset.Inquiry })\nclass MLEventGroup extends PXView {\n\t@columnConfig({ type: GridColumnType.CheckBox, allowCheckAll: false })\n\tSelected: PXFieldState;\n\tType: PXFieldState;\n}\n"
+  : labels:
+    - source: "@gridConfig({ preset: GridPreset.Inquiry })\nclass MLEventGroup extends PXView {\n\t@columnConfig({ type: GridColumnType.CheckBox, allowCheckAll: false })\n\tSelected: PXFieldState;\n\tType: PXFieldState;\n}"
+      style: primary
+      start: 0
+      end: 199
+    - source: preset
+      style: secondary
+      start: 14
+      end: 20
+    - source: GridPreset.Inquiry
+      style: secondary
+      start: 22
+      end: 40
+    - source: 'preset: GridPreset.Inquiry'
+      style: secondary
+      start: 14
+      end: 40
+    - source: '@gridConfig({ preset: GridPreset.Inquiry })'
+      style: secondary
+      start: 0
+      end: 43
+    - source: Selected
+      style: secondary
+      start: 153
+      end: 161
+    - source: "@columnConfig({ type: GridColumnType.CheckBox, allowCheckAll: false })\n\tSelected: PXFieldState"
+      style: secondary
+      start: 81
+      end: 175
+    - source: "@columnConfig({ type: GridColumnType.CheckBox, allowCheckAll: false })\n\tSelected: PXFieldState"
+      style: secondary
+      start: 81
+      end: 175
+  ? "@gridConfig({ preset: GridPreset.Inquiry, syncPosition: true })\nexport class OrderAllocationDetail extends PXView {\n\tAssign: PXActionState;\n\tSelected: PXFieldState<PXFieldOptions.CommitChanges>;\n\tQtyToAllocate: PXFieldState;\n}\n"
+  : labels:
+    - source: "@gridConfig({ preset: GridPreset.Inquiry, syncPosition: true })\nexport class OrderAllocationDetail extends PXView {\n\tAssign: PXActionState;\n\tSelected: PXFieldState<PXFieldOptions.CommitChanges>;\n\tQtyToAllocate: PXFieldState;\n}"
+      style: primary
+      start: 0
+      end: 226
+    - source: preset
+      style: secondary
+      start: 14
+      end: 20
+    - source: GridPreset.Inquiry
+      style: secondary
+      start: 22
+      end: 40
+    - source: 'preset: GridPreset.Inquiry'
+      style: secondary
+      start: 14
+      end: 40
+    - source: '@gridConfig({ preset: GridPreset.Inquiry, syncPosition: true })'
+      style: secondary
+      start: 0
+      end: 63
+    - source: Selected
+      style: secondary
+      start: 141
+      end: 149
+    - source: 'Selected: PXFieldState<PXFieldOptions.CommitChanges>'
+      style: secondary
+      start: 141
+      end: 193
+    - source: 'Selected: PXFieldState<PXFieldOptions.CommitChanges>'
+      style: secondary
+      start: 141
+      end: 193
+    - source: "class OrderAllocationDetail extends PXView {\n\tAssign: PXActionState;\n\tSelected: PXFieldState<PXFieldOptions.CommitChanges>;\n\tQtyToAllocate: PXFieldState;\n}"
+      style: secondary
+      start: 71
+      end: 226

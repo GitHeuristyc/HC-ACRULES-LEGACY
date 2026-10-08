@@ -20,4 +20,8 @@ rule:
             field: body
             has:
               kind: method_declaration
-              regex: '^public\s+static\s+bool\s+IsActive\s*\('
+              # Modifiers in any order, `new` included, and attributes before them.
+              all:
+                - has: { field: name, regex: '^IsActive$' }
+                - has: { kind: modifier, regex: '^public$' }
+                - has: { kind: modifier, regex: '^static$' }

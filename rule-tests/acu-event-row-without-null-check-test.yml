@@ -1,0 +1,151 @@
+id: acu-event-row-without-null-check
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            if (e.Row == null) return;
+            PXUIFieldAttribute.SetEnabled<SOOrder.orderDesc>(e.Cache, e.Row, e.Row.Hold == true);
+        }
+
+        protected virtual void _(Events.FieldSelecting<SOOrder, SOOrder.orderDesc> e)
+        {
+            SOOrder row = e.Row;
+            if (row is null) return;
+            e.ReturnValue = row.OrderDesc;
+        }
+
+        protected virtual void _(Events.FieldUpdating<SOLine, SOLine.orderQty> e)
+        {
+            if (e?.Row == null) return;
+            e.NewValue = e.Row.BaseOrderQty;
+        }
+
+        protected virtual void _(Events.RowUpdated<SOOrder> e)
+        {
+            e.Cache.SetValueExt<SOOrder.orderDesc>(e.Row, e.Row.CustomerRefNbr);
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            if (!(e.Row is HCODWidget row)) return;
+            PXUIFieldAttribute.SetEnabled<HCODWidget.descr>(sender, row, row.Active == true);
+        }
+
+        protected virtual void HCODWidgetLine_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            HCODWidgetLine line = (HCODWidgetLine)e.Row;
+            if (line == null) return;
+            PXUIFieldAttribute.SetEnabled<HCODWidgetLine.qty>(sender, line, line.Released != true);
+        }
+
+        protected virtual void HCODWidgetFilter_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            HCODWidgetFilter filter = (HCODWidgetFilter)e.Row;
+            Widgets.SetProcessDelegate(list => Process(list, filter.ProcessDate));
+        }
+    }
+  - |
+    public class HCODxINItemSiteMaint : PXGraphExtension<INItemSiteMaint>
+    {
+        protected virtual void _(Events.RowSelected<INItemSite> e)
+        {
+            if (!IsEditable(e.Row)) return;
+            PXUIFieldAttribute.SetEnabled<INItemSite.preferredVendorID>(e.Cache, e.Row, e.Row.PreferredVendorOverride == true);
+        }
+
+        protected virtual void _(Events.RowSelected<INItemSiteReplenishment> e)
+        {
+            INItemSiteReplenishment row = e.Row;
+            if (row?.InventoryID != null)
+            {
+                Replenishment.AllowDelete = row.InventoryID > 0;
+            }
+        }
+
+        protected virtual void _(Events.RowSelected<SOAdjust> e)
+        {
+            Adjustments.AllowUpdate = Base.Document.Current?.Hold == true && e.Row?.CuryAdjdAmt > 0m && e.Row.Voided == false;
+        }
+    }
+  - |
+    public class HCODWidgetStateAttribute : PXEventSubscriberAttribute, IPXFieldSelectingSubscriber
+    {
+        public virtual void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+        {
+            if (e.Row is not HCODWidget widget) return;
+            e.ReturnValue = widget.Descr;
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        protected virtual void _(Events.RowSelected<SOOrder> e)
+        {
+            Base.Document.Cache.AllowDelete = e.Row.Hold == true;
+            Base.Transactions.Cache.AllowInsert = e.Row.Hold == true;
+        }
+    }
+  - |
+    public class HCODWidgetMaint : PXGraph<HCODWidgetMaint>
+    {
+        protected virtual void HCODWidget_RowSelected(PXCache sender, PXRowSelectedEventArgs e)
+        {
+            HCODWidget row = (HCODWidget)e.Row;
+            if (row.CustomerID == null) return;
+            PXUIFieldAttribute.SetEnabled<HCODWidget.descr>(sender, row, row.Active == true);
+        }
+    }
+  - |
+    public class HCODxTermsMaint : PXGraphExtension<TermsMaint>
+    {
+        protected virtual void _(Events.RowSelected<Terms> e, PXRowSelected baseHandler)
+        {
+            baseHandler?.Invoke(e.Cache, e.Args);
+            Terms term = e.Row;
+            PXUIFieldAttribute.SetEnabled<Terms.dayDue00>(e.Cache, term, term.DueType != HCODTermsDueType.SecondDay);
+        }
+    }
+  - |
+    public class HCODxPOReceiptEntry : PXGraphExtension<POReceiptEntry>
+    {
+        protected virtual void _(Events.RowSelected<HCODNcmFilter> e)
+        {
+            HCODNcmFilter row = (HCODNcmFilter)e.Row;
+            PXUIFieldAttribute.SetEnabled<HCODNcmFilter.descr>(e.Cache, row, row.ReasonCode == HCODNcmReasons.WrongItem);
+            PXUIFieldAttribute.SetEnabled<HCODNcmFilter.uoM>(e.Cache, row, row?.ReasonCode == HCODNcmReasons.WrongItem);
+        }
+    }
+  - |
+    public class HCODxInventoryItemMaint : PXGraphExtension<InventoryItemMaint>
+    {
+        protected virtual void HCODItemManufacturer_IsDefault_FieldUpdating(PXCache sender, PXFieldUpdatingEventArgs e)
+        {
+            var row = e.Row as HCODItemManufacturer;
+            if ((bool?)e.NewValue == true && row.BranchID != null)
+            {
+                ClearOtherDefaults(row.InventoryID, row.BranchID);
+            }
+        }
+    }
+  - |
+    public class HCODxNonStockItemMaint : PXGraphExtension<NonStockItemMaint>
+    {
+        protected virtual void _(Events.FieldSelecting<HCODItemManufacturer, HCODItemManufacturer.descr> e)
+        {
+            e.ReturnValue = e.Row.Descr;
+        }
+    }
+  - |
+    public class HCODWidgetStateAttribute : PXEventSubscriberAttribute, IPXFieldSelectingSubscriber
+    {
+        public virtual void FieldSelecting(PXCache sender, PXFieldSelectingEventArgs e)
+        {
+            e.ReturnValue = ((HCODWidget)e.Row).Descr;
+        }
+    }

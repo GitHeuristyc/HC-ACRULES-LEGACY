@@ -1,0 +1,98 @@
+id: acu-field-addhandler-dac-type
+valid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public override void Initialize()
+        {
+            Base.FieldUpdated.AddHandler<SOLine.inventoryID>((cache, e) => SetWarehouse(cache, (SOLine)e.Row));
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public override void Initialize()
+        {
+            Base.RowSelected.AddHandler<SOLine>((cache, e) => SetVisibility(cache, (SOLine)e.Row));
+            Base.RowPersisting.AddHandler<SOOrder>(OnOrderPersisting);
+        }
+    }
+  - |
+    public class PaymentChargeSelect<PaymentTable, PaymentMethodID, CashAccountID> : PXSelect<PaymentTable>
+        where PaymentTable : class, IBqlTable, new()
+        where PaymentMethodID : IBqlField
+        where CashAccountID : IBqlField
+    {
+        public PaymentChargeSelect(PXGraph graph) : base(graph)
+        {
+            graph.FieldUpdating.AddHandler<PaymentMethodID>(PaymentMethodID_FieldUpdating);
+        }
+    }
+  - |
+    public class GenerationPeriods : PXGraph<GenerationPeriods>
+    {
+        protected virtual void RemoveFieldDefaultingHandler<FieldID>(PXFieldDefaulting handler)
+            where FieldID : IBqlField
+        {
+            FieldDefaulting.RemoveHandler<FieldID>(handler);
+        }
+    }
+  - |
+    public class HCODShipmentFilter : PXBqlTable, IBqlTable
+    {
+        public abstract class WalMartOnly : PX.Data.BQL.BqlBool.Field<WalMartOnly> { }
+        [PXBool]
+        public virtual bool? WalMartOnly { get; set; }
+
+        public static void Subscribe(PXGraph graph) =>
+            graph.FieldUpdated.AddHandler<WalMartOnly>((cache, e) => cache.SetValue<WalMartOnly>(e.Row, false));
+    }
+  - |
+    using InvID = PX.Objects.SO.SOLine.inventoryID;
+
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public override void Initialize()
+        {
+            Base.FieldVerifying.AddHandler<InvID>(VerifyItem);
+        }
+    }
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public override void Initialize()
+        {
+            Base.FieldUpdated.AddHandler(typeof(SOLine), nameof(SOLine.inventoryID), OnInventoryUpdated);
+        }
+    }
+invalid:
+  - |
+    public class HCODxSOOrderEntry : PXGraphExtension<SOOrderEntry>
+    {
+        public override void Initialize()
+        {
+            Base.FieldUpdated.AddHandler<SOLine>((cache, e) => SetWarehouse(cache, (SOLine)e.Row));
+        }
+    }
+  - |
+    public class HCODInvoiceEntry : PXGraph<HCODInvoiceEntry, ARInvoice>
+    {
+        public HCODInvoiceEntry()
+        {
+            FieldDefaulting.AddHandler<ARTran>(DefaultProject);
+            this.ExceptionHandling.RemoveHandler<ARTran>(OnException);
+        }
+    }
+  - |
+    public class usrConShipBox : PXBqlTable, IBqlTable
+    {
+        public abstract class boxID : PX.Data.BQL.BqlInt.Field<boxID> { }
+    }
+
+    public class HCODConsolidatedShipmentEntry : PXGraph<HCODConsolidatedShipmentEntry>
+    {
+        public HCODConsolidatedShipmentEntry()
+        {
+            FieldVerifying.AddHandler<usrConShipBox>(VerifyBox);
+        }
+    }

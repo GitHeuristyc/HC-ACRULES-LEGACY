@@ -1,0 +1,119 @@
+id: acu-event-row-without-null-check
+language: csharp
+severity: warning
+message: "e.Row is dereferenced without a null check in a RowSelected, FieldSelecting or FieldUpdating handler. These events also run with a null row (no current record, grid filter, field state request); return early when e.Row is null."
+metadata:
+  skill: acumatica-events
+utils:
+  # e.Row, or e?.Row inside a null test
+  e-row:
+    any:
+      - { kind: member_access_expression, regex: '^e\.Row$' }
+      - { kind: conditional_access_expression, regex: '^e\?\.Row$' }
+  # e.Row, (SOOrder)e.Row or e.Row as SOOrder, optionally in parentheses
+  row-value:
+    any:
+      - matches: e-row
+      - { kind: cast_expression, has: { field: value, matches: e-row } }
+      - { kind: as_expression, has: { field: left, matches: e-row } }
+      - kind: parenthesized_expression
+        has:
+          any:
+            - { kind: cast_expression, has: { field: value, matches: e-row } }
+            - { kind: as_expression, has: { field: left, matches: e-row } }
+  null-row-handler:
+    kind: method_declaration
+    any:
+      - has:
+          field: parameters
+          has: { kind: parameter, nthChild: 1, has: { field: type, regex: '^(PX\.Data\.)?Events\.(RowSelected|FieldSelecting|FieldUpdating)<' } }
+      - has:
+          field: parameters
+          has: { kind: parameter, has: { field: type, regex: '^(PX\.Data\.)?PX(RowSelected|FieldSelecting|FieldUpdating)EventArgs$' } }
+  statement-or-if:
+    any:
+      - kind: if_statement
+      - kind: block
+      - kind: expression_statement
+      - kind: return_statement
+      - kind: local_declaration_statement
+      - kind: throw_statement
+      - kind: lambda_expression
+  # The operand of a null test: x == null, x is null, x is not SOOrder row, x ?? y,
+  # ReferenceEquals(x, null), or a helper call in an if condition such as if (!IsValid(x)) return;
+  null-tested:
+    any:
+      - inside: { kind: binary_expression, regex: '(==|!=)\s*null$|^null\s*(==|!=)|\?\?' }
+      - inside: { kind: is_pattern_expression, field: expression }
+      - inside:
+          kind: argument
+          inside:
+            kind: argument_list
+            inside:
+              kind: invocation_expression
+              any:
+                - regex: '^(object\.|Object\.)?ReferenceEquals\('
+                - inside: { stopBy: { matches: statement-or-if }, kind: if_statement }
+  # e.Row.Status, ((SOOrder)e.Row).Status, or row.Status where the method declares
+  # var row = e.Row, (SOOrder)e.Row or e.Row as SOOrder
+  row-dereference:
+    kind: member_access_expression
+    any:
+      - has: { field: expression, matches: row-value }
+      - all:
+          - has: { field: expression, kind: identifier, pattern: $ROW }
+          - inside:
+              stopBy: end
+              kind: method_declaration
+              has: { stopBy: end, kind: variable_declarator, all: [ { has: { field: name, pattern: $ROW } }, { has: { matches: row-value } } ] }
+  # e.Row?.Status or row?.Status
+  # The C# grammar parses a && e.Row?.Field as (a && e.Row)?.Field, so the row can be
+  # the right operand of the condition.
+  row-conditional-access:
+    kind: conditional_access_expression
+    any:
+      - has: { field: condition, any: [ { matches: row-value }, { kind: binary_expression, has: { field: right, matches: row-value } } ] }
+      - all:
+          - has:
+              field: condition
+              any:
+                - { kind: identifier, pattern: $COND }
+                - { kind: binary_expression, has: { field: right, kind: identifier, pattern: $COND } }
+          - inside:
+              stopBy: end
+              kind: method_declaration
+              has: { stopBy: end, kind: variable_declarator, all: [ { has: { field: name, pattern: $COND } }, { has: { matches: row-value } } ] }
+  # An earlier dereference already marks the handler; an earlier e.Row?.Field, as in
+  # if (row?.InventoryID != null) { row.InventoryID ... }, shows the author handled null there.
+  earlier-row-use:
+    any:
+      - matches: row-dereference
+      - matches: row-conditional-access
+      - has: { stopBy: end, any: [ { matches: row-dereference }, { matches: row-conditional-access } ] }
+rule:
+  kind: member_access_expression
+  all:
+    - matches: row-dereference
+    - inside: { stopBy: end, matches: null-row-handler }
+    # A lambda such as a process delegate runs later, not when the event fires.
+    - not:
+        inside:
+          stopBy: { kind: method_declaration }
+          any: [ { kind: lambda_expression }, { kind: anonymous_method_expression }, { kind: local_function_statement } ]
+    - not:
+        inside:
+          stopBy: end
+          kind: method_declaration
+          any:
+            - has: { stopBy: end, all: [ { matches: row-value }, { matches: null-tested } ] }
+            - all:
+                - has: { stopBy: end, kind: variable_declarator, all: [ { has: { field: name, pattern: $ALIAS } }, { has: { matches: row-value } } ] }
+                - has: { stopBy: end, kind: identifier, all: [ { pattern: $ALIAS }, { matches: null-tested } ] }
+    # Report only the first dereference in the method, so one finding marks the handler.
+    - not:
+        any:
+          - follows: { stopBy: end, matches: earlier-row-use }
+          - inside:
+              stopBy: { kind: method_declaration }
+              not: { kind: method_declaration }
+              follows: { stopBy: end, matches: earlier-row-use }

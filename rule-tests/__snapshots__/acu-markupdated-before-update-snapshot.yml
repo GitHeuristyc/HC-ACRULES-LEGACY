@@ -1,0 +1,301 @@
+id: acu-markupdated-before-update
+snapshots:
+  ? |
+    public class Lines
+    {
+        void Add(SOOrderEntry graph)
+        {
+            SOLine line = graph.Transactions.Insert();
+            line.InventoryID = inventoryID;
+            graph.Transactions.Cache.MarkUpdated(line);
+            graph.Transactions.Update(line);
+        }
+    }
+  : labels:
+    - source: graph.Transactions.Cache.MarkUpdated(line)
+      style: primary
+      start: 159
+      end: 201
+    - source: graph.Transactions.Cache.MarkUpdated
+      style: secondary
+      start: 159
+      end: 195
+    - source: line
+      style: secondary
+      start: 196
+      end: 200
+    - source: line
+      style: secondary
+      start: 196
+      end: 200
+    - source: line
+      style: secondary
+      start: 196
+      end: 200
+    - source: line
+      style: secondary
+      start: 75
+      end: 79
+    - source: graph.Transactions.Insert
+      style: secondary
+      start: 82
+      end: 107
+    - source: graph.Transactions.Insert()
+      style: secondary
+      start: 82
+      end: 109
+    - source: line = graph.Transactions.Insert()
+      style: secondary
+      start: 75
+      end: 109
+    - source: line = graph.Transactions.Insert()
+      style: secondary
+      start: 75
+      end: 109
+    - source: line.InventoryID = inventoryID
+      style: secondary
+      start: 119
+      end: 149
+    - source: line.InventoryID = inventoryID;
+      style: secondary
+      start: 119
+      end: 150
+    - source: graph.Transactions.Update(line)
+      style: secondary
+      start: 211
+      end: 242
+    - source: graph.Transactions.Update(line)
+      style: secondary
+      start: 211
+      end: 242
+    - source: graph.Transactions.Cache.MarkUpdated(line);
+      style: secondary
+      start: 159
+      end: 202
+  ? |
+    public class Posting
+    {
+        void CreateProjectTran(RegisterEntry graph, GLTran tran)
+        {
+            PMTran pmt = (PMTran)graph.Transactions.Cache.Insert();
+            pmt.ProjectID = tran.ProjectID;
+            pmt.TaskID = tran.TaskID;
+            PXNoteAttribute.CopyNoteAndFiles(glCache, tran, graph.Transactions.Cache, pmt);
+            try
+            {
+                graph.Transactions.Update(pmt);
+            }
+            catch (PXFieldValueProcessingException) { throw; }
+        }
+    }
+  : labels:
+    - source: PXNoteAttribute.CopyNoteAndFiles(glCache, tran, graph.Transactions.Cache, pmt)
+      style: primary
+      start: 236
+      end: 314
+    - source: PXNoteAttribute.CopyNoteAndFiles
+      style: secondary
+      start: 236
+      end: 268
+    - source: pmt
+      style: secondary
+      start: 310
+      end: 313
+    - source: pmt
+      style: secondary
+      start: 310
+      end: 313
+    - source: pmt
+      style: secondary
+      start: 310
+      end: 313
+    - source: pmt
+      style: secondary
+      start: 105
+      end: 108
+    - source: graph.Transactions.Cache.Insert
+      style: secondary
+      start: 119
+      end: 150
+    - source: graph.Transactions.Cache.Insert()
+      style: secondary
+      start: 119
+      end: 152
+    - source: pmt = (PMTran)graph.Transactions.Cache.Insert()
+      style: secondary
+      start: 105
+      end: 152
+    - source: pmt = (PMTran)graph.Transactions.Cache.Insert()
+      style: secondary
+      start: 105
+      end: 152
+    - source: pmt.TaskID = tran.TaskID
+      style: secondary
+      start: 202
+      end: 226
+    - source: pmt.TaskID = tran.TaskID;
+      style: secondary
+      start: 202
+      end: 227
+    - source: graph.Transactions.Update(pmt)
+      style: secondary
+      start: 350
+      end: 380
+    - source: graph.Transactions.Update(pmt)
+      style: secondary
+      start: 350
+      end: 380
+    - source: PXNoteAttribute.CopyNoteAndFiles(glCache, tran, graph.Transactions.Cache, pmt);
+      style: secondary
+      start: 236
+      end: 315
+  ? |
+    public class QuoteToOrder
+    {
+        void CreateLine(SOOrderEntry graph, QuickLine source)
+        {
+            SOLine newLine = graph.Transactions.Insert();
+            newLine.InventoryID = source.InventoryID;
+            if (lotSerialRequired)
+            {
+                newLine.LocationID = source.LocationID;
+            }
+            newLine.OrderQty = source.OrderQty;
+            Helper.CopyLineNoteAndFilesToGeneratedDocument(defaults, sourceCache, source, graph.Transactions.Cache, newLine);
+            newLine = graph.Transactions.Update(newLine);
+        }
+    }
+  : labels:
+    - source: Helper.CopyLineNoteAndFilesToGeneratedDocument(defaults, sourceCache, source, graph.Transactions.Cache, newLine)
+      style: primary
+      start: 351
+      end: 463
+    - source: Helper.CopyLineNoteAndFilesToGeneratedDocument
+      style: secondary
+      start: 351
+      end: 397
+    - source: newLine
+      style: secondary
+      start: 455
+      end: 462
+    - source: newLine
+      style: secondary
+      start: 455
+      end: 462
+    - source: newLine
+      style: secondary
+      start: 455
+      end: 462
+    - source: newLine
+      style: secondary
+      start: 107
+      end: 114
+    - source: graph.Transactions.Insert
+      style: secondary
+      start: 117
+      end: 142
+    - source: graph.Transactions.Insert()
+      style: secondary
+      start: 117
+      end: 144
+    - source: newLine = graph.Transactions.Insert()
+      style: secondary
+      start: 107
+      end: 144
+    - source: newLine = graph.Transactions.Insert()
+      style: secondary
+      start: 107
+      end: 144
+    - source: newLine.OrderQty = source.OrderQty
+      style: secondary
+      start: 307
+      end: 341
+    - source: newLine.OrderQty = source.OrderQty;
+      style: secondary
+      start: 307
+      end: 342
+    - source: graph.Transactions.Update(newLine)
+      style: secondary
+      start: 483
+      end: 517
+    - source: graph.Transactions.Update(newLine)
+      style: secondary
+      start: 483
+      end: 517
+    - source: Helper.CopyLineNoteAndFilesToGeneratedDocument(defaults, sourceCache, source, graph.Transactions.Cache, newLine);
+      style: secondary
+      start: 351
+      end: 464
+  ? |
+    public class Quotes
+    {
+        void Copy(QuoteMaint graph, Guid[] files)
+        {
+            var quote = graph.Quote.Insert(new CRQuote());
+            quote = graph.Quote.Update(quote);
+            quote.TermsID = terms;
+            PXNoteAttribute.SetFileNotes(graph.Quote.Cache, quote, files);
+            graph.Quote.Update(quote);
+        }
+    }
+  : labels:
+    - source: PXNoteAttribute.SetFileNotes(graph.Quote.Cache, quote, files)
+      style: primary
+      start: 211
+      end: 272
+    - source: PXNoteAttribute.SetFileNotes
+      style: secondary
+      start: 211
+      end: 239
+    - source: quote
+      style: secondary
+      start: 259
+      end: 264
+    - source: quote
+      style: secondary
+      start: 259
+      end: 264
+    - source: quote
+      style: secondary
+      start: 259
+      end: 264
+    - source: quote
+      style: secondary
+      start: 86
+      end: 91
+    - source: graph.Quote.Insert
+      style: secondary
+      start: 94
+      end: 112
+    - source: graph.Quote.Insert(new CRQuote())
+      style: secondary
+      start: 94
+      end: 127
+    - source: quote = graph.Quote.Insert(new CRQuote())
+      style: secondary
+      start: 86
+      end: 127
+    - source: quote = graph.Quote.Insert(new CRQuote())
+      style: secondary
+      start: 86
+      end: 127
+    - source: quote.TermsID = terms
+      style: secondary
+      start: 180
+      end: 201
+    - source: quote.TermsID = terms;
+      style: secondary
+      start: 180
+      end: 202
+    - source: graph.Quote.Update(quote)
+      style: secondary
+      start: 282
+      end: 307
+    - source: graph.Quote.Update(quote)
+      style: secondary
+      start: 282
+      end: 307
+    - source: PXNoteAttribute.SetFileNotes(graph.Quote.Cache, quote, files);
+      style: secondary
+      start: 211
+      end: 273

@@ -1,0 +1,67 @@
+id: acu-field-addhandler-dac-type
+language: csharp
+severity: error
+message: "Field-level AddHandler/RemoveHandler receives a DAC type instead of a field class, so the call throws ArgumentNullException at run time (a nested DAC instead registers a handler that never fires); pass the field, for example `AddHandler<SOLine.inventoryID>`."
+note: |
+  FieldEventsBase.AddHandler<TField> has no IBqlField constraint. It takes the
+  table from typeof(TField).DeclaringType and the field name from
+  typeof(TField).Name, so a DAC compiles. The rule checks only an unqualified type
+  argument, treats a PascalCase name as a DAC, and uses declarations in the same
+  file for the exceptions (lowercase DACs, uppercase field classes, aliases).
+metadata:
+  skill: acumatica-events
+rule:
+  # Reported on `AddHandler<T>` so that a long lambda argument does not widen the range.
+  kind: generic_name
+  all:
+    - has: { kind: identifier, regex: '^(Add|Remove)Handler$' }
+    - has:
+        kind: type_argument_list
+        regex: '^<\s*\w+\s*>$'
+        has: { kind: identifier, pattern: $T }
+    - inside:
+        field: name
+        kind: member_access_expression
+        has:
+          field: expression
+          regex: '(^|\.)\s*(FieldUpdated|FieldVerifying|FieldDefaulting|FieldUpdating|FieldSelecting|ExceptionHandling|CommandPreparing)$'
+    # A generic type parameter of an enclosing method or class (`AddHandler<TField>`).
+    - not:
+        inside:
+          stopBy: end
+          has:
+            kind: type_parameter_list
+            has: { kind: type_parameter, has: { field: name, pattern: $T } }
+    # A field class declared in the same file, whatever its casing.
+    - not:
+        inside:
+          stopBy: end
+          kind: compilation_unit
+          has:
+            stopBy: end
+            kind: class_declaration
+            all:
+              - has: { field: name, pattern: $T }
+              - has: { kind: base_list, regex: '(IBqlField|\.Field<)' }
+    # A using alias for a field class (`using InvID = PX.Objects.SO.SOLine.inventoryID;`).
+    - not:
+        inside:
+          stopBy: end
+          kind: compilation_unit
+          has:
+            kind: using_directive
+            all:
+              - has: { field: name, pattern: $T }
+              - regex: '\.[a-z]\w*\s*;$'
+    - any:
+        - has: { kind: type_argument_list, regex: '^<\s*[A-Z]' }
+        # A DAC declared in the same file with a lowercase name (`usrConShipBox`).
+        - inside:
+            stopBy: end
+            kind: compilation_unit
+            has:
+              stopBy: end
+              kind: class_declaration
+              all:
+                - has: { field: name, pattern: $T }
+                - has: { kind: base_list, regex: '(PXBqlTable|IBqlTable|PXCacheExtension)' }

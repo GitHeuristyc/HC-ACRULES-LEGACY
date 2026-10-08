@@ -1,0 +1,75 @@
+# On a processing screen, an Inquiry grid whose Selected column has no
+# check-all is a PXProcessing/PXFilteredProcessing view configured as an inquiry.
+# Source: skills/acumatica-modern-ui/SKILL.md (Grid Configuration)
+id: mui-processing-grid-inquiry-preset
+language: typescript
+severity: warning
+message: "Processing grid uses GridPreset.Inquiry and its `Selected` column has no check-all. Use GridPreset.Processing and declare Selected with @columnConfig({ allowCheckAll: true })."
+note: |
+  The graph view type is not visible here, so the rule only checks screen
+  folders whose ID marks a processing screen (XX5xxxxx for Acumatica IDs,
+  XXXX5xxx for HC IDs) and skips extensions/. Native processing grids declare
+  `preset: GridPreset.Processing` with `@columnConfig({ allowCheckAll: true })`
+  on Selected (AR501000.ts:21-27 in 2024R2 to 2026R2). Acumatica fixed this
+  exact shape in 2025R2 (EP503020, SM502030, SM500400). An Inquiry grid whose
+  Selected column already allows check-all is not reported, because several
+  native processing screens use that combination (PR505000, PM505000,
+  IN506100).
+files:
+  - '**/screens/*/[A-Z][A-Z]5[0-9][0-9][0-9][0-9][0-9]/*.ts'
+  - '**/screens/*/[A-Z][A-Z][A-Z][A-Z]5[0-9][0-9][0-9]/*.ts'
+ignores:
+  - '**/extensions/**'
+rule:
+  any:
+    - kind: export_statement
+      all:
+        - has:
+            kind: decorator
+            matches: inquiry-grid-config
+        - has:
+            field: declaration
+            kind: class_declaration
+            matches: selected-without-check-all
+    - kind: class_declaration
+      all:
+        - has:
+            kind: decorator
+            matches: inquiry-grid-config
+        - matches: selected-without-check-all
+utils:
+  inquiry-grid-config:
+    regex: ^@gridConfig\b
+    has:
+      stopBy: end
+      kind: pair
+      all:
+        - has:
+            field: key
+            regex: ^preset$
+        - has:
+            field: value
+            regex: ^GridPreset\.Inquiry$
+  selected-without-check-all:
+    has:
+      field: body
+      has:
+        kind: public_field_definition
+        has:
+          field: name
+          regex: ^Selected$
+        not:
+          has:
+            kind: decorator
+            has:
+              stopBy: end
+              kind: pair
+              all:
+                - has:
+                    field: key
+                    regex: ^allowCheckAll$
+                - has:
+                    field: value
+                    regex: ^true$
+metadata:
+  skill: acumatica-modern-ui

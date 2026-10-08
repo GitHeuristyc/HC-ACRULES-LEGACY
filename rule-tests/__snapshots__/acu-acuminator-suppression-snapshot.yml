@@ -1,0 +1,119 @@
+id: acu-acuminator-suppression
+snapshots:
+  ? |
+    class D : PXBqlTable, IBqlTable {
+      // Acuminator disable once PX1023 MultipleTypeAttributesOnProperty [Justification]
+      [PXDBInt]
+      public int? CustomerID { get; set; }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1023 MultipleTypeAttributesOnProperty [Justification]
+      style: primary
+      start: 36
+      end: 118
+  ? |
+    class E : PXCacheExtension<SOShipment> {
+      // Acuminator disable once PX1007 NoXmlCommentForPublicEntityOrDacProperty to be documented later
+      public int? UsrValue { get; set; }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1007 NoXmlCommentForPublicEntityOrDacProperty to be documented later
+      style: primary
+      start: 43
+      end: 140
+  ? |
+    class E : PXGraphExtension<INReplenishmentCreate> {
+      protected virtual void _(Events.RowSelected<INReplenishmentItem> e, PXRowSelected baseHandler) {
+        baseHandler?.Invoke(e.Cache, e.Args);
+        // Acuminator disable once PX1049 DatabaseQueriesInRowSelected Reprice only when the native handler changes quantity; unchanged UI refreshes perform no price lookup.
+        UpdateVendorPriceStatus(e.Row);
+      }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1049 DatabaseQueriesInRowSelected Reprice only when the native handler changes quantity; unchanged UI refreshes perform no price lookup.
+      style: primary
+      start: 197
+      end: 362
+  ? |
+    class E {
+      // Acuminator disable once PX1086 Legacy
+      void M() { throw new PXSetupNotEnteredException<ARSetup>(null); }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1086 Legacy
+      style: primary
+      start: 12
+      end: 52
+  ? |
+    class E {
+      [SuppressMessage("Acuminator", "PX1045:PXGraphCreateInstanceInEventHandlers", Justification = "Reads the file only")]
+      protected virtual void _(Events.FieldUpdated<HCPSDocument, HCPSDocument.fileID> e) { }
+    }
+  : labels:
+    - source: SuppressMessage("Acuminator", "PX1045:PXGraphCreateInstanceInEventHandlers", Justification = "Reads the file only")
+      style: primary
+      start: 13
+      end: 128
+  ? |
+    class E {
+      protected virtual void _(Events.FieldUpdated<TGShipping.shipped> e) {
+        // Acuminator disable once PX1043 SavingChangesInEventHandlers [BADIA's Design]
+        this.Persist();
+      }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1043 SavingChangesInEventHandlers [BADIA's Design]
+      style: primary
+      start: 86
+      end: 165
+  ? |
+    class E {
+      protected virtual void _(Events.RowPersisted<SOOrder> e) {
+    #pragma warning disable PX1043 // Changes cannot be saved to the database from the event handler
+        Base.Save.Press();
+    #pragma warning restore PX1043
+      }
+    }
+  : labels:
+    - source: |
+        #pragma warning disable PX1043 // Changes cannot be saved to the database from the event handler
+      style: primary
+      start: 71
+      end: 168
+  ? |
+    class E {
+      protected virtual void _(Events.RowSelected<HCPDDocument> e) {
+        // Acuminator disable once PX1045 PXGraphCreateInstanceInEventHandlers [No instance is being created.]
+        SetFieldListAttribute(e.Cache, e.Row, "FieldName", false);
+      }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1045 PXGraphCreateInstanceInEventHandlers [No instance is being created.]
+      style: primary
+      start: 79
+      end: 181
+  ? |
+    class E {
+      public IEnumerable process(PXAdapter adapter) {
+        /* Acuminator disable once PX1008 LongOperationDelegateSynchronousExecution */
+        PXLongOperation.StartOperation(this, delegate () { Filter.Current.Process(); });
+        return adapter.Get();
+      }
+    }
+  : labels:
+    - source: /* Acuminator disable once PX1008 LongOperationDelegateSynchronousExecution */
+      style: primary
+      start: 64
+      end: 142
+  ? |
+    class P : CustomizationPlugin {
+      public override void UpdateDatabase() {
+        // Acuminator disable once PX1003 NonSpecificPXGraphCreateInstance.
+        PXGraph graph = new PXGraph();
+      }
+    }
+  : labels:
+    - source: // Acuminator disable once PX1003 NonSpecificPXGraphCreateInstance.
+      style: primary
+      start: 78
+      end: 145

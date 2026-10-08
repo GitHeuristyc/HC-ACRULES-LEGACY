@@ -1,0 +1,27 @@
+id: acu-acuminator-suppression
+language: csharp
+severity: warning
+message: "Acuminator suppression of a diagnostic that guards database, graph, cache, action or long-operation side effects, or a suppression without a concrete reason. Remove the suppression and fix the code (a helper called from the handler runs on every event too), or state in plain text why the suppressed code is safe."
+note: |
+  High-impact diagnostics: PX1008, PX1043-PX1049, PX1054, PX1057-PX1059,
+  PX1073, PX1075 and PX1080-PX1084. A suppression of one of them is reported even
+  when it has a reason, because the reason is the claim the reviewer must check.
+  A suppression of any other diagnostic is reported only when the reason is
+  missing or generic: [Justification], Legacy, TODO, expected, false positive,
+  false alert, false error, or to be documented later.
+  Covered forms: `// Acuminator disable once PX####`, `#pragma warning disable PX####`
+  and `[SuppressMessage("Acuminator", "PX####...")]`. Commented-out suppressions
+  and .acuminator suppression files are not reported.
+metadata:
+  skill: acumatica-acuminator
+rule:
+  any:
+    - kind: comment
+      any:
+        - regex: '^(//|/\*)\s*Acuminator\s+disable\s+once\s+PX10(08|4[3-9]|5[4789]|7[35]|8[0-4])\b'
+        # No reason, or a generic one. A single word after the code counts as the diagnostic name.
+        - regex: '(?i)^(//|/\*)\s*Acuminator\s+disable\s+once\s+PX\d{4}(\s+\w+)?\s*(\[\s*\]|\[?\s*(Justification|Legacy|Legacy code|TODO|expected|false positive|false alert|false error|to be documented later)\s*\]?)?[\s.]*(\*/)?$'
+    - kind: preproc_pragma
+      regex: '^#pragma\s+warning\s+disable\b[^/\n]*\bPX10(08|4[3-9]|5[4789]|7[35]|8[0-4])\b'
+    - kind: attribute
+      regex: '^(System\.Diagnostics\.CodeAnalysis\.)?SuppressMessage(Attribute)?\(\s*"Acuminator"\s*,\s*"PX10(08|4[3-9]|5[4789]|7[35]|8[0-4])\b'

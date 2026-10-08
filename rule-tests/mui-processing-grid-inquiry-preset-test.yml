@@ -1,0 +1,82 @@
+id: mui-processing-grid-inquiry-preset
+valid:
+  - |
+    @gridConfig({
+    	preset: GridPreset.Processing,
+    	allowUpdate: false,
+    	syncPosition: true,
+    	mergeToolbarWith: "ScreenToolbar"
+    })
+    export class HCCOCorfixEntity extends PXView {
+    	@columnConfig({ type: GridColumnType.CheckBox, allowCheckAll: true, width: 80 })
+    	Selected: PXFieldState;
+    	EntityType: PXFieldState;
+    }
+  - |
+    @gridConfig({
+    	preset: GridPreset.Inquiry,
+    	showFilterBar: GridFilterBarVisibility.OnDemand
+    })
+    export class PRPayment extends PXView {
+    	@columnConfig({ allowCheckAll: true })
+    	Selected: PXFieldState<PXFieldOptions.CommitChanges>;
+    	RefNbr: PXFieldState;
+    }
+  - |
+    @gridConfig({ preset: GridPreset.Inquiry, syncPosition: true })
+    export class HCTCClockHistory extends PXView {
+    	@linkCommand("ViewClock")
+    	RefNbr: PXFieldState;
+    	Status: PXFieldState;
+    }
+  - |
+    @gridConfig({ preset: GridPreset.ReadOnly })
+    export class HCUSLookupRow extends PXView {
+    	@columnConfig({ allowNull: false })
+    	Selected: PXFieldState;
+    	InventoryID: PXFieldState;
+    }
+  - |
+    export class HCCOSyncDataFilter extends PXView {
+    	Selected: PXFieldState<PXFieldOptions.CommitChanges>;
+    	BranchID: PXFieldState;
+    }
+invalid:
+  - |
+    @gridConfig({
+    	syncPosition: true,
+    	showFastFilter: GridFastFilterVisibility.False,
+    	mergeToolbarWith: "ScreenToolbar",
+    	preset: GridPreset.Inquiry
+    })
+    export class HCCOCorfixEntity extends PXView  {
+
+    	@columnConfig({width: 80})	Selected : PXFieldState;
+    	EntityType : PXFieldState;
+    }
+  - |
+    @gridConfig({
+    	preset: GridPreset.Inquiry,
+    	mergeToolbarWith: "ScreenToolbar",
+    	syncPosition: true
+    })
+    export class MyProcessRecord extends PXView {
+    	@columnConfig({allowSort: false, allowNull: false})
+    	Selected: PXFieldState;
+    	@columnConfig({allowUpdate: false})
+    	DocNbr: PXFieldState;
+    }
+  - |
+    @gridConfig({ preset: GridPreset.Inquiry, syncPosition: true })
+    export class OrderAllocationDetail extends PXView {
+    	Assign: PXActionState;
+    	Selected: PXFieldState<PXFieldOptions.CommitChanges>;
+    	QtyToAllocate: PXFieldState;
+    }
+  - |
+    @gridConfig({ preset: GridPreset.Inquiry })
+    class MLEventGroup extends PXView {
+    	@columnConfig({ type: GridColumnType.CheckBox, allowCheckAll: false })
+    	Selected: PXFieldState;
+    	Type: PXFieldState;
+    }

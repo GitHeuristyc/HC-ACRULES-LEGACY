@@ -1,0 +1,76 @@
+id: acu-markupdated-before-update
+language: csharp
+severity: warning
+message: "Attachment copy or MarkUpdated between direct field assignments and Update(row) on an inserted row. It refreshes the copy that Update compares against, so FieldVerifying and FieldUpdated never run for the assigned fields; call Update(row) first, then copy notes and files."
+metadata:
+  skill: acumatica-cache-tricks
+rule:
+  kind: invocation_expression
+  any:
+    # PXNoteAttribute.CopyNoteAndFiles(srcCache, srcRow, dstCache, dstRow, ...)
+    - all:
+        - has: { field: function, regex: '(^|\.)CopyNoteAndFiles$' }
+        - has: { field: arguments, has: { kind: argument, nthChild: 4, has: { kind: identifier, pattern: $ROW } } }
+    # Project helpers that wrap CopyNoteAndFiles take the destination row last.
+    - all:
+        - has: { field: function, regex: '(^|\.)\w*NoteAndFiles\w*$' }
+        - has: { field: arguments, has: { kind: argument, nthChild: { position: 1, reverse: true }, has: { kind: identifier, pattern: $ROW } } }
+    - all:
+        - has: { field: function, regex: '(^|\.)SetFileNotes$' }
+        - has: { field: arguments, has: { kind: argument, nthChild: 2, has: { kind: identifier, pattern: $ROW } } }
+    - all:
+        - has: { field: function, regex: '(^|\.)MarkUpdated$' }
+        - has: { field: arguments, has: { kind: argument, nthChild: 1, has: { kind: identifier, pattern: $ROW } } }
+    - all:
+        - has: { field: function, regex: '(^|\.)SetStatus$' }
+        - has: { field: arguments, has: { kind: argument, nthChild: 1, has: { kind: identifier, pattern: $ROW } } }
+        - has: { field: arguments, has: { kind: argument, nthChild: 2, regex: 'PXEntryStatus\.Updated$' } }
+  inside:
+    kind: expression_statement
+    all:
+      # The row comes from Insert, so the later Update is what runs field events for the assigned fields.
+      - follows:
+          stopBy: end
+          has:
+            stopBy: end
+            any:
+              - all: [{ kind: variable_declarator }, { has: { field: name, pattern: $ROW } }]
+              - all: [{ kind: assignment_expression }, { has: { field: left, pattern: $ROW } }]
+            has: { stopBy: end, kind: invocation_expression, has: { field: function, regex: '(^|\.)Insert$' } }
+      # A direct field assignment not yet processed by a rebind, an Update(row) or a save.
+      # stopBy cannot see bound metavariables, so "nothing in between" is checked with not + precedes.
+      - follows:
+          stopBy: end
+          has: { stopBy: end, pattern: $ROW.$FIELD = $VALUE }
+          not:
+            any:
+              - has: { stopBy: end, pattern: $ROW = $REBOUND }
+              - has: { stopBy: end, pattern: $PRIOR.Update($ROW) }
+              - precedes:
+                  stopBy: end
+                  any:
+                    - has: { stopBy: end, pattern: $ROW = $REBOUND }
+                    - has: { stopBy: end, pattern: $PRIOR.Update($ROW) }
+                    - has: { stopBy: end, kind: invocation_expression, has: { field: function, regex: '(^|\.)(PressSave|Persist|Save\.Press)$' } }
+                  precedes:
+                    stopBy: end
+                    has:
+                      stopBy: end
+                      kind: invocation_expression
+                      regex: '(NoteAndFiles|SetFileNotes|MarkUpdated|SetStatus)'
+                      has: { field: arguments, has: { kind: argument, has: { kind: identifier, pattern: $ROW } } }
+      - precedes:
+          stopBy: end
+          has: { stopBy: end, pattern: $VIEW.Update($ROW) }
+      # Update must receive the same cached instance. After row = CreateCopy(row) it diffs a copy instead.
+      - not:
+          precedes:
+            stopBy: end
+            has:
+              stopBy: end
+              kind: assignment_expression
+              has: { field: left, pattern: $ROW }
+              not: { has: { field: right, stopBy: end, pattern: $NEXT.Update($ROW) } }
+            precedes:
+              stopBy: end
+              has: { stopBy: end, pattern: $LATER.Update($ROW) }
