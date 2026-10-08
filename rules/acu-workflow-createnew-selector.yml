@@ -1,0 +1,29 @@
+id: acu-workflow-createnew-selector
+language: csharp
+severity: error
+message: "ActionDefinitions.CreateNew takes only an action name, so a selector lambda does not compile. Use CreateExisting(g => g.action, ...) or CreateExisting<TExtension>(e => e.action, ...) for an action declared on the graph or an extension; use CreateNew(\"name\", ...) only for an action the workflow creates."
+note: |
+  ActionDefinition.cs declares one CreateNew(string actionName, initializer)
+  in every release from 2022R1 to 2026R2 (line 73 in 2025R2); the selector
+  overloads are CreateExisting (lines 104 and 128).
+metadata:
+  skill: acumatica-workflow-extension
+rule:
+  # Reported on the method name so that only edits to the call line raise it.
+  any:
+    - kind: identifier
+    - kind: generic_name
+  regex: ^CreateNew\b
+  inside:
+    field: name
+    kind: member_access_expression
+    has: { field: expression, regex: '(^|\.)ActionDefinitions$' }
+    inside:
+      field: function
+      kind: invocation_expression
+      has:
+        field: arguments
+        has:
+          kind: argument
+          nthChild: { position: 1, ofRule: { kind: argument } }
+          has: { kind: lambda_expression }

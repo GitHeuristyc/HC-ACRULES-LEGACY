@@ -1,0 +1,72 @@
+id: mui-field-view-attribute
+snapshots:
+  ? |
+    <template>
+      <field name="UsrMinOrderQty"
+             view="Item"
+             before="#fsStandardCost-PriceCost [name='PendingStdCost']"></field>
+    </template>
+  : labels:
+    - source: view="Item"
+      style: primary
+      start: 51
+      end: 62
+    - source: field
+      style: secondary
+      start: 14
+      end: 19
+    - source: |-
+        <field name="UsrMinOrderQty"
+                 view="Item"
+                 before="#fsStandardCost-PriceCost [name='PendingStdCost']">
+      style: secondary
+      start: 13
+      end: 131
+    - source: view
+      style: secondary
+      start: 51
+      end: 55
+  ? |
+    <template>
+      <field name="UsrSSVendorTermId" view="Document" after="#fsColumnB-Order [name='VendorRefNbr']"></field>
+    </template>
+  : labels:
+    - source: view="Document"
+      style: primary
+      start: 45
+      end: 60
+    - source: field
+      style: secondary
+      start: 14
+      end: 19
+    - source: <field name="UsrSSVendorTermId" view="Document" after="#fsColumnB-Order [name='VendorRefNbr']">
+      style: secondary
+      start: 13
+      end: 108
+    - source: view
+      style: secondary
+      start: 45
+      end: 49
+  ? |
+    <template>
+      <qp-fieldset id="fsHCTC" view.bind="Document">
+        <field name="UsrHCTCNote" view="Transactions"></field>
+      </qp-fieldset>
+    </template>
+  : labels:
+    - source: view="Transactions"
+      style: primary
+      start: 90
+      end: 109
+    - source: field
+      style: secondary
+      start: 65
+      end: 70
+    - source: <field name="UsrHCTCNote" view="Transactions">
+      style: secondary
+      start: 64
+      end: 110
+    - source: view
+      style: secondary
+      start: 90
+      end: 94

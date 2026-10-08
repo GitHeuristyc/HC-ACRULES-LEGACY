@@ -1,0 +1,67 @@
+id: mui-qp-panel-auto-repaint-no-value
+snapshots:
+  ? |
+    <template>
+      <qp-panel id="ChangeCustomerPONbrFilter" caption="Change Customer PO Nbr" auto-repaint=""></qp-panel>
+    </template>
+  : labels:
+    - source: auto-repaint=""
+      style: primary
+      start: 87
+      end: 102
+    - source: qp-panel
+      style: secondary
+      start: 14
+      end: 22
+    - source: <qp-panel id="ChangeCustomerPONbrFilter" caption="Change Customer PO Nbr" auto-repaint="">
+      style: secondary
+      start: 13
+      end: 103
+    - source: auto-repaint
+      style: secondary
+      start: 87
+      end: 99
+  ? |
+    <template>
+      <qp-panel id="HCTCFilterView" auto-repaint="True"></qp-panel>
+    </template>
+  : labels:
+    - source: auto-repaint="True"
+      style: primary
+      start: 43
+      end: 62
+    - source: qp-panel
+      style: secondary
+      start: 14
+      end: 22
+    - source: <qp-panel id="HCTCFilterView" auto-repaint="True">
+      style: secondary
+      start: 13
+      end: 63
+    - source: auto-repaint
+      style: secondary
+      start: 43
+      end: 55
+  ? |
+    <template>
+      <qp-panel id="PackageCounterFilter" caption="Add Package Contents" auto-repaint width="lg" height="70vh">
+        <qp-fieldset id="fsHCEM-PackageFilter" view.bind="PackageCounterFilter"></qp-fieldset>
+      </qp-panel>
+    </template>
+  : labels:
+    - source: auto-repaint
+      style: primary
+      start: 80
+      end: 92
+    - source: qp-panel
+      style: secondary
+      start: 14
+      end: 22
+    - source: <qp-panel id="PackageCounterFilter" caption="Add Package Contents" auto-repaint width="lg" height="70vh">
+      style: secondary
+      start: 13
+      end: 118
+    - source: auto-repaint
+      style: secondary
+      start: 80
+      end: 92

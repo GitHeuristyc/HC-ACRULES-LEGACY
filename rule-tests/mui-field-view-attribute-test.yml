@@ -1,0 +1,33 @@
+id: mui-field-view-attribute
+valid:
+  - |
+    <template>
+      <field name="UsrSSVendorTermId" after="#fsColumnB-Order [name='VendorRefNbr']"></field>
+      <using view="Item" before="#fsStandardCost-PriceCost [name='PendingStdCost']">
+        <field name="UsrMinOrderQty"></field>
+      </using>
+    </template>
+  - |
+    <template>
+      <qp-fieldset id="fsHCEM" view.bind="Document">
+        <field name="CuryID" view.bind="CurrencyInfo"></field>
+        <field name="AppointmentSelected.UsrDMOpportunityID"></field>
+      </qp-fieldset>
+    </template>
+invalid:
+  - |
+    <template>
+      <field name="UsrSSVendorTermId" view="Document" after="#fsColumnB-Order [name='VendorRefNbr']"></field>
+    </template>
+  - |
+    <template>
+      <field name="UsrMinOrderQty"
+             view="Item"
+             before="#fsStandardCost-PriceCost [name='PendingStdCost']"></field>
+    </template>
+  - |
+    <template>
+      <qp-fieldset id="fsHCTC" view.bind="Document">
+        <field name="UsrHCTCNote" view="Transactions"></field>
+      </qp-fieldset>
+    </template>

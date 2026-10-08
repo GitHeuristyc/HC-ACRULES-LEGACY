@@ -1,0 +1,72 @@
+id: acu-workflow-createnew-selector
+snapshots:
+  ? |
+    protected static void Configure(WorkflowContext<CRCaseMaint, CRCase> context)
+    {
+        var actionEscalate = context.ActionDefinitions.CreateNew(
+            g => g.GetExtension<HCODxCRCaseMaint>().escalate,
+            a => a.WithForm(formEscalate));
+    }
+  : labels:
+    - source: CreateNew
+      style: primary
+      start: 131
+      end: 140
+    - source: g => g.GetExtension<HCODxCRCaseMaint>().escalate
+      style: secondary
+      start: 150
+      end: 198
+    - source: g => g.GetExtension<HCODxCRCaseMaint>().escalate
+      style: secondary
+      start: 150
+      end: 198
+    - source: g => g.GetExtension<HCODxCRCaseMaint>().escalate
+      style: secondary
+      start: 150
+      end: 198
+    - source: |-
+        context.ActionDefinitions.CreateNew(
+                g => g.GetExtension<HCODxCRCaseMaint>().escalate,
+                a => a.WithForm(formEscalate))
+      style: secondary
+      start: 105
+      end: 238
+    - source: context.ActionDefinitions
+      style: secondary
+      start: 105
+      end: 130
+    - source: context.ActionDefinitions.CreateNew
+      style: secondary
+      start: 105
+      end: 140
+  ? |
+    var reassign = context.ActionDefinitions.CreateNew<HCODxCRCaseMaint>(e => e.reassign, a => a.IsExposedToMobile(true));
+  : labels:
+    - source: CreateNew<HCODxCRCaseMaint>
+      style: primary
+      start: 41
+      end: 68
+    - source: e => e.reassign
+      style: secondary
+      start: 69
+      end: 84
+    - source: e => e.reassign
+      style: secondary
+      start: 69
+      end: 84
+    - source: e => e.reassign
+      style: secondary
+      start: 69
+      end: 84
+    - source: context.ActionDefinitions.CreateNew<HCODxCRCaseMaint>(e => e.reassign, a => a.IsExposedToMobile(true))
+      style: secondary
+      start: 15
+      end: 117
+    - source: context.ActionDefinitions
+      style: secondary
+      start: 15
+      end: 40
+    - source: context.ActionDefinitions.CreateNew<HCODxCRCaseMaint>
+      style: secondary
+      start: 15
+      end: 68

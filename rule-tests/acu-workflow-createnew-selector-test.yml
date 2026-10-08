@@ -1,0 +1,28 @@
+id: acu-workflow-createnew-selector
+valid:
+  - |
+    protected static void Configure(WorkflowContext<SOOrderEntry, SOOrder> context)
+    {
+        var approve = context.ActionDefinitions.CreateNew(ApproveActionName, a => a
+            .WithCategory(approvalCategory)
+            .PlaceAfter(g => g.putOnHold));
+        var batchReview = context.ActionDefinitions.CreateNew("BatchReview", action => action
+            .WithDisplayOnToolbar(DisplayOnToolBar.Hidden));
+    }
+  - |
+    protected static void Configure(WorkflowContext<CRCaseMaint, CRCase> context)
+    {
+        var escalate = context.ActionDefinitions.CreateExisting<HCODxCRCaseMaint>(g => g.escalate, a => a
+            .WithCategory(processingCategory));
+        var category = context.Categories.CreateNew("HCCustom", c => c.DisplayName("Custom"));
+    }
+invalid:
+  - |
+    protected static void Configure(WorkflowContext<CRCaseMaint, CRCase> context)
+    {
+        var actionEscalate = context.ActionDefinitions.CreateNew(
+            g => g.GetExtension<HCODxCRCaseMaint>().escalate,
+            a => a.WithForm(formEscalate));
+    }
+  - |
+    var reassign = context.ActionDefinitions.CreateNew<HCODxCRCaseMaint>(e => e.reassign, a => a.IsExposedToMobile(true));

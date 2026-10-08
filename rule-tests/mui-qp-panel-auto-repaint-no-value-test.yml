@@ -1,0 +1,31 @@
+id: mui-qp-panel-auto-repaint-no-value
+valid:
+  - |
+    <template>
+      <qp-panel id="HCTCCreatePaymentFilterView" caption="Create Payment" auto-repaint="true" width="sm">
+        <qp-fieldset id="fsHCTCPayment" view.bind="HCTCCreatePaymentFilterView"></qp-fieldset>
+      </qp-panel>
+    </template>
+  - |
+    <template>
+      <qp-panel id="PackageCounterFilter" caption="Add Package Contents"
+        auto-repaint="{ commitChanges: true }" width="lg"></qp-panel>
+      <qp-panel id="CreateSOFilter" caption="Create Sales Order"></qp-panel>
+      <qp-panel id="HCEMLog" auto-repaint="false"></qp-panel>
+      <qp-tab id="tabHCEM" caption="Packages" auto-repaint></qp-tab>
+    </template>
+invalid:
+  - |
+    <template>
+      <qp-panel id="PackageCounterFilter" caption="Add Package Contents" auto-repaint width="lg" height="70vh">
+        <qp-fieldset id="fsHCEM-PackageFilter" view.bind="PackageCounterFilter"></qp-fieldset>
+      </qp-panel>
+    </template>
+  - |
+    <template>
+      <qp-panel id="ChangeCustomerPONbrFilter" caption="Change Customer PO Nbr" auto-repaint=""></qp-panel>
+    </template>
+  - |
+    <template>
+      <qp-panel id="HCTCFilterView" auto-repaint="True"></qp-panel>
+    </template>

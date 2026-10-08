@@ -1,0 +1,31 @@
+# Source: skills/acumatica-modern-ui/assets/extension-patterns.md (Missing auto-repaint)
+id: mui-qp-panel-auto-repaint-no-value
+language: html
+severity: warning
+message: "`auto-repaint` on `<qp-panel>` has no usable value. A bare or empty attribute is skipped, so the dialog does not repaint and shows stale data on reopen; a value other than true, false or an object literal fails JSON.parse when the dialog opens. Write auto-repaint=\"true\" or auto-repaint=\"{ commitChanges: true }\"."
+note: |
+  qp-dialog.ts reads the template with getAttribute("auto-repaint") and only
+  applies it when the string is truthy, then passes it to JSON.parse
+  (client-controls/src/controls/dialog/base-dialog/qp-dialog.ts:216-219 in
+  2025R2; same code from 2023R2 to 2026R2). 2023R1 compares the value with
+  "true". Every stock qp-panel that sets the attribute uses "true". A panel
+  without the attribute is not checked: 51 stock 2025R2 panels omit it.
+rule:
+  kind: attribute
+  has:
+    kind: attribute_name
+    regex: ^(?i:auto-repaint)$
+  inside:
+    any:
+      - kind: start_tag
+      - kind: self_closing_tag
+    has:
+      kind: tag_name
+      regex: ^(?i:qp-panel)$
+  not:
+    has:
+      stopBy: end
+      kind: attribute_value
+      regex: ^\s*(true|false|\{[\s\S]*\})\s*$
+metadata:
+  skill: acumatica-modern-ui

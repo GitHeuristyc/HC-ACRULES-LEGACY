@@ -1,0 +1,27 @@
+# Source: skills/acumatica-modern-ui-html-attrs/SKILL.md (Rule 7); acumatica-modern-ui/assets/extension-html-positioning-guide.md
+id: mui-field-view-attribute
+language: html
+severity: warning
+message: "`view` on `<field>` has no effect; the field binds to the view of the fieldset it lands in. Remove the attribute, or, when the field belongs to another view, wrap it in <using view=\"ViewName\"> with the positioning attribute."
+note: |
+  The runtime reads `view` only on <using> (client-controls
+  controls/container/fieldset/qp-fieldset.ts:640 and utils.ts:214 in 2025R2),
+  and so does the build (build-tools html-wrapper-generation.ts:252). On a
+  <field> without children the attribute is copied to <qp-field>, which has
+  no `view` bindable. Same code from 2023R2 to 2026R2; 2023R1 reads no `view`
+  at all. No stock screen puts `view` on a <field>. `view.bind` is a
+  different attribute and is not checked.
+rule:
+  kind: attribute
+  has:
+    kind: attribute_name
+    regex: ^(?i:view)$
+  inside:
+    any:
+      - kind: start_tag
+      - kind: self_closing_tag
+    has:
+      kind: tag_name
+      regex: ^(?i:field)$
+metadata:
+  skill: acumatica-modern-ui-html-attrs
