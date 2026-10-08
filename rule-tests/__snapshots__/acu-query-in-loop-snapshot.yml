@@ -1,0 +1,297 @@
+id: acu-query-in-loop
+snapshots:
+  ? |
+    class E { void M() { for (int i = 0; i < lines.Count; i++) { SOLine line = Base.Transactions.Search<SOLine.lineNbr>(lines[i].LineNbr); } } }
+  : labels:
+    - source: Base.Transactions.Search<SOLine.lineNbr>(lines[i].LineNbr)
+      style: primary
+      start: 75
+      end: 133
+    - source: for (int i = 0; i < lines.Count; i++) { SOLine line = Base.Transactions.Search<SOLine.lineNbr>(lines[i].LineNbr); }
+      style: secondary
+      start: 21
+      end: 136
+    - source: for (int i = 0; i < lines.Count; i++) { SOLine line = Base.Transactions.Search<SOLine.lineNbr>(lines[i].LineNbr); }
+      style: secondary
+      start: 21
+      end: 136
+    - source: Base.Transactions
+      style: secondary
+      start: 75
+      end: 92
+    - source: Base.Transactions
+      style: secondary
+      start: 75
+      end: 92
+    - source: Search<SOLine.lineNbr>
+      style: secondary
+      start: 93
+      end: 115
+    - source: Base.Transactions.Search<SOLine.lineNbr>
+      style: secondary
+      start: 75
+      end: 115
+  ? |
+    class E { void M() { foreach (POReceiptLine line in Base.transactions.Select()) { POLine po = PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>.Select(Base, line.PONbr, line.POLineNbr); } } }
+  : labels:
+    - source: PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>.Select(Base, line.PONbr, line.POLineNbr)
+      style: primary
+      start: 94
+      end: 263
+    - source: foreach (POReceiptLine line in Base.transactions.Select()) { POLine po = PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>.Select(Base, line.PONbr, line.POLineNbr); }
+      style: secondary
+      start: 21
+      end: 266
+    - source: foreach (POReceiptLine line in Base.transactions.Select()) { POLine po = PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>.Select(Base, line.PONbr, line.POLineNbr); }
+      style: secondary
+      start: 21
+      end: 266
+    - source: PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>
+      style: secondary
+      start: 94
+      end: 222
+    - source: PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>
+      style: secondary
+      start: 94
+      end: 222
+    - source: Select
+      style: secondary
+      start: 223
+      end: 229
+    - source: PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>.Select
+      style: secondary
+      start: 94
+      end: 229
+  ? |
+    class E { void M() { foreach (SOLine line in lines) { var pos = SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View.Select(Base, line.OrderNbr); } } }
+  : labels:
+    - source: SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View.Select(Base, line.OrderNbr)
+      style: primary
+      start: 64
+      end: 173
+    - source: foreach (SOLine line in lines) { var pos = SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View.Select(Base, line.OrderNbr); }
+      style: secondary
+      start: 21
+      end: 176
+    - source: foreach (SOLine line in lines) { var pos = SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View.Select(Base, line.OrderNbr); }
+      style: secondary
+      start: 21
+      end: 176
+    - source: SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View
+      style: secondary
+      start: 64
+      end: 145
+    - source: SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View
+      style: secondary
+      start: 64
+      end: 145
+    - source: Select
+      style: secondary
+      start: 146
+      end: 152
+    - source: SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View.Select
+      style: secondary
+      start: 64
+      end: 152
+  ? |
+    class E { void M() { foreach (SOOrder order in orders) { for (int i = 0; i < 4; i++) { var code = PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>.Select(Base, codes[i]); } } } }
+  : labels:
+    - source: PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>.Select(Base, codes[i])
+      style: primary
+      start: 98
+      end: 215
+    - source: for (int i = 0; i < 4; i++) { var code = PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>.Select(Base, codes[i]); }
+      style: secondary
+      start: 57
+      end: 218
+    - source: for (int i = 0; i < 4; i++) { var code = PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>.Select(Base, codes[i]); }
+      style: secondary
+      start: 57
+      end: 218
+    - source: PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>
+      style: secondary
+      start: 98
+      end: 192
+    - source: PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>
+      style: secondary
+      start: 98
+      end: 192
+    - source: Select
+      style: secondary
+      start: 193
+      end: 199
+    - source: PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>.Select
+      style: secondary
+      start: 98
+      end: 199
+  ? |
+    class E { void M() { foreach (SOOrder order in orders) { foreach (SOLine line in PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, order.OrderNbr)) { Process(line); } } } }
+  : labels:
+    - source: PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, order.OrderNbr)
+      style: primary
+      start: 81
+      end: 184
+    - source: foreach (SOOrder order in orders) { foreach (SOLine line in PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, order.OrderNbr)) { Process(line); } }
+      style: secondary
+      start: 21
+      end: 206
+    - source: foreach (SOOrder order in orders) { foreach (SOLine line in PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, order.OrderNbr)) { Process(line); } }
+      style: secondary
+      start: 21
+      end: 206
+    - source: PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>
+      style: secondary
+      start: 81
+      end: 155
+    - source: PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>
+      style: secondary
+      start: 81
+      end: 155
+    - source: Select
+      style: secondary
+      start: 156
+      end: 162
+    - source: PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select
+      style: secondary
+      start: 81
+      end: 162
+  ? |
+    class E { void M() { foreach (var line in lines) { PMTask task = SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View.SelectSingleBound(Base, null, line.ProjectID, line.TaskID); } } }
+  : labels:
+    - source: SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View.SelectSingleBound(Base, null, line.ProjectID, line.TaskID)
+      style: primary
+      start: 65
+      end: 226
+    - source: foreach (var line in lines) { PMTask task = SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View.SelectSingleBound(Base, null, line.ProjectID, line.TaskID); }
+      style: secondary
+      start: 21
+      end: 229
+    - source: foreach (var line in lines) { PMTask task = SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View.SelectSingleBound(Base, null, line.ProjectID, line.TaskID); }
+      style: secondary
+      start: 21
+      end: 229
+    - source: SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View
+      style: secondary
+      start: 65
+      end: 167
+    - source: SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View
+      style: secondary
+      start: 65
+      end: 167
+    - source: SelectSingleBound
+      style: secondary
+      start: 168
+      end: 185
+    - source: SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View.SelectSingleBound
+      style: secondary
+      start: 65
+      end: 185
+  ? |
+    class E { void M() { int i = 0; do { InventoryItem item = PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.SelectWindowed(Base, 0, 1, codes[i]); i++; } while (i < codes.Count); } }
+  : labels:
+    - source: PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.SelectWindowed(Base, 0, 1, codes[i])
+      style: primary
+      start: 58
+      end: 196
+    - source: do { InventoryItem item = PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.SelectWindowed(Base, 0, 1, codes[i]); i++; } while (i < codes.Count);
+      style: secondary
+      start: 32
+      end: 229
+    - source: do { InventoryItem item = PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.SelectWindowed(Base, 0, 1, codes[i]); i++; } while (i < codes.Count);
+      style: secondary
+      start: 32
+      end: 229
+    - source: PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>
+      style: secondary
+      start: 58
+      end: 159
+    - source: PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>
+      style: secondary
+      start: 58
+      end: 159
+    - source: SelectWindowed
+      style: secondary
+      start: 160
+      end: 174
+    - source: PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.SelectWindowed
+      style: secondary
+      start: 58
+      end: 174
+  ? |
+    class E { void M() { var view = new PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>(Base); foreach (SOOrder order in orders) { var lines = view.Select(order.OrderNbr); } } }
+  : labels:
+    - source: view.Select(order.OrderNbr)
+      style: primary
+      start: 166
+      end: 193
+    - source: foreach (SOOrder order in orders) { var lines = view.Select(order.OrderNbr); }
+      style: secondary
+      start: 118
+      end: 196
+    - source: foreach (SOOrder order in orders) { var lines = view.Select(order.OrderNbr); }
+      style: secondary
+      start: 118
+      end: 196
+    - source: view
+      style: secondary
+      start: 166
+      end: 170
+    - source: view
+      style: secondary
+      start: 166
+      end: 170
+    - source: Select
+      style: secondary
+      start: 171
+      end: 177
+    - source: view
+      style: secondary
+      start: 25
+      end: 29
+    - source: new PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>(Base)
+      style: secondary
+      start: 32
+      end: 116
+    - source: view = new PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>(Base)
+      style: secondary
+      start: 25
+      end: 116
+    - source: void M() { var view = new PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>(Base); foreach (SOOrder order in orders) { var lines = view.Select(order.OrderNbr); } }
+      style: secondary
+      start: 10
+      end: 198
+    - source: view.Select
+      style: secondary
+      start: 166
+      end: 177
+  ? |
+    class E { void M() { while (reader.MoveNext()) { var row = PXDatabase.SelectSingle<SOLine>(new PXDataField<SOLine.orderNbr>(), new PXDataFieldValue<SOLine.noteID>(reader.Current)); } } }
+  : labels:
+    - source: PXDatabase.SelectSingle<SOLine>(new PXDataField<SOLine.orderNbr>(), new PXDataFieldValue<SOLine.noteID>(reader.Current))
+      style: primary
+      start: 59
+      end: 179
+    - source: while (reader.MoveNext()) { var row = PXDatabase.SelectSingle<SOLine>(new PXDataField<SOLine.orderNbr>(), new PXDataFieldValue<SOLine.noteID>(reader.Current)); }
+      style: secondary
+      start: 21
+      end: 182
+    - source: while (reader.MoveNext()) { var row = PXDatabase.SelectSingle<SOLine>(new PXDataField<SOLine.orderNbr>(), new PXDataFieldValue<SOLine.noteID>(reader.Current)); }
+      style: secondary
+      start: 21
+      end: 182
+    - source: PXDatabase
+      style: secondary
+      start: 59
+      end: 69
+    - source: PXDatabase
+      style: secondary
+      start: 59
+      end: 69
+    - source: SelectSingle<SOLine>
+      style: secondary
+      start: 70
+      end: 90
+    - source: PXDatabase.SelectSingle<SOLine>
+      style: secondary
+      start: 59
+      end: 90

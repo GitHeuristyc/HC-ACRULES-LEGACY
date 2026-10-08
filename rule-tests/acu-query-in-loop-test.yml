@@ -1,0 +1,35 @@
+id: acu-query-in-loop
+valid:
+  - |
+    class E { void M() { foreach (SOLine line in PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, nbr)) { Process(line); } } }
+  - |
+    class E { void M() { var lines = PXSelect<SOLine>.Select(Base).RowCast<SOLine>().ToList(); foreach (SOLine line in lines) { Process(line); } } }
+  - |
+    class E { void M() { foreach (SOLine line in lines) { var item = InventoryItem.PK.Find(Base, line.InventoryID); var site = PXSelectorAttribute.Select<SOLine.siteID>(cache, line); var cached = cache.Locate(line); var ids = line.Splits.Select(s => s.LotSerialNbr); } } }
+  - |
+    class E { void M() { foreach (SOLine line in lines) { if (line.IsFree == true) return PXSelect<SOOrder, Where<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>.Select(Base, line.OrderNbr); } } }
+  - |
+    class E { void M() { foreach (SOLine line in lines) { if (line.IsFree != true) continue; var order = PXSelect<SOOrder, Where<SOOrder.orderNbr, Equal<Required<SOOrder.orderNbr>>>>.Select(Base, line.OrderNbr); throw new PXException(Messages.FreeLine, order); } } }
+  - |
+    class E { void M() { foreach (SOOrder order in list) { graph.Clear(); graph.Document.Current = graph.Document.Search<SOOrder.orderNbr>(order.OrderNbr, order.OrderType); graph.Save.Press(); } } }
+  - |
+    class E { void M() { for (int i = 0; i < 12; i++) { var history = PXSelect<APHistory, Where<APHistory.finPeriodID, Equal<Required<APHistory.finPeriodID>>>>.Select(this, periods[i]); } } }
+invalid:
+  - |
+    class E { void M() { foreach (POReceiptLine line in Base.transactions.Select()) { POLine po = PXSelect<POLine, Where<POLine.orderNbr, Equal<Required<POLine.orderNbr>>, And<POLine.lineNbr, Equal<Required<POLine.lineNbr>>>>>.Select(Base, line.PONbr, line.POLineNbr); } } }
+  - |
+    class E { void M() { foreach (SOLine line in lines) { var pos = SelectFrom<HCODOrderLine>.Where<HCODOrderLine.orderNbr.IsEqual<@P.AsString>>.View.Select(Base, line.OrderNbr); } } }
+  - |
+    class E { void M() { foreach (var line in lines) { PMTask task = SelectFrom<PMTask>.Where<PMTask.projectID.IsEqual<@P.AsInt>.And<PMTask.taskID.IsEqual<@P.AsInt>>>.View.SelectSingleBound(Base, null, line.ProjectID, line.TaskID); } } }
+  - |
+    class E { void M() { foreach (SOOrder order in orders) { foreach (SOLine line in PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>.Select(Base, order.OrderNbr)) { Process(line); } } } }
+  - |
+    class E { void M() { var view = new PXSelect<SOLine, Where<SOLine.orderNbr, Equal<Required<SOLine.orderNbr>>>>(Base); foreach (SOOrder order in orders) { var lines = view.Select(order.OrderNbr); } } }
+  - |
+    class E { void M() { for (int i = 0; i < lines.Count; i++) { SOLine line = Base.Transactions.Search<SOLine.lineNbr>(lines[i].LineNbr); } } }
+  - |
+    class E { void M() { while (reader.MoveNext()) { var row = PXDatabase.SelectSingle<SOLine>(new PXDataField<SOLine.orderNbr>(), new PXDataFieldValue<SOLine.noteID>(reader.Current)); } } }
+  - |
+    class E { void M() { int i = 0; do { InventoryItem item = PXSelect<InventoryItem, Where<InventoryItem.inventoryCD, Equal<Required<InventoryItem.inventoryCD>>>>.SelectWindowed(Base, 0, 1, codes[i]); i++; } while (i < codes.Count); } }
+  - |
+    class E { void M() { foreach (SOOrder order in orders) { for (int i = 0; i < 4; i++) { var code = PXSelect<ReasonCode, Where<ReasonCode.reasonCodeID, Equal<Required<ReasonCode.reasonCodeID>>>>.Select(Base, codes[i]); } } } }

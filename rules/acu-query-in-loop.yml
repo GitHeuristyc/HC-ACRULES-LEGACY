@@ -1,0 +1,93 @@
+id: acu-query-in-loop
+language: csharp
+severity: warning
+message: "Database query inside a loop body (N+1). Each iteration sends another query; join the data into the loop's query, or load it into a dictionary before the loop. Keep a per-row lookup only when the loop is bounded and the reason is documented."
+note: |
+  The rule reports query executions in the body of a foreach, for, while or do
+  loop: Select, SelectSingle, SelectSingleBound, SelectWindowed, SelectMultiBound
+  and Search<> on PXSelect*/SelectFrom types, Select on a local variable created
+  with new PXSelect*, new SelectFrom or new PXView, SelectSingle, SelectSingleBound,
+  SelectWindowed, SelectMulti, SelectMultiBound and Search<> on any view, and
+  PXDatabase.Select, SelectSingle, SelectMulti and SelectRecords.
+  Not reported: the loop header (iterating a query result is fine); PK.Find,
+  UK.Find, PXSelectorAttribute.Select and cache.Locate, which read the cache
+  first; calls with a lambda argument (LINQ); Select on a graph view such as
+  Base.Transactions.Select(...), which cannot be told apart from LINQ without
+  types; a query assigned to a view's Current, which loads the document that a
+  processing loop works on; a query in a return or throw statement, or followed
+  by one in the same block, because it runs at most once; and a for loop with a
+  literal bound below 100 that is not nested in another loop.
+  A query in a lambda or local function inside the loop body is reported,
+  because such code usually runs on every iteration.
+metadata:
+  skill: acumatica-performance-optimization
+utils:
+  loop:
+    any: [ { kind: foreach_statement }, { kind: for_statement }, { kind: while_statement }, { kind: do_statement } ]
+  loop-or-function:
+    any:
+      - matches: loop
+      - kind: lambda_expression
+      - kind: anonymous_method_expression
+      - kind: local_function_statement
+rule:
+  kind: invocation_expression
+  has:
+    field: function
+    kind: member_access_expression
+    all:
+      # PXSelect<...>.Select(Base).Select(r => ...) reports only the inner call.
+      - has: { field: expression, not: { kind: invocation_expression } }
+      - any:
+          # PXSelect<...>.Select(...), SelectFrom<...>.View.Select(...), new PXSelect<...>(graph).Select()
+          - all:
+              - has: { field: expression, regex: '^(new\s+)?(PX\.Data\.(BQL\.Fluent\.)?)?(PXSelect\w*|SelectFrom)<' }
+              - has: { field: name, regex: '^(Select|SelectSingle|SelectSingleBound|SelectWindowed|SelectMultiBound)$|^Search(All)?<' }
+          # PXDatabase.SelectSingle<T>(...)
+          - all:
+              - has: { field: expression, regex: '^(PX\.Data\.)?PXDatabase$' }
+              - has: { field: name, regex: '^(Select|SelectSingle|SelectMulti|SelectRecords)(<|$)' }
+          # var view = new PXSelect<...>(Base); ... view.Select(...)
+          - all:
+              - has: { field: expression, kind: identifier, pattern: $VIEW }
+              - has: { field: name, regex: '^Select$' }
+              - inside:
+                  stopBy: end
+                  any: [ { kind: method_declaration }, { kind: constructor_declaration }, { kind: local_function_statement }, { kind: lambda_expression } ]
+                  has:
+                    stopBy: end
+                    kind: variable_declarator
+                    all:
+                      - has: { field: name, pattern: $VIEW }
+                      - has: { kind: object_creation_expression, regex: '^new\s+(PX\.Data\.)?(PXSelect\w*<|SelectFrom<|PXView\()' }
+          # Methods that only views have: Base.Transactions.Search<SOLine.lineNbr>(...)
+          - all:
+              - has: { field: expression, not: { regex: 'Attribute$' } }
+              - has: { field: name, regex: '^(SelectSingle|SelectSingleBound|SelectWindowed|SelectMulti|SelectMultiBound)$|^Search(All)?<' }
+  inside:
+    stopBy: end
+    inside: { field: body, matches: loop }
+  not:
+    any:
+      - has:
+          field: arguments
+          has: { kind: argument, has: { any: [ { kind: lambda_expression }, { kind: anonymous_method_expression } ] } }
+      - inside:
+          stopBy: { matches: loop }
+          kind: for_statement
+          has: { field: condition, regex: '^\w+\s*<=?\s*\d{1,2}$' }
+          not: { inside: { stopBy: end, inside: { field: body, matches: loop } } }
+      - inside:
+          stopBy: { not: { kind: assignment_expression } }
+          kind: assignment_expression
+          has: { field: left, regex: '\.Current$' }
+      - inside:
+          stopBy: { matches: loop-or-function }
+          any:
+            - kind: return_statement
+            - kind: throw_statement
+            - kind: throw_expression
+            - not: { matches: loop-or-function }
+              precedes:
+                stopBy: end
+                any: [ { kind: return_statement }, { kind: throw_statement } ]
